@@ -1,7 +1,9 @@
 ---
 title: JSON两个api用法简介
 date: 2016-03-30 09:17:05
-tags: javascript json
+tags: 
+	- javascript
+	- json
 ---
 
 ```
