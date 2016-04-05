@@ -5,7 +5,7 @@
 # Site
 title: 有道
 subtitle: 君子爱才，取之有道
-description: 新一天新积累
+description: 新一天新积累</br>I Belive I Can.
 author: wangtuda
 language: zh-Hans
 timezone: Asia/Shanghai
@@ -63,12 +63,13 @@ pagination_dir: page
 # Extensions
 ## Plugins: https://hexo.io/plugins/
 ## Themes: https://hexo.io/themes/
-theme: hexo-theme-next
+theme: nexT
 
 # 头像
 avatar: /images/head.gif
 since: 2016-03-24
 highlight_theme: night blue
+duoshuo_shortname: superfighter
 
 # Deployment
 ## Docs: https://hexo.io/docs/deployment.html

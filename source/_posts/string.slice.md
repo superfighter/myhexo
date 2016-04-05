@@ -2,6 +2,7 @@
 title: string.slice
 date: 2016-04-01 09:02:21
 tags: javascript
+categories: string
 ---
 
 * 简单介绍补零方案

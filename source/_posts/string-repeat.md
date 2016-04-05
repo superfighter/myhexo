@@ -2,6 +2,7 @@
 title: string.repeat
 date: 2016-03-31 16:57:13
 tags: javascript
+categories: string
 ---
 
 * 主要参考[MDN](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String/repeat)
