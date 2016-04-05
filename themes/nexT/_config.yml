@@ -3,7 +3,7 @@
 # ---------------------------------------------------------------
 
 # Put your favicon.ico into `hexo-site/source/` directory.
-favicon: /favicon.ico
+favicon: /fs.ico
 
 # Set default keywords (Use a comma to separate)
 keywords: "王土达"
@@ -205,7 +205,7 @@ mathjax:
 #google_analytics:
 
 # CNZZ count
-#cnzz_siteid:
+cnzz_siteid: 1258398492
 
 
 # Make duoshuo show UA
