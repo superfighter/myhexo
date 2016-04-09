@@ -41,7 +41,7 @@
 <link href="/css/main.css?v=0.5.0" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="王土达" />
+  <meta name="keywords" content="seajs javascript," />
 
 
 
@@ -57,15 +57,58 @@
 
 
 
-<meta name="description" content="新一天新积累I Belive I Can.">
-<meta property="og:type" content="website">
-<meta property="og:title" content="有道">
-<meta property="og:url" content="http://superfighter.github.io/archives/2016/04/index.html">
+<meta name="description" content="1、检测seajs对象
+2、初始化seajs对象
+    * data
+3、lang 辅助方法
+    * isObject
+    * isString
+    * isArray
+    * isFunction
+    * isUndefined
+4、_cid变量自增
+5、data.events对象
+6、定义事件绑定、解绑方法
+7、emit方法定义触发事件
+8、path 辅助方法
+    *">
+<meta property="og:type" content="article">
+<meta property="og:title" content="analyse Seajs-3.0">
+<meta property="og:url" content="http://superfighter.github.io/2016/04/09/analyse-Seajs-3-0/index.html">
 <meta property="og:site_name" content="有道">
-<meta property="og:description" content="新一天新积累I Belive I Can.">
+<meta property="og:description" content="1、检测seajs对象
+2、初始化seajs对象
+    * data
+3、lang 辅助方法
+    * isObject
+    * isString
+    * isArray
+    * isFunction
+    * isUndefined
+4、_cid变量自增
+5、data.events对象
+6、定义事件绑定、解绑方法
+7、emit方法定义触发事件
+8、path 辅助方法
+    *">
+<meta property="og:updated_time" content="2016-04-09T10:00:06.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="有道">
-<meta name="twitter:description" content="新一天新积累I Belive I Can.">
+<meta name="twitter:title" content="analyse Seajs-3.0">
+<meta name="twitter:description" content="1、检测seajs对象
+2、初始化seajs对象
+    * data
+3、lang 辅助方法
+    * isObject
+    * isString
+    * isArray
+    * isFunction
+    * isUndefined
+4、_cid变量自增
+5、data.events对象
+6、定义事件绑定、解绑方法
+7、emit方法定义触发事件
+8、path 辅助方法
+    *">
 
 
 
@@ -83,7 +126,7 @@
   };
 </script>
 
-  <title> 归档 | 有道 </title>
+  <title> analyse Seajs-3.0 | 有道 </title>
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
@@ -104,7 +147,7 @@
     
   
 
-  <div class="container one-collumn sidebar-position-left  page-archive  ">
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
     <div class="headband"></div>
 
     <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
@@ -202,140 +245,189 @@
           <div id="content" class="content">
             
 
-  <section id="posts" class="posts-collapse">
-    <span class="archive-move-on"></span>
-
-    <span class="archive-page-counter">
-      
-      
-      
-        
-      
-      嗯..! 目前共计 8 篇日志。 继续努力。
-    </span>
-
+  <div id="posts" class="posts-expand">
     
-
-      
-      
-      
-
-      
-        
-        <div class="collection-title">
-          <h2 class="archive-year motion-element" id="archive-year-2016">2016</h2>
-        </div>
-      
-      
-
-      
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h1 class="post-title">
-        
-            <a class="post-title-link" href="/2016/04/09/analyse-Seajs-3-0/" itemprop="url">
-              
-                <span itemprop="name">analyse Seajs-3.0</span>
-              
-            </a>
-        
-      </h1>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2016-04-09T17:56:46+08:00"
-              content="2016-04-09" >
-          04-09
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-
-    
-
-      
-      
-      
-
-      
-      
-
-      
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h1 class="post-title">
-        
-            <a class="post-title-link" href="/2016/04/04/巧用callback/" itemprop="url">
-              
-                <span itemprop="name">巧用callback实现链式调用</span>
-              
-            </a>
-        
-      </h1>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2016-04-04T16:17:29+08:00"
-              content="2016-04-04" >
-          04-04
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-
-    
-
-      
-      
-      
-
-      
-      
-
-      
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h1 class="post-title">
-        
-            <a class="post-title-link" href="/2016/04/01/string.slice/" itemprop="url">
-              
-                <span itemprop="name">string.slice</span>
-              
-            </a>
-        
-      </h1>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2016-04-01T09:02:21+08:00"
-              content="2016-04-01" >
-          04-01
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-
-    
-
-  </section>
 
   
+  
 
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                analyse Seajs-3.0
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2016-04-09T17:56:46+08:00" content="2016-04-09">
+              2016-04-09
+            </time>
+          </span>
+
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2016/04/09/analyse-Seajs-3-0/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/04/09/analyse-Seajs-3-0/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <pre><code>1、检测seajs对象
+2、初始化seajs对象
+    * data
+3、lang 辅助方法
+    * isObject
+    * isString
+    * isArray
+    * isFunction
+    * isUndefined
+4、_cid变量自增
+5、data.events对象
+6、定义事件绑定、解绑方法
+7、emit方法定义触发事件
+8、path 辅助方法
+    * 目录正则
+    * 同级正则
+    * 上级正则
+    * 多斜杠正则
+    * 序列化绝对地址
+    * 正常化模块js地址
+    * 路径正则
+    * config中配置的vars正则/*{}*/
+    * 解析配置中alias属性值
+    * 解析配置中paths属性值
+    * 解析配置中vars的属性值
+    * 解析配置中map的属性值
+    * 定义追加base路径方法
+    * 定义id2uri方法
+</code></pre><a id="more"></a>
+<pre><code>9、seajs.resolve = id2uri
+10、定义判定环境变量
+11、忽略本地路径判断正则
+12、定义当前路径变量
+13、定义当前模块所处地址
+14、定义request方法，插入script标签加载对应模块路径
+    * 定义addOnload方法
+        * 定义onload方法
+15、seajs.request = request
+16、解析依赖deps方法
+    * 处理空格
+    * 处理单双引号
+    * 处理peek
+        * 处理正则
+    * 处理单词
+    * 处理数字
+    * 处理左括号
+    * 处理右括号
+    * 处理左大括号
+    * 处理右大括号
+    * 返回res
+17、seajs.cache 属性
+18、定义匿名Meta变量、正在抓取列表、已抓取列表、回调列表
+19、定义状态码
+20、定义Module构造函数
+    * 处理依赖，返回地址数组
+    * 验证是否入栈？
+    * 加载模块依赖方法
+    * 加载后执行方法
+    * 出错方法
+    * 解析模块代码
+    * 抓取模块方法
+    * 定义模块的id2uri方法
+    * define方法
+    * save方法保存define定义的模块&lt;存到cachedMods&gt;
+    * get获取module
+    * use使用等同于加载匿名模块
+21、seajs.use
+22、定义define.cmd和define
+23、seajs.require
+24、处理config
+</code></pre>
+      
+    </div>
+
+    <div>
+      
+        
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/seajs-javascript/" rel="tag">#seajs javascript</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2016/04/04/巧用callback/" rel="next" title="巧用callback实现链式调用">
+                <i class="fa fa-chevron-left"></i> 巧用callback实现链式调用
+              </a>
+            
+          </div>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
 
 
           </div>
@@ -343,6 +435,14 @@
 
 
           
+  <div class="comments" id="comments">
+    
+      <div class="ds-thread" data-thread-key="2016/04/09/analyse-Seajs-3-0/"
+           data-title="analyse Seajs-3.0" data-url="http://superfighter.github.io/2016/04/09/analyse-Seajs-3-0/">
+      </div>
+    
+  </div>
+
 
         </div>
         
@@ -362,8 +462,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
 
-      <section class="site-overview sidebar-panel  sidebar-panel-active ">
+      <section class="site-overview sidebar-panel ">
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
           <img class="site-author-image" itemprop="image"
                src="/images/head.gif"
@@ -415,6 +524,17 @@
 
       </section>
 
+      
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+            
+              
+            
+            
+              <p class="post-toc-empty">此文章未包含目录</p>
+            
+          </div>
+        </section>
       
 
     </div>
@@ -506,11 +626,9 @@
 
 
   
-  
-    <script type="text/javascript" id="motion.page.archive">
-      $('.archive-year').velocity('transition.slideLeftIn');
-    </script>
-  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=0.5.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=0.5.0"></script>
+
 
 
   
