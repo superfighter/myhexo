@@ -232,6 +232,167 @@
             
               
                 
+                <a class="post-title-link" href="/2016/04/14/Media-query/" itemprop="url">
+                  Media query
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2016-04-14T08:37:30+08:00" content="2016-04-14">
+              2016-04-14
+            </time>
+          </span>
+
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2016/04/14/Media-query/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/04/14/Media-query/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h2 id="Media-Query"><a href="#Media-Query" class="headerlink" title="Media Query"></a>Media Query</h2><blockquote>
+<p><code>内容部分参照于</code><a href="http://www.w3cplus.com/content/css3-media-queries" target="_blank" rel="external">W3C Plus</a></p>
+</blockquote>
+<h3 id="含义"><a href="#含义" class="headerlink" title="含义"></a>含义</h3><ul>
+<li>Media Query 直译就是”媒体查询”，常见于检测展示页面所属终端，针对不同终端赋予不同样式。</li>
+</ul>
+<h3 id="代码片段"><a href="#代码片段" class="headerlink" title="代码片段"></a>代码片段</h3><p>片段A</p>
+<pre><code>&lt;link href=&quot;css/reset.css&quot; rel=&quot;stylesheet&quot; type=&quot;text/css&quot; media=&quot;screen&quot; /&gt;
+&lt;link href=&quot;css/style.css&quot; rel=&quot;stylesheet&quot; type=&quot;text/css&quot; media=&quot;all&quot; /&gt;
+&lt;link href=&quot;css/print.css&quot; rel=&quot;stylesheet&quot; type=&quot;text/css&quot; media=&quot;print&quot; /&gt;
+</code></pre><p>片段B</p>
+<pre><code>&lt;style type=&quot;text/css&quot; media=&quot;screen&quot;&gt;
+  @import url(&quot;css/style.css&quot;);
+&lt;/style&gt;
+</code></pre><p>片段C</p>
+<pre><code>&lt;link rel=&quot;stylesheet&quot; media=&quot;screen and (max-width: 600px)&quot; href=&quot;small.css&quot; /&gt;
+</code></pre><p>片段D</p>
+<pre><code>@media screen,3D and (max-width: 600px) {
+  选择器 {
+        属性：属性值；
+  }
+  }
+</code></pre><h3 id="分析代码"><a href="#分析代码" class="headerlink" title="分析代码"></a>分析代码</h3><h4 id="共性"><a href="#共性" class="headerlink" title="共性"></a>共性</h4><ul>
+<li>以上代码片段都是Media query的使用场景<ul>
+<li><code>link</code>方式引入和<code>@import</code>方式引入</li>
+<li><code>@media</code>方式引入</li>
+</ul>
+</li>
+<li>属性介绍<ul>
+<li>媒介类型(常用三种，齐全<a href="https://www.w3.org/TR/CSS2/media.html#media-types" target="_blank" rel="external">10种</a>,如3D,TV,handheld等.)<ul>
+<li><code>print</code> 打印</li>
+<li><code>screen</code> 屏幕</li>
+<li><code>all</code> 所有</li>
+</ul>
+</li>
+<li>关键词<ul>
+<li><code>and</code></li>
+<li><code>not</code></li>
+<li><code>only</code><ul>
+<li>only用来定某种特定的媒体类型，可以用来排除不支持媒体查询的浏览器。其实only很多时候是用来对那些不支持Media Query但却支持Media Type的设备隐藏样式表的。其主要有：支持媒体特性（Media Queries）的设备，正常调用样式，此时就当only不存在；对于不支持媒体特性(Media Queries)但又支持媒体类型(Media Type)的设备，这样就会不读了样式，因为其先读only而不是screen；另外不支持Media Qqueries的浏览器，不论是否支持only，样式都不会被采用</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>媒体特性(常见width,更多见<a href="https://www.w3.org/TR/css3-mediaqueries/#media1" target="_blank" rel="external">Media features</a>)<ul>
+<li><code>max-width</code></li>
+<li><code>min-width</code></li>
+<li><code>max-device-width</code></li>
+<li><code>min-device-width</code></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h4 id="Media-query和Css-语法结构区别"><a href="#Media-query和Css-语法结构区别" class="headerlink" title="Media query和Css 语法结构区别"></a>Media query和Css 语法结构区别</h4><ul>
+<li>Media query只接受单个的逻辑表达式作为值，或者没有值</li>
+<li>css属性用于声明如何表现；Media query是一个用于判断设备是否满足某种条件的表达式</li>
+<li>Media query中大部分接受min/max前缀，用来表示其逻辑关系，表示应用于大于等于或者小于等于某个值的情况</li>
+<li>css属性要求必须有属性值，Media query可以没有值，因为其表达式返回的只有真或者假</li>
+</ul>
+<h4 id="单例"><a href="#单例" class="headerlink" title="单例"></a>单例</h4><p>iphone4</p>
+<pre><code>&lt;link rel=&quot;stylesheet&quot; media=&quot;only screen and (-webkit-min-device-pixel-ratio: 2)&quot; type=&quot;text/css&quot; href=&quot;iphone4.css&quot; /&gt;
+</code></pre><p>ipad</p>
+<pre><code> &lt;!-- 竖横屏 --&gt;    
+&lt;link rel=&quot;stylesheet&quot; media=&quot;all and (orientation:portrait)&quot; href=&quot;portrait.css&quot; type=&quot;text/css&quot; /&gt; 
+&lt;link rel=&quot;stylesheet&quot; media=&quot;all and (orientation:landscape)&quot; href=&quot;landscape.css&quot;  type=&quot;text/css&quot; /&gt;
+</code></pre>
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
                 <a class="post-title-link" href="/2016/04/11/model-factory/" itemprop="url">
                   model-factory
                 </a>
@@ -1179,104 +1340,6 @@
 
 
     
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2016/03/25/weibo-img/" itemprop="url">
-                  博客发图的好后仓--微博图床
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            <span class="post-meta-item-icon">
-              <i class="fa fa-calendar-o"></i>
-            </span>
-            <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2016-03-25T09:17:18+08:00" content="2016-03-25">
-              2016-03-25
-            </time>
-          </span>
-
-          
-
-          
-            
-              <span class="post-comments-count">
-                &nbsp; | &nbsp;
-                <a href="/2016/03/25/weibo-img/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/03/25/weibo-img/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-
-          
-          
-
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <ul>
-<li><a href="http://weibotuchuang.sinaapp.com/" target="_blank" rel="external">微博图床</a></li>
-</ul>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
   </section>
 
   
@@ -1322,7 +1385,7 @@
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">11</span>
+              <span class="site-state-item-count">12</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>
@@ -1339,7 +1402,7 @@
           
             <div class="site-state-item site-state-tags">
               <a href="/tags">
-                <span class="site-state-item-count">9</span>
+                <span class="site-state-item-count">10</span>
                 <span class="site-state-item-name">标签</span>
               </a>
             </div>
@@ -1377,7 +1440,7 @@
       <div class="footer-inner">
         <div class="copyright" >
   
-  &copy;  Thu Mar 24 2016 08:00:00 GMT+0800 (CST) - 
+  &copy;  Thu Mar 24 2016 08:00:00 GMT+0800 (中国标准时间) - 
   <span itemprop="copyrightYear">2016</span>
   <span class="with-love">
     <i class="fa fa-heart"></i>
