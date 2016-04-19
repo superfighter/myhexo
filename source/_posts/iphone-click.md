@@ -70,14 +70,22 @@ tags: [javascript, iphone, css3]
 #### 方案二：定义touch事件 ####
 
 ```javascript
-    function fire(e) { alert('hi'); }
+    $(document).ready(function () {
+      init();
+    });
+
+    function fire(obj,event) { 
+        // TODO something
+        console.log(obj);
+        event.preventDefault();
+    }
 
     function touchHandler(event)
     {
         var touches = event.changedTouches,
             first = touches[0],
             type = "";
-    
+
         switch(event.type)
         {
            case "touchstart": type = "mousedown"; break;
@@ -85,11 +93,11 @@ tags: [javascript, iphone, css3]
            case "touchend":   type = "mouseup"; break;
            default: return;
         }
-    
+
         //initMouseEvent(type, canBubble, cancelable, view, clickCount, 
         //           screenX, screenY, clientX, clientY, ctrlKey, 
         //           altKey, shiftKey, metaKey, button, relatedTarget);
-    
+
         var simulatedEvent = document.createEvent("MouseEvent");
         simulatedEvent.initMouseEvent(type, true, true, window, 1, 
                               first.screenX, first.screenY, 
@@ -97,7 +105,9 @@ tags: [javascript, iphone, css3]
                               false, false, false, 0/*left*/, null);
         //触发自定义事件
         first.target.dispatchEvent(simulatedEvent);
-        event.preventDefault();
+        if($(event.target).hasClass('j_provLi')){
+            fire($(event.target),event);
+        }
     }
 
     function init() 
@@ -107,8 +117,6 @@ tags: [javascript, iphone, css3]
         document.addEventListener("touchend", touchHandler, true);
         document.addEventListener("touchcancel", touchHandler, true);    
     }
-    
-    init();
 ```
 #### 方案三：借助第三方库 ####
 ---
