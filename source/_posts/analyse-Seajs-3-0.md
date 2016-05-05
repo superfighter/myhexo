@@ -1,7 +1,9 @@
 ---
 title: analyse Seajs-3.0
 date: 2016-04-09 17:56:46
-tags: seajs javascript
+tags: 
+	- seajs
+	- javascript
 ---
 
 	1、检测seajs对象

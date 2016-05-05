@@ -1,7 +1,9 @@
 ---
 title: Media query
 date: 2016-04-14 08:37:30
-tags: css3 media
+tags: 
+	- css3 
+	- media
 ---
 ## Media Query ##
 
