@@ -102,3 +102,71 @@ gg() // arguments error
 	//   }.bind({ x: 'inner' })()];
 	// }.call({ x: 'outer' })
 ````
+* :: 返回的是原对象
+````
+	//上下文::执行方法
+	foo::bar;
+	// 等同于
+	bar.bind(foo);
+
+	foo::bar(...arguments);
+	// 等同于
+	bar.apply(foo, arguments);
+
+	const hasOwnProperty = Object.prototype.hasOwnProperty;
+	function hasOwn(obj, key) {
+	  return obj::hasOwnProperty(key);
+	}
+````
+* 尾调=>调用栈
+* stack overflow 栈溢出
+* 尾递归
+````
+	//复杂度O(n)
+	function factorial(n) {
+	  if (n === 1) return 1;
+	  return n * factorial(n - 1);
+	}
+	factorial(5) // 120
+	//5 * factorial(4)
+	//5 * (4 * factorial(3))
+	//5 * (4 * (3 * factorial(2)))
+	//5 * (4 * (3 * (2 * factorial(1))))
+	//5 * 4 * 3 * 2 * 1 
+	//复杂度O(1)
+	function factorial(n, total){
+		if(n === 1) return total;
+		return factorial(n-1, n * total);
+	}
+	factorial(5,1) // 120
+	// 只保留一个调用帧
+	// factorial(5,1)
+	// factorial(4,5)
+	// factorial(3,20)
+	// factorial(2,60)
+	// factorial(1,120)
+````
+`
+尾递归的实现，往往需要改写递归函数，确保最后一步只调用自身。做到这一点的方法，就是把所有用到的内部变量改写成函数的参数。比如上面的例子，阶乘函数 factorial 需要用到一个中间变量 total ，那就把这个中间变量改写成函数的参数。
+`
+* 闭包记忆 [简书资料](http://www.jianshu.com/p/a2dfa59e70d7)
+````
+//cache为function内局部变量，cache被匿名函数引用，匿名函数上下文为全局变量window
+//memorize执行完后，cache理应被回收，但是在被匿名函数引用的情况下无法回收
+function memorize(sets, f) {
+    var cache = {}; 
+    return function (x) { 
+        console.log('cache: %j', cache);
+        return x in cache
+               ? cache[x]
+               : cache[x] = f(sets[x]);
+    }
+}
+var g = memorize([1000, 2000, 3000], function (x) { return x * x; });
+````
+* console.log('%c Hello~how are you','font-size:28px; font-family:Microsoft YAHEI;color: blue; font-weight: bold;')
+
+/*Object*/
+* Object.assign 
+* //除了字符串会以数组形式拷贝入目标对象，数值、布尔、undefined、null都不起效果（这是因为只有字符串的包装对象，会产生可枚举属性）
+* //首参数不能是Null、Undefined ：Cannot convert undefined or null to object

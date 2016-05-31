@@ -232,6 +232,128 @@
             
               
                 
+                <a class="post-title-link" href="/2016/05/31/jQuery-Deferred/" itemprop="url">
+                  jQuery-Deferred
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2016-05-31T14:50:24+08:00" content="2016-05-31">
+              2016-05-31
+            </time>
+          </span>
+
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2016/05/31/jQuery-Deferred/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/05/31/jQuery-Deferred/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <ul>
+<li>jQuery 1.5.0 之前的jQuery调用ajax语法</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">　　			$.ajax(&#123;</span><br><span class="line">　　　　			url: &quot;test.html&quot;,</span><br><span class="line">　　　				success: function()&#123;</span><br><span class="line">　　　　　　				alert(&quot;success!&quot;);</span><br><span class="line">　　　　			&#125;,</span><br><span class="line">　　　　			error:function()&#123;</span><br><span class="line">　　　　　　				alert(&quot;error!&quot;);</span><br><span class="line">　　　　			&#125;</span><br><span class="line">　　			&#125;);</span><br></pre></td></tr></table></figure>
+<ul>
+<li>jQuery 1.5.0 新增Deferred对象后ajax语法</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">　　			$.ajax(&#123;url: &quot;test.html&quot;&#125;).done(function()&#123;alert(&quot;success!&quot;)&#125;).fail(function()&#123;alert(&quot;error!&quot;)&#125;);</span><br></pre></td></tr></table></figure>
+<ul>
+<li>多次回调</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$.ajax(&#123;url: &quot;test.html&quot;&#125;).done(function()&#123;alert(&quot;success!&quot;)&#125;).fail(function()&#123;alert(&quot;error!&quot;)&#125;).done(function()&#123;alert(&quot;success again&quot;)&#125;);</span><br></pre></td></tr></table></figure>
+<ul>
+<li>为多个事件制定一个回调参数</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$.when($.ajax(&#123;url:&apos;1t.html&apos;&#125;),$.ajax(&#123;url:&apos;2t.html&apos;&#125;)).</span><br><span class="line">	done(function()&#123;alert(&apos;all success&apos;)&#125;).</span><br><span class="line">	fail(function()&#123;alert(&apos;not all success&apos;)&#125;);</span><br></pre></td></tr></table></figure>
+<ul>
+<li>普通函数的回调参数</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">//判断是否支持webP格式图片</span><br><span class="line">function hasWebP()&#123;</span><br><span class="line">	var rv = $.Deferred();</span><br><span class="line">	var img = new Image();</span><br><span class="line">	img.onload = function ()&#123; return rv.resolve();&#125;</span><br><span class="line">	img.onerror = function()&#123; return rv.reject();&#125;</span><br><span class="line">	//img.src=&quot;http://baidu.com/1.jpg&quot;;</span><br><span class="line">	img.src=&quot;http://musicdata.baidu.com/data2/pic/39817702/39817702.jpg&quot;;</span><br><span class="line">	$(&apos;div&apos;).append(img);</span><br><span class="line">	return rv.promise();</span><br><span class="line">&#125;</span><br><span class="line">$(function()&#123;</span><br><span class="line">          //then(done,fail)</span><br><span class="line">	hasWebP().then(function()&#123;console.log(1)&#125;,function()&#123;console.log(2)&#125;);</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+<ul>
+<li>Deffered可以接受一个函数名参数</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">  function func(rv)&#123;</span><br><span class="line">       //rv是Deferred对象</span><br><span class="line">　　　　var tasks = function()&#123;</span><br><span class="line">　　　　　　alert(&quot;done！&quot;);</span><br><span class="line">	   rv.resolve();</span><br><span class="line">　　　　&#125;;</span><br><span class="line">　　　　setTimeout(tasks,3000);</span><br><span class="line">	return rv.promise();</span><br><span class="line">&#125;</span><br><span class="line">  $.Deferred(func)</span><br><span class="line">　　.done(function()&#123; alert(&quot;success！&quot;); &#125;)</span><br><span class="line">　　.fail(function()&#123; alert(&quot;error！&quot;); &#125;);</span><br></pre></td></tr></table></figure>
+<ul>
+<li>always方法，执行完done,fail后执行</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"> $.Deferred(func)</span><br><span class="line">　　.done(function()&#123; alert(&quot;success！&quot;); &#125;)</span><br><span class="line">　　.fail(function()&#123; alert(&quot;error！&quot;); &#125;)</span><br><span class="line">.always(function()&#123;console.log(&apos;end&apos;);&#125;)</span><br></pre></td></tr></table></figure>
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
                 <a class="post-title-link" href="/2016/05/13/Function-ES6/" itemprop="url">
                   Function-ES6
                 </a>
@@ -283,7 +405,88 @@
         
           
             <ul>
-<li></li>
+<li>参数默认值</li>
+<li><p>arguments</p>
+<ul>
+<li>length不包括rese参数(…values)</li>
+<li>length不包括赋默认值参数(values=1)<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">console.log((function A(a,dm,s,...v)&#123;&#125;).length) // 3</span><br><span class="line">console.log((function A(a,dm,s,v=1)&#123;&#125;).length) // 3</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+</li>
+<li><p>作用域</p>
+</li>
+<li><p>必输参数</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">function throwMiss()&#123;</span><br><span class="line">  throw new Error(&apos;arguments error&apos;)</span><br><span class="line">&#125;</span><br><span class="line">function gg(x=throwMiss())&#123; console.log(x)&#125;</span><br><span class="line">gg(2) // 2</span><br><span class="line">gg() // arguments error</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>rest参数</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">function add(...values)&#123;</span><br><span class="line">	//...values == [2,3,4,5] 从参数末尾索引开始计算，截止到最后一个有效参数索引为止</span><br><span class="line">	let sum = 0;</span><br><span class="line">	for (var val of values)&#123;</span><br><span class="line">		sum += val;</span><br><span class="line">	&#125;</span><br><span class="line">	return sum;</span><br><span class="line">&#125;</span><br><span class="line">add(2,3,4,5);</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>扩展运算符…</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">	console.log(...[1,5,6]) // 1 5 6</span><br><span class="line">	console.log(...[1,[5,6]]) // 1 [5,6]</span><br><span class="line">	console.log(...[1,...[5,6]]) // 1 5 6</span><br><span class="line">	console.log(...&#123;&apos;0&apos;:&apos;12&apos;,&apos;1&apos;:&apos;34&apos;,length:2&#125;) // 12 34</span><br><span class="line">* 凡是涉及到操作32位Unicode字符的函数</span><br></pre></td></tr></table></figure>
+<p>  ‘x\uD83D\uDE80y’.length // 4 wrong<br>  […’x\uD83D\uDE80y’].length // 3 right<br>  function length(str){ return […str].length}</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">* map, generator function可以使用...</span><br><span class="line">* 如果对没有iterator接口的对象，使用扩展运算符，将会报错</span><br><span class="line">* 箭头函数</span><br><span class="line">	*函数体内的this对象，就是定义时所在的对象，而不是使用时所在的对象。</span><br><span class="line">	*不可以当作构造函数，也就是说，不可以使用new命令，否则会抛出一个错误。</span><br><span class="line">	*不可以使用arguments对象，该对象在函数体内不存在。如果要用，可以用Rest参数代替。</span><br><span class="line">	*不可以使用yield命令，因此箭头函数不能用作Generator函数。</span><br></pre></td></tr></table></figure>
+<p>  function Timer () {</p>
+<pre><code>this.s1 = 14;
+this.s2 = 4;
+// 箭头函数
+// this指向定义时所在作用域，即Timer
+setInterval(() =&gt; this.s1++, 1000);
+// 普通函数
+// this指向执行时作用域，即window
+setInterval(function () {
+  this.s2++;
+}, 1000);
+</code></pre><p>  }</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">* 箭头函数可以让this指向固定化</span><br></pre></td></tr></table></figure>
+<p>  var handler = {</p>
+<pre><code>id: &apos;123456&apos;,
+
+init: function() {
+    //this指向handler，因为=&gt;没有自己的this(this == undefined)，所以指向最近的外部this
+  document.addEventListener(&apos;click&apos;,
+    event =&gt; this.doSomething(event.type), false);
+  // var self = this;
+  // document.addEventListener(&apos;click&apos;,function(){
+  //   self.doSomething(event.type)
+  // },false)
+},
+
+doSomething: function(type) {
+  console.log(&apos;Handling &apos; + type  + &apos; for &apos; + this.id);
+}
+</code></pre><p>  };</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">* call\apply\bind无效，会忽略</span><br></pre></td></tr></table></figure>
+<p>  (function() {</p>
+<pre><code>return [
+  (() =&gt; this.x).bind({ x: &apos;inner&apos; })()
+]
+</code></pre><p>  }).call({ x: ‘outer’ });<br>  // function () {<br>  //   var _this = this;<br>  //   return [function () {<br>  //     return _this.x;<br>  //   }.bind({ x: ‘inner’ })()];<br>  // }.call({ x: ‘outer’ })</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">* :: 返回的是原对象</span><br></pre></td></tr></table></figure>
+<p>  //上下文::执行方法<br>  foo::bar;<br>  // 等同于<br>  bar.bind(foo);</p>
+<p>  foo::bar(…arguments);<br>  // 等同于<br>  bar.apply(foo, arguments);</p>
+<p>  const hasOwnProperty = Object.prototype.hasOwnProperty;<br>  function hasOwn(obj, key) {</p>
+<pre><code>return obj::hasOwnProperty(key);
+</code></pre><p>  }</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">* 尾调=&gt;调用栈</span><br><span class="line">* stack overflow 栈溢出</span><br><span class="line">* 尾递归</span><br></pre></td></tr></table></figure>
+<p>  //复杂度O(n)<br>  function factorial(n) {</p>
+<pre><code>if (n === 1) return 1;
+return n * factorial(n - 1);
+</code></pre><p>  }<br>  factorial(5) // 120<br>  //5 <em> factorial(4)<br>  //5 </em> (4 <em> factorial(3))<br>  //5 </em> (4 <em> (3 </em> factorial(2)))<br>  //5 <em> (4 </em> (3 <em> (2 </em> factorial(1))))<br>  //5 <em> 4 </em> 3 <em> 2 </em> 1<br>  //复杂度O(1)<br>  function factorial(n, total){</p>
+<pre><code>if(n === 1) return total;
+return factorial(n-1, n * total);
+</code></pre><p>  }<br>  factorial(5,1) // 120<br>  // 只保留一个调用帧<br>  // factorial(5,1)<br>  // factorial(4,5)<br>  // factorial(3,20)<br>  // factorial(2,60)<br>  // factorial(1,120)</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">`</span><br><span class="line">尾递归的实现，往往需要改写递归函数，确保最后一步只调用自身。做到这一点的方法，就是把所有用到的内部变量改写成函数的参数。比如上面的例子，阶乘函数 factorial 需要用到一个中间变量 total ，那就把这个中间变量改写成函数的参数。</span><br><span class="line">`</span><br><span class="line">* 闭包记忆 [简书资料](http://www.jianshu.com/p/a2dfa59e70d7)</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<p>//cache为function内局部变量，cache被匿名函数引用，匿名函数上下文为全局变量window<br>//memorize执行完后，cache理应被回收，但是在被匿名函数引用的情况下无法回收<br>function memorize(sets, f) {<br>    var cache = {};<br>    return function (x) {<br>        console.log(‘cache: %j’, cache);<br>        return x in cache<br>               ? cache[x]<br>               : cache[x] = f(sets[x]);<br>    }<br>}<br>var g = memorize([1000, 2000, 3000], function (x) { return x * x; });<br>````</p>
+<ul>
+<li>console.log(‘%c Hello~how are you’,’font-size:28px; font-family:Microsoft YAHEI;color: blue; font-weight: bold;’)</li>
+</ul>
+<p>/<em>Object</em>/</p>
+<ul>
+<li>Object.assign </li>
+<li>//除了字符串会以数组形式拷贝入目标对象，数值、布尔、undefined、null都不起效果（这是因为只有字符串的包装对象，会产生可枚举属性）</li>
+<li>//首参数不能是Null、Undefined ：Cannot convert undefined or null to object</li>
 </ul>
 
           
@@ -1097,7 +1300,12 @@
       
         
           
-            
+            <ul>
+<li>延迟至某条件达成后执行<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">driver.wait(function () &#123;</span><br><span class="line">    return driver.isElementPresent(webdriver.By.name(&quot;username&quot;));</span><br><span class="line">&#125;, timeout);</span><br><span class="line">/*==========*/</span><br><span class="line">driver.wait(until.elementLocated(By.name(&apos;username&apos;)), 5 * 1000).then(function(elm) &#123;</span><br><span class="line">    elm.sendKeys(username);</span><br><span class="line">&#125;);</span><br><span class="line">/*==========*/</span><br><span class="line">driver.findElement(webdriver.By.id(element)).then(function(webElement) &#123;</span><br><span class="line">        console.log(element + &apos; exists&apos;);</span><br><span class="line">    &#125;, function(err) &#123;</span><br><span class="line">        if (err.state &amp;&amp; err.state === &apos;no such element&apos;) &#123;</span><br><span class="line">            console.log(element + &apos; not found&apos;);</span><br><span class="line">        &#125; else &#123;</span><br><span class="line">            webdriver.promise.rejected(err);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line">// Import Selenium Dependency</span><br><span class="line">var Webdriver = require(&apos;selenium-webdriver&apos;);</span><br><span class="line"> </span><br><span class="line">// Few Settings</span><br><span class="line">var PAGE_LOAD_TIMEOUT_MS = 10000;</span><br><span class="line">var SCRIPT_LOAD_TIMEOUT_MS = 1000;</span><br><span class="line">var WINDOW_WIDTH_PX = 1024;</span><br><span class="line">var WINDOW_HEIGHT_PX = 768;</span><br><span class="line"> </span><br><span class="line">// Initialize a webdriver with desired capabilites</span><br><span class="line">var driver = new Webdriver.Builder().withCapabilities(Webdriver.Capabilities.firefox()).build();</span><br><span class="line">// Manage timeouts of the webdriver instance</span><br><span class="line">driver.manage().timeouts().pageLoadTimeout(PAGE_LOAD_TIMEOUT_MS);</span><br><span class="line">driver.manage().timeouts().setScriptTimeout(SCRIPT_LOAD_TIMEOUT_MS);</span><br><span class="line">// Manage window settings of the webdriver instance</span><br><span class="line">driver.manage().window().setSize(WINDOW_WIDTH_PX, WINDOW_HEIGHT_PX);</span><br><span class="line"> </span><br><span class="line">// Request to render google.com</span><br><span class="line">driver.get(&quot;http://google.com&quot;).then(function () &#123;</span><br><span class="line">        // On Success get the title of the rendered page</span><br><span class="line">    driver.getTitle().then(function (title) &#123;</span><br><span class="line">            // On Success log it out</span><br><span class="line">        console.log(title);</span><br><span class="line">    &#125;);</span><br><span class="line">&#125;);</span><br><span class="line">- See more at: http://itsallabtamil.blogspot.com/2014/10/selenium-webdriver-in-nodejs-javascript.html#sthash.QYKh3mjf.dpuf</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">Wednesday, October 8, 2014</span><br><span class="line">Selenium Webdriver in Nodejs + Javascript</span><br><span class="line">Phewww getting back to blog after almost an year.</span><br><span class="line">So, am back to discuss an interesting node module selenium-webdriver [Ref: Project Doc and npm registry]</span><br><span class="line">Am assuming the reader has prior knowledge on what nodejs, npm and node modules are. And a little bit of selenium fun ;)</span><br><span class="line">What is selenium?</span><br><span class="line">As wiki says, Selenium is a portable software testing framework for web applications.</span><br><span class="line">It is a prominently used tool for browser automation. For further details checkout SeleniumHQ.</span><br><span class="line"></span><br><span class="line">What are we doing here?</span><br><span class="line">Basically Selenium provides bindings in many languages like java, python, php and now even nodejs. </span><br><span class="line">Here am planning to run through few code samples of using selenium webdriver in nodejs.</span><br><span class="line"></span><br><span class="line">Where to start?</span><br><span class="line"></span><br><span class="line">im@mylaptop$ npm install --save selenium-webdriver</span><br><span class="line"></span><br><span class="line">A Simple Webdriver Example</span><br><span class="line"></span><br><span class="line">// Import Selenium Dependency</span><br><span class="line">var Webdriver = require(&apos;selenium-webdriver&apos;);</span><br><span class="line"> </span><br><span class="line">// Few Settings</span><br><span class="line">var PAGE_LOAD_TIMEOUT_MS = 10000;</span><br><span class="line">var SCRIPT_LOAD_TIMEOUT_MS = 1000;</span><br><span class="line">var WINDOW_WIDTH_PX = 1024;</span><br><span class="line">var WINDOW_HEIGHT_PX = 768;</span><br><span class="line"> </span><br><span class="line">// Initialize a webdriver with desired capabilites</span><br><span class="line">var driver = new Webdriver.Builder().withCapabilities(Webdriver.Capabilities.firefox()).build();</span><br><span class="line">// Manage timeouts of the webdriver instance</span><br><span class="line">driver.manage().timeouts().pageLoadTimeout(PAGE_LOAD_TIMEOUT_MS);</span><br><span class="line">driver.manage().timeouts().setScriptTimeout(SCRIPT_LOAD_TIMEOUT_MS);</span><br><span class="line">// Manage window settings of the webdriver instance</span><br><span class="line">driver.manage().window().setSize(WINDOW_WIDTH_PX, WINDOW_HEIGHT_PX);</span><br><span class="line"> </span><br><span class="line">// Request to render google.com</span><br><span class="line">driver.get(&quot;http://google.com&quot;).then(function () &#123;</span><br><span class="line">        // On Success get the title of the rendered page</span><br><span class="line">    driver.getTitle().then(function (title) &#123;</span><br><span class="line">            // On Success log it out</span><br><span class="line">        console.log(title);</span><br><span class="line">    &#125;);</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line">// Initialize a webdriver with desired capabilites</span><br><span class="line">What are the default capabilities?</span><br><span class="line">Checkout capabilities.js</span><br><span class="line">It includes</span><br><span class="line">1. BROWSER_NAME</span><br><span class="line">2. SUPPORTS_JAVASCRIPT</span><br><span class="line">3. SUPPORTS_CSS_SELECTORS</span><br><span class="line">4. TAKES_SCREENSHOT</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">Webdriver.Capabilities.firefox()</span><br><span class="line">Creates a new capabilities object by overriding the default BROWSER_NAME from &apos;browserName&apos; to &apos;firefox&apos;.</span><br><span class="line"></span><br><span class="line">So, What are all other browser options?</span><br><span class="line">Checkout Browsers Section </span><br><span class="line"></span><br><span class="line">Do all the browsers work by default?</span><br><span class="line">Not really. To initialize a webdriver, we need to make sure that executable of desired browser is present in the system PATH.</span><br><span class="line">For Ex: To use firefox, the following should be checked. If this fails, then appropriate binaries should be installed.</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">iam@mylaptop$ which firefox</span><br><span class="line">/usr/bin/firefox</span><br><span class="line"></span><br><span class="line">Apart from this, few browsers use separate driver executables to abstract the communication via webdriver to actual browser. For Ex: Chrome needs chromedriver. Download and make sure it is available in the system PATH.</span><br><span class="line">Internally chromedriver expects google-chrome to be available in the system PATH.</span><br><span class="line"></span><br><span class="line">What if I wish to start chrome or firefox from webdriver with specific options?</span><br><span class="line"></span><br><span class="line">var driver = new Webdriver.Builder().withCapabilities(Webdriver.Capabilities.firefox()).setFirefoxOptions(&#123;</span><br><span class="line">    firefox_profile: &quot;Name&quot;</span><br><span class="line">&#125;).build();</span><br><span class="line"></span><br><span class="line">How do I manage exceptions while loading [like pageload timesout]?</span><br><span class="line">Selenium webdriver is full of promises. Almost every interaction with the webdriver [irrespective of whether it is sync or async] returns a promise.</span><br><span class="line">As we can see in our code,</span><br><span class="line"></span><br><span class="line">driver.get(&quot;http://google.com&quot;).then(function success() &#123;</span><br><span class="line">    console.log(&apos;Successful&apos;);</span><br><span class="line">    i++;</span><br><span class="line">&#125;, function error(err) &#123;</span><br><span class="line">    console.log(err);</span><br><span class="line">&#125;).thenCatch(function (e) &#123; </span><br><span class="line">    console.log(&quot;Any exceptions in success or err callbacks gets thrown here&quot;, e);</span><br><span class="line">    // You need to decide the resolution value here</span><br><span class="line">&#125;).thenFinally(function () &#123;</span><br><span class="line">    console.log(&quot;We can tear down stuffs here&quot;);</span><br><span class="line">    // You need to decide the resolution value here. If nothing specified undefined will be returned.</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line">How do I handle actions that are dependent on some conditions [like may be after some ajax calls you need click some button]?</span><br><span class="line">We can ask driver to wait implicitly on a timeout basis or explicitly on a condition basis.</span><br><span class="line"></span><br><span class="line">driver.sleep(MY_SLEEPTIMER_MS).then(function () &#123;</span><br><span class="line">    console.log(&quot;I&apos;ll do my action&quot;);</span><br><span class="line">&#125;);</span><br><span class="line">driver.wait(function () &#123;</span><br><span class="line">    if (document.readyState === &quot;complete&quot;) &#123;</span><br><span class="line">        return true;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;, TIMEOUT_TO_WAIT).then(function () &#123;</span><br><span class="line">    console.log(&quot;I&apos;ll do my action here&quot;);</span><br><span class="line">&#125;, function () &#123;</span><br><span class="line">    console.log(&quot;Either the condn satisfied or the TIMEOUT_TO_WAIT happened; luck is yours&quot;);</span><br><span class="line">&#125;);</span><br><span class="line">- See more at: http://itsallabtamil.blogspot.com/2014/10/selenium-webdriver-in-nodejs-javascript.html#sthash.QYKh3mjf.dpuf</span><br></pre></td></tr></table></figure>
           
         
       
@@ -1219,121 +1427,6 @@
 
 
     
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2016/04/26/regex-base1/" itemprop="url">
-                  词法分析基础
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            <span class="post-meta-item-icon">
-              <i class="fa fa-calendar-o"></i>
-            </span>
-            <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2016-04-26T08:48:20+08:00" content="2016-04-26">
-              2016-04-26
-            </time>
-          </span>
-
-          
-
-          
-            
-              <span class="post-comments-count">
-                &nbsp; | &nbsp;
-                <a href="/2016/04/26/regex-base1/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/04/26/regex-base1/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-
-          
-          
-
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <p>主要参考<a href="http://www.cppblog.com/vczh/">陈梓瀚</a></p>
-<h4 id="问题概述"><a href="#问题概述" class="headerlink" title="问题概述"></a>问题概述</h4><ul>
-<li>词法分析的重要性<ul>
-<li>运行命令</li>
-<li>(1+2)*(3+4)<ul>
-<li>(左括号,”(“) (数字,”1”) (一级操作符,”+”) (数字,”2”) (右括号,”)”) (二级操作符,”*”) (左括号,”(“) (数字,”3”) (一级操作符,”+”) (数字,”4”) (右括号,”)”)</li>
-<li>操作符、括号、数字</li>
-<li>但是，都是等价的对象，没有层次<h4 id="正则表达式"><a href="#正则表达式" class="headerlink" title="正则表达式"></a>正则表达式</h4></li>
-</ul>
-</li>
-</ul>
-</li>
-<li>代表字符串集合的规则<ul>
-<li>规则可以把一个特定的字符或者是空字符串认为是一种类型的记号的全部，如”(“是”左括号”，”[“不会是”左括号”</li>
-<li>规则可以进行串联，”hello”是”h”,”e”,”l”,”l”,”o”的记号串联</li>
-<li>规则可以进行并联, “if”,”else”,”while”等字符串，称之为关键字</li>
-<li>规则是可选的， “abc”,”abcde”可以看做是”abd”的前缀字符串，”de”是可选的</li>
-<li>规则可以重复
-          <div class="post-more-link text-center">
-            <a class="btn" href="/2016/04/26/regex-base1/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
   </section>
 
   
@@ -1379,7 +1472,7 @@
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">24</span>
+              <span class="site-state-item-count">25</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>
@@ -1396,7 +1489,7 @@
           
             <div class="site-state-item site-state-tags">
               <a href="/tags">
-                <span class="site-state-item-count">19</span>
+                <span class="site-state-item-count">21</span>
                 <span class="site-state-item-name">标签</span>
               </a>
             </div>
