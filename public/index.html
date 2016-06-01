@@ -232,6 +232,144 @@
             
               
                 
+                <a class="post-title-link" href="/2016/06/01/css-box/" itemprop="url">
+                  css-box
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2016-06-01T14:55:23+08:00" content="2016-06-01">
+              2016-06-01
+            </time>
+          </span>
+
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2016/06/01/css-box/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/06/01/css-box/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h3 id="容器属性"><a href="#容器属性" class="headerlink" title="容器属性"></a>容器属性</h3><ul>
+<li><p>box-pack：定义子元素主轴对齐方式：justify-content</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">box-pack: start | end | center | justify;</span><br><span class="line">   /*主轴对齐：左对齐（默认） | 右对齐 | 居中对齐 | 左右对齐*/</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>box-align：定义元素交叉轴对齐方式：align-items</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">box-align: start | end | center | baseline | stretch;</span><br><span class="line">/*交叉轴对齐：顶部对齐（默认） | 底部对齐 | 居中对齐 | 文本基线对齐 | 上下对齐并铺满*/</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>box-direction：定义元素显示方向：flex-flow</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">box-direction: normal | reverse | inherit;</span><br><span class="line">/*显示方向：默认方向 | 反方向 | 继承子元素的 box-direction*/</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>box-orient：定义子元素水平或垂直排列：flex-flow</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">box-orient: horizontal | vertical | inline-axis | block-axis | inherit;</span><br><span class="line">/*排列方向：水平 | 垂直 | 行内方式排列（默认） | 块方式排列 | 继承父级的box-orient*/</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>box-lines：定义子元素超出容器是否换行：flex-wrap</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">box-lines: single | multiple;</span><br><span class="line">/*允许换行：不允许（默认） | 允许*/</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>box-flex：定义是否允许子元素伸缩：flex</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">box-flex: &lt;value&gt;;</span><br><span class="line">/*伸缩：&lt;一个浮点数，默认为0.0，即表示不可伸缩，大于0的值可伸缩，柔性相对&gt;*/</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>box-ordinal-group：定义子元素的显示顺序：flex-order</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">box-ordinal-group: &lt;integer&gt;;</span><br><span class="line">/*显示次序：&lt;一个整数，默认为1，数值越小越排前&gt;*/</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>元素对其方式</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">align-self: auto | flex-start | flex-end | center | baseline | stretch;</span><br><span class="line">/*单独对齐方式：自动（默认） | 顶部对齐 | 底部对齐 | 居中对齐 | 上下对齐并铺满 | 文本基线对齐*/</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h3 id="兼容写法"><a href="#兼容写法" class="headerlink" title="兼容写法"></a>兼容写法</h3><ul>
+<li>如果子元素是行内元素，在很多情况下都要使用 display:block 或 display:inline-block 把行内子元素变成块元素（例如使用 box-flex 属性），这也是旧版语法和新版语法的区别之一。</li>
+<li><p>由于旧版语法并没有列入W3C标准，所以这里不用写 display:box ，下面的语法也是一样的。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">.box&#123;</span><br><span class="line">	display: -webkit-box; /* 老版本语法: Safari, iOS, Android browser, older WebKit browsers. */</span><br><span class="line">	display: -moz-box; /* 老版本语法: Firefox (buggy) */</span><br><span class="line">	display: -ms-flexbox; /* 混合版本语法: IE 10 */</span><br><span class="line">	display: -webkit-flex; /* 新版本语法: Chrome 21+ */</span><br><span class="line">	display: flex; /* 新版本语法: Opera 12.1, Firefox 22+ */</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>子元素轴对齐方式，旧版语法有4个参数，而新版语法有5个参数，兼容写法新版语法的 space-around 是不可用的</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">.box&#123;</span><br><span class="line">	-webkit-box-pack: center;</span><br><span class="line">	-moz-justify-content: center;</span><br><span class="line">	-webkit-justify-content: center;</span><br><span class="line">	justify-content: center;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>子元素交叉轴对齐方式</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">.box&#123;</span><br><span class="line">	-webkit-box-align: center;</span><br><span class="line">	-moz-align-items: center;</span><br><span class="line">	-webkit-align-items: center;</span><br><span class="line">	align-items: center;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>子元素的显示方向，可通过 box-direction + box-orient + flex-direction 实现</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line">   /*左到右*/</span><br><span class="line">.box&#123;</span><br><span class="line">	-webkit-box-direction: normal;</span><br><span class="line">	-webkit-box-orient: horizontal;</span><br><span class="line">	-moz-flex-direction: row;</span><br><span class="line">	-webkit-flex-direction: row;</span><br><span class="line">	flex-direction: row;</span><br><span class="line">&#125;</span><br><span class="line">/*右到左*/</span><br><span class="line">.box&#123;</span><br><span class="line">	-webkit-box-pack: end;</span><br><span class="line">	-webkit-box-direction: reverse;</span><br><span class="line">	-webkit-box-orient: horizontal;</span><br><span class="line">	-moz-flex-direction: row-reverse;</span><br><span class="line">	-webkit-flex-direction: row-reverse;</span><br><span class="line">	flex-direction: row-reverse;</span><br><span class="line">&#125;</span><br><span class="line">/*上到下*/</span><br><span class="line">.box&#123;</span><br><span class="line">	-webkit-box-direction: normal;</span><br><span class="line">	-webkit-box-orient: vertical;</span><br><span class="line">	-moz-flex-direction: column;</span><br><span class="line">	-webkit-flex-direction: column;</span><br><span class="line">	flex-direction: column;</span><br><span class="line">&#125;</span><br><span class="line">/*下到上*/</span><br><span class="line">.box&#123;</span><br><span class="line">	-webkit-box-pack: end;</span><br><span class="line">	-webkit-box-direction: reverse;</span><br><span class="line">	-webkit-box-orient: vertical;</span><br><span class="line">	-moz-flex-direction: column-reverse;</span><br><span class="line">	-webkit-flex-direction: column-reverse;</span><br><span class="line">	flex-direction: column-reverse;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>是否允许子元素伸缩</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">/*扩展*/</span><br><span class="line">.item&#123;</span><br><span class="line">	-webkit-box-flex: 1.0;</span><br><span class="line">	-moz-flex-grow: 1;</span><br><span class="line">	-webkit-flex-grow: 1;</span><br><span class="line">	flex-grow: 1;</span><br><span class="line">&#125;</span><br><span class="line">/*收缩*/</span><br><span class="line">.item&#123;</span><br><span class="line">	-webkit-box-flex: 1.0;</span><br><span class="line">	-moz-flex-shrink: 1;</span><br><span class="line">	-webkit-flex-shrink: 1;</span><br><span class="line">	flex-shrink: 1;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
+</ul>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
                 <a class="post-title-link" href="/2016/05/31/jQuery-Deferred/" itemprop="url">
                   jQuery-Deferred
                 </a>
@@ -1329,104 +1467,6 @@ return factorial(n-1, n * total);
 
 
     
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2016/04/26/analyse-requirejs/" itemprop="url">
-                  analyse-requirejs
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            <span class="post-meta-item-icon">
-              <i class="fa fa-calendar-o"></i>
-            </span>
-            <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2016-04-26T08:51:03+08:00" content="2016-04-26">
-              2016-04-26
-            </time>
-          </span>
-
-          
-
-          
-            
-              <span class="post-comments-count">
-                &nbsp; | &nbsp;
-                <a href="/2016/04/26/analyse-requirejs/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/04/26/analyse-requirejs/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-
-          
-          
-
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <h3 id="定义常量"><a href="#定义常量" class="headerlink" title="定义常量"></a>定义常量</h3><p>req<br>s<br>head<br>baseElement<br>dataMain<br>src<br>interactiveScript<br>currentlyAddingScript<br>mainScript<br>subPath<br>version<br>commentRegExp<br>jsSuffixRegExp<br>op<br>ostring<br>hasOwn<br>isBrowser<br>isWebWorker<br>readyRegExp<br>defContextName<br>isOpera<br>contexts<br>cfg<br>globalDefQueue<br>useInteractive<br>handlers<br>
-          <div class="post-more-link text-center">
-            <a class="btn" href="/2016/04/26/analyse-requirejs/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
   </section>
 
   
@@ -1472,7 +1512,7 @@ return factorial(n-1, n * total);
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">25</span>
+              <span class="site-state-item-count">26</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>
