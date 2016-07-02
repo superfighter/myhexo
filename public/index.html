@@ -232,12 +232,8 @@
             
               
                 
-<<<<<<< Updated upstream
-                <a class="post-title-link" href="/2016/06/30/Proxy-ES6/" itemprop="url">
-                  Proxy-ES6
-=======
-                <a class="post-title-link" href="/2016/06/05/Symbol-ES6/" itemprop="url">
-                  Symbol-ES6
+                <a class="post-title-link" href="/2016/07/01/a-pixel-is-not-a-pixel/" itemprop="url">
+                  a pixel is not a pixel is not a pixel
                 </a>
               
             
@@ -250,8 +246,8 @@
               <i class="fa fa-calendar-o"></i>
             </span>
             <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2016-06-05T14:54:28+08:00" content="2016-06-05">
-              2016-06-05
+            <time itemprop="dateCreated" datetime="2016-07-01T20:18:16+08:00" content="2016-07-01">
+              2016-07-01
             </time>
           </span>
 
@@ -261,8 +257,8 @@
             
               <span class="post-comments-count">
                 &nbsp; | &nbsp;
-                <a href="/2016/06/05/Symbol-ES6/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/06/05/Symbol-ES6/" itemprop="commentsCount"></span>
+                <a href="/2016/07/01/a-pixel-is-not-a-pixel/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/07/01/a-pixel-is-not-a-pixel/" itemprop="commentsCount"></span>
                 </a>
               </span>
             
@@ -286,37 +282,40 @@
       
         
           
-            <ul>
-<li>symbol.for(‘string’)</li>
-<li>symbol.keyfor()</li>
-<li><p>内置symbol</p>
+            <p>原文<a href="http://www.quirksmode.org/blog/archives/2010/04/a_pixel_is_not.html" target="_blank" rel="external">A pixel is not a pixel is not a pixel</a></p>
 <ul>
-<li><p>Symbol.hasInstance,<code>foo instance Foo</code>内部是<code>Foo[Symbol.hasInstance](foo)</code></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">class MyClass &#123;</span><br><span class="line">  [Symbol.hasInstance](foo) &#123;</span><br><span class="line">    return foo instanceof Array;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">[1, 2, 3] instanceof MyClass() // true</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>Symbol.isConcatSpreadable 对象是否可以展开</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">//数组对象默认展开</span><br><span class="line">let arr1 = [&apos;c&apos;, &apos;d&apos;];</span><br><span class="line">[&apos;a&apos;, &apos;b&apos;].concat(arr1, &apos;e&apos;) // [&apos;a&apos;, &apos;b&apos;, &apos;c&apos;, &apos;d&apos;, &apos;e&apos;]</span><br><span class="line"></span><br><span class="line">let arr2 = [&apos;c&apos;, &apos;d&apos;];</span><br><span class="line">arr2[Symbol.isConcatSpreadable] = false;</span><br><span class="line">[&apos;a&apos;, &apos;b&apos;].concat(arr2, &apos;e&apos;) // [&apos;a&apos;, &apos;b&apos;, [&apos;c&apos;,&apos;d&apos;], &apos;e&apos;]</span><br><span class="line">//字面量对象默认收起</span><br><span class="line">let obj = &#123;length: 2, 0: &apos;c&apos;, 1: &apos;d&apos;&#125;;</span><br><span class="line">[&apos;a&apos;, &apos;b&apos;].concat(obj, &apos;e&apos;) // [&apos;a&apos;, &apos;b&apos;, obj, &apos;e&apos;]</span><br><span class="line"></span><br><span class="line">obj[Symbol.isConcatSpreadable] = true;</span><br><span class="line">[&apos;a&apos;, &apos;b&apos;].concat(obj, &apos;e&apos;) // [&apos;a&apos;, &apos;b&apos;, &apos;c&apos;, &apos;d&apos;, &apos;e&apos;]</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>Symbol.species 指向一个方法,该对象做为构造函数创造实例时，会调用这个方法。</p>
-</li>
-<li><p>Symbol.match 指向一个函数，当执行str.match(myObject)时，如果该属性存在，会调用它，返回该方法的返回值</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">String.prototype.match(regexp)</span><br><span class="line">// 等同于</span><br><span class="line">regexp[Symbol.match](this)</span><br><span class="line"></span><br><span class="line">class MyMatcher &#123;</span><br><span class="line">  [Symbol.match](string) &#123;</span><br><span class="line">    return &apos;hello world&apos;.indexOf(string);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">&apos;e&apos;.match(new MyMatcher()) // 1</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>Symbol.replace 指向一个方法,当该对象被String.prototype.replace调用时，会返回该方法的返回值</p>
-</li>
-<li>Symbol.search 指向一个方法，当该对象被String.prototype.search调用时，会返回该方法的返回值</li>
-<li>Symbol.split 指向一个方法，当该对象被String.prototye.split调用时，会返回该方法的返回值</li>
-<li>Symbol.iterator 指向该对象默认遍历器方法.对象进行for…of循环时，会调用Symbol.iterator方法，返回该对象的默认遍历器</li>
-<li><p>Symbol.toPrimitive</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">let obj = &#123;</span><br><span class="line">  	[Symbol.toPrimitive](hint) &#123;</span><br><span class="line">	    switch (hint) &#123;</span><br><span class="line">	      case &apos;number&apos;:</span><br><span class="line">	        return 123;</span><br><span class="line">	      case &apos;string&apos;:</span><br><span class="line">	        return &apos;str&apos;;</span><br><span class="line">	      case &apos;default&apos;:</span><br><span class="line">	        return &apos;default&apos;;</span><br><span class="line">	      default:</span><br><span class="line">	        throw new Error();</span><br><span class="line">     	&#125;</span><br><span class="line">   	&#125;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">2 * obj // 246</span><br><span class="line">3 + obj // &apos;3default&apos;</span><br><span class="line">obj === &apos;default&apos; // true</span><br><span class="line">String(obj) // &apos;str&apos;</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>Symbol.toStringTag 被Object.prototype.toString调用时触发</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">class Collection &#123;</span><br><span class="line">  get [Symbol.toStringTag]() &#123;</span><br><span class="line">    return &apos;x2x3x&apos;;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line">var x = new Collection();</span><br><span class="line">console.log(Object.prototype.toString.call(x)) // &quot;[object x2x3x]&quot;</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>Symbol.unscopables 指向一个对象，设置哪些属性可被with环境排除</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">// 没有unscopables时</span><br><span class="line">class MyClass &#123;</span><br><span class="line">  foo() &#123; return 1; &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">var foo = function () &#123; return 2; &#125;;</span><br><span class="line"></span><br><span class="line">with (MyClass.prototype) &#123;</span><br><span class="line">  foo(); // 1</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">// 有unscopables时</span><br><span class="line">class MyClass &#123;</span><br><span class="line">  foo() &#123; return 1; &#125;</span><br><span class="line">  get [Symbol.unscopables]() &#123;</span><br><span class="line">    return &#123; foo: true &#125;;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">var foo = function () &#123; return 2; &#125;;</span><br><span class="line"></span><br><span class="line">with (MyClass.prototype) &#123;</span><br><span class="line">  foo(); // 2</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
+<li>现在我正在深入研究移动端中跨浏览器手机的宽和高，得出的结论是在99%的情况下，这些因素不会影响到正常的web开发</li>
+<li>剩余的1%变得非常诡异，我期望苹果公司通过假如一个像素层来解决这个1%引起的问题</li>
+<li>开始之前，我先提示下：因为这些因素对那些我忽视的正规屏幕尺寸并不重要，并且我没有认真的去研究过展示、像素密度等其他复杂概念。所以，接下的内容我可能用错了很多专业术语，多多包涵。</li>
 </ul>
+<h4 id="Web开发者需要什么"><a href="#Web开发者需要什么" class="headerlink" title="Web开发者需要什么"></a>Web开发者需要什么</h4><ul>
+<li>我并不知道web开发者真正感兴趣的是什么，但是我知道他们需要CSS像素单位。就是在CSS表达式中声明的：width: 300px 或者是 font-size: 14px;</li>
+<li>CSS像素和设备像素密度没有任何关系，也跟即将产生的中间层没有任何关系。他们本质上是专门为我们web开发者创造的抽象构造。</li>
+<li>我们可以用zoom操作来做简单说明。当用户放大的时候，一个<code>width:300px</code>的元素占据了更大的屏幕，这使得被放大的元素在设备（物理）像素上就变得越来越宽。zoom的效果完全是通过尽可能的扩展CSS像素产生的，然而此时该元素的CSS像素值仍是300px。</li>
+<li>当zoom效果达到100%时，一个CSS像素等于一个设备像素（尽管中间层会替代设备像素层）我得说明下<code>zoom 100%</code>对于web开发者来说没有任何意义，Zoom层级对我们不重要，我们要关心的是适配当前屏幕需要多少CSS像素。</li>
+<li>我们想想当用户zoom操作时到底发生了什么？当用户缩小时，CSS像素变小，此时一个设备像素重叠了更多的CSS像素。当用户放大时，CSS像素变大，此时一个设备像素重叠更少的CSS像素。</li>
+<li>这样我们的<code>width:300px</code>元素的实际CSS像素总是300，另外由zoom因素决定多少设备像素呈现一个CSS像素。</li>
+<li>这种机制不会改变，如果改变了，所有iPhone网站会严重失控，苹果公司肯定不会让这一切发生的。</li>
+<li>因此，完全适配的网站扔展示980px，此时我们并不关心多少设备像素来呈现980px。</li>
+</ul>
+<h4 id="解决方案"><a href="#解决方案" class="headerlink" title="解决方案"></a>解决方案</h4><ul>
+<li>&lt;meta name=\”viewport\” width=\”device-width\”&gt;</li>
+<li>media query <code>device-width</code></li>
+<li>以上两种方案都作用于设备像素，而不是CSS像素，因为他们的上下文是网页，不是CSS内部运行环境。</li>
+</ul>
+<h4 id="media-query"><a href="#media-query" class="headerlink" title="media query"></a>media query</h4><ul>
+<li><code>device-width</code>代表设备的宽度。</li>
+<li><code>width</code>代表页面的宽度。<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">/*正常范围宽300*/</span><br><span class="line">div.sidebar &#123; width: 300px;&#125;</span><br><span class="line">/*小于320px设定宽100*/</span><br><span class="line">@media all and (max-device-width: 320px)&#123;</span><br><span class="line">	div.sidebar&#123; width: 100px&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 </li>
+</ul>
+<h4 id="meta-tag"><a href="#meta-tag" class="headerlink" title="meta tag"></a>meta tag</h4><ul>
+<li>一般来说meta标签更有用。这起先是由苹果发布的属性，后来被许多移动浏览器实现，让layout viewport适配设备屏幕更容易。</li>
+<li>什么是Layout Viewport? 浏览器用它来计算元素的展示比例（CSS像素）,比如<code>div.sidebar{width: 20%}</code>,Layout Viewport总是比设备像素大一些。</li>
+<li>如果你添加了meta标签，layout viewport的宽度会限制在设备像素内：iPhone 是320</li>
+<li>即使你的页面小到足以适配屏幕，那也会有影响。应该加上<meta>标签，让文字适配当前屏幕。</li>
+</ul>
+<h4 id="other"><a href="#other" class="headerlink" title="other"></a>other</h4><ul>
+<li>dips: 谷歌提出一个概念，device-independent pixels，CSS像素作用于这一层 </li>
 </ul>
 
           
@@ -363,9 +362,8 @@
             
               
                 
-                <a class="post-title-link" href="/2016/06/01/css-box/" itemprop="url">
-                  css-box
->>>>>>> Stashed changes
+                <a class="post-title-link" href="/2016/06/30/Proxy-ES6/" itemprop="url">
+                  Proxy-ES6
                 </a>
               
             
@@ -595,145 +593,8 @@
             
               
                 
-<<<<<<< Updated upstream
                 <a class="post-title-link" href="/2016/06/22/Reflect-ES6/" itemprop="url">
                   Reflect-ES6
-=======
-                <a class="post-title-link" href="/2016/05/22/Object-ES6/" itemprop="url">
-                  Object-ES6 
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            <span class="post-meta-item-icon">
-              <i class="fa fa-calendar-o"></i>
-            </span>
-            <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2016-05-22T09:55:02+08:00" content="2016-05-22">
-              2016-05-22
-            </time>
-          </span>
-
-          
-
-          
-            
-              <span class="post-comments-count">
-                &nbsp; | &nbsp;
-                <a href="/2016/05/22/Object-ES6/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/05/22/Object-ES6/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-
-          
-          
-
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <ul>
-<li><p>属性简写：允许只写对象属性名，不写属性值</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">let foo = &apos;hello&apos;</span><br><span class="line">let bar = &#123;foo&#125; // bar.foo = &apos;hello&apos;</span><br><span class="line">function x(my,other)&#123; return &#123;my,other&#125;&#125;</span><br><span class="line">let o = x(1,2)// o.my = 1 , o.other = 2</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>方法简写</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">let obj = &#123;</span><br><span class="line">	method()&#123;</span><br><span class="line">		return &quot;hello~&quot;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line">console.log(obj.method()) // hello~</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>方括号定义对象变量</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">//ES5</span><br><span class="line">var bar = &#123;&quot;foo&quot;:&quot;hello&quot;&#125;</span><br><span class="line">//ES6</span><br><span class="line">let f = &quot;foo&quot;</span><br><span class="line">let bar = &#123;[f]:&apos;hello&apos;&#125; // bar.foo = hello</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>Object.is</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">Object.defineProperty(Object, &apos;is&apos;, &#123;</span><br><span class="line">  value: function(x, y) &#123;</span><br><span class="line">    if (x === y) &#123;</span><br><span class="line">      // 针对+0 不等于 -0的情况</span><br><span class="line">      return x !== 0 || 1 / x === 1 / y;</span><br><span class="line">    &#125;</span><br><span class="line">    // 针对NaN的情况</span><br><span class="line">    return x !== x &amp;&amp; y !== y;</span><br><span class="line">  &#125;,</span><br><span class="line">  configurable: true,</span><br><span class="line">  enumerable: false,</span><br><span class="line">  writable: true</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>Object.assin 合并可枚举对象</p>
-<ul>
-<li>为对象添加属性</li>
-<li>为对象添加方法</li>
-<li>克隆对象</li>
-<li>合并多个对象</li>
-<li>为属性指定默认值</li>
-</ul>
-</li>
-<li>Object.getOwnPropertyDescriptor 属性的可枚举性<ul>
-<li>ES5会有三个操作忽略enumerable为false的属性<ul>
-<li>for…in循环：只遍历对象自身的和继承的可枚举的属性</li>
-<li>Object.keys():返回对象自身的所有可枚举的属性键名</li>
-<li>JSON.stringify:只串行化对象自身的可枚举的属性</li>
-</ul>
-</li>
-<li>ES6新增会忽略enumerable为false的属性<ul>
-<li>Object.assign():只拷贝对象自身可枚举的属性</li>
-<li>Reflect.enumerate():返回所有for…in循环会遍历的属性</li>
-</ul>
-</li>
-</ul>
-</li>
-</ul>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2016/05/13/Function-ES6/" itemprop="url">
-                  Function-ES6
->>>>>>> Stashed changes
                 </a>
               
             
@@ -788,6 +649,22 @@
 <li>修改某些Object方法的返回结果，让其变得更合理。比如，Object.defineProperty(obj, name, desc)在无法定义属性时，会抛出一个错误，而Reflect.defineProperty(obj, name, desc)则会返回false。</li>
 <li>让Object操作都变成函数行为。某些Object操作是命令式，比如name in obj和delete obj[name]，而Reflect.has(obj, name)和Reflect.deleteProperty(obj, name)让它们变成了函数行为。</li>
 <li>Reflect对象的方法与Proxy对象的方法一一对应，只要是Proxy对象的方法，就能在Reflect对象上找到对应的方法。这就让Proxy对象可以方便地调用对应的Reflect方法，完成默认行为，作为修改行为的基础。也就是说，不管Proxy怎么修改默认行为，你总可以在Reflect上获取默认行为。</li>
+<li>Reflect方法清单<ul>
+<li>Reflect.apply(target,thisArg,args)</li>
+<li>Reflect.construct(target,args)</li>
+<li>Reflect.get(target,name,receiver)</li>
+<li>Reflect.set(target,name,value,receiver)</li>
+<li>Reflect.defineProperty(target,name,desc)</li>
+<li>Reflect.deleteProperty(target,name)</li>
+<li>Reflect.has(target,name)</li>
+<li>Reflect.ownKeys(target)</li>
+<li>Reflect.isExtensible(target)</li>
+<li>Reflect.preventExtensions(target)</li>
+<li>Reflect.getOwnPropertyDescriptor(target, name)</li>
+<li>Reflect.getPrototypeOf(target)</li>
+<li>Reflect.setPrototypeOf(target, prototype)</li>
+</ul>
+</li>
 </ul>
 
           
@@ -1401,7 +1278,6 @@
 
 
     
-<<<<<<< Updated upstream
       
 
   
@@ -1534,187 +1410,6 @@
 
 
     
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2016/05/13/Function-ES6/" itemprop="url">
-                  Function-ES6
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            <span class="post-meta-item-icon">
-              <i class="fa fa-calendar-o"></i>
-            </span>
-            <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2016-05-13T11:16:55+08:00" content="2016-05-13">
-              2016-05-13
-            </time>
-          </span>
-
-          
-
-          
-            
-              <span class="post-comments-count">
-                &nbsp; | &nbsp;
-                <a href="/2016/05/13/Function-ES6/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/05/13/Function-ES6/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-
-          
-          
-
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <ul>
-<li>参数默认值</li>
-<li><p>arguments</p>
-<ul>
-<li>length不包括rese参数(…values)</li>
-<li>length不包括赋默认值参数(values=1)<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">console.log((function A(a,dm,s,...v)&#123;&#125;).length) // 3</span><br><span class="line">console.log((function A(a,dm,s,v=1)&#123;&#125;).length) // 3</span><br></pre></td></tr></table></figure>
-</li>
-</ul>
-</li>
-<li><p>作用域</p>
-</li>
-<li><p>必输参数</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">function throwMiss()&#123;</span><br><span class="line">  throw new Error(&apos;arguments error&apos;)</span><br><span class="line">&#125;</span><br><span class="line">function gg(x=throwMiss())&#123; console.log(x)&#125;</span><br><span class="line">gg(2) // 2</span><br><span class="line">gg() // arguments error</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>rest参数</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">function add(...values)&#123;</span><br><span class="line">	//...values == [2,3,4,5] 从参数末尾索引开始计算，截止到最后一个有效参数索引为止</span><br><span class="line">	let sum = 0;</span><br><span class="line">	for (var val of values)&#123;</span><br><span class="line">		sum += val;</span><br><span class="line">	&#125;</span><br><span class="line">	return sum;</span><br><span class="line">&#125;</span><br><span class="line">add(2,3,4,5);</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>扩展运算符…</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">	console.log(...[1,5,6]) // 1 5 6</span><br><span class="line">	console.log(...[1,[5,6]]) // 1 [5,6]</span><br><span class="line">	console.log(...[1,...[5,6]]) // 1 5 6</span><br><span class="line">	console.log(...&#123;&apos;0&apos;:&apos;12&apos;,&apos;1&apos;:&apos;34&apos;,length:2&#125;) // 12 34</span><br><span class="line">* 凡是涉及到操作32位Unicode字符的函数</span><br></pre></td></tr></table></figure>
-<p>  ‘x\uD83D\uDE80y’.length // 4 wrong<br>  […’x\uD83D\uDE80y’].length // 3 right<br>  function length(str){ return […str].length}</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">* map, generator function可以使用...</span><br><span class="line">* 如果对没有iterator接口的对象，使用扩展运算符，将会报错</span><br><span class="line">* 箭头函数</span><br><span class="line">	*函数体内的this对象，就是定义时所在的对象，而不是使用时所在的对象。</span><br><span class="line">	*不可以当作构造函数，也就是说，不可以使用new命令，否则会抛出一个错误。</span><br><span class="line">	*不可以使用arguments对象，该对象在函数体内不存在。如果要用，可以用Rest参数代替。</span><br><span class="line">	*不可以使用yield命令，因此箭头函数不能用作Generator函数。</span><br></pre></td></tr></table></figure>
-<p>  function Timer () {</p>
-<pre><code>this.s1 = 14;
-this.s2 = 4;
-// 箭头函数
-// this指向定义时所在作用域，即Timer
-setInterval(() =&gt; this.s1++, 1000);
-// 普通函数
-// this指向执行时作用域，即window
-setInterval(function () {
-  this.s2++;
-}, 1000);
-</code></pre><p>  }</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">* 箭头函数可以让this指向固定化</span><br></pre></td></tr></table></figure>
-<p>  var handler = {</p>
-<pre><code>id: &apos;123456&apos;,
-
-init: function() {
-    //this指向handler，因为=&gt;没有自己的this(this == undefined)，所以指向最近的外部this
-  document.addEventListener(&apos;click&apos;,
-    event =&gt; this.doSomething(event.type), false);
-  // var self = this;
-  // document.addEventListener(&apos;click&apos;,function(){
-  //   self.doSomething(event.type)
-  // },false)
-},
-
-doSomething: function(type) {
-  console.log(&apos;Handling &apos; + type  + &apos; for &apos; + this.id);
-}
-</code></pre><p>  };</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">* call\apply\bind无效，会忽略</span><br></pre></td></tr></table></figure>
-<p>  (function() {</p>
-<pre><code>return [
-  (() =&gt; this.x).bind({ x: &apos;inner&apos; })()
-]
-</code></pre><p>  }).call({ x: ‘outer’ });<br>  // function () {<br>  //   var _this = this;<br>  //   return [function () {<br>  //     return _this.x;<br>  //   }.bind({ x: ‘inner’ })()];<br>  // }.call({ x: ‘outer’ })</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">* :: 返回的是原对象</span><br></pre></td></tr></table></figure>
-<p>  //上下文::执行方法<br>  foo::bar;<br>  // 等同于<br>  bar.bind(foo);</p>
-<p>  foo::bar(…arguments);<br>  // 等同于<br>  bar.apply(foo, arguments);</p>
-<p>  const hasOwnProperty = Object.prototype.hasOwnProperty;<br>  function hasOwn(obj, key) {</p>
-<pre><code>return obj::hasOwnProperty(key);
-</code></pre><p>  }</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">* 尾调=&gt;调用栈</span><br><span class="line">* stack overflow 栈溢出</span><br><span class="line">* 尾递归</span><br></pre></td></tr></table></figure>
-<p>  //复杂度O(n)<br>  function factorial(n) {</p>
-<pre><code>if (n === 1) return 1;
-return n * factorial(n - 1);
-</code></pre><p>  }<br>  factorial(5) // 120<br>  //5 <em> factorial(4)<br>  //5 </em> (4 <em> factorial(3))<br>  //5 </em> (4 <em> (3 </em> factorial(2)))<br>  //5 <em> (4 </em> (3 <em> (2 </em> factorial(1))))<br>  //5 <em> 4 </em> 3 <em> 2 </em> 1<br>  //复杂度O(1)<br>  function factorial(n, total){</p>
-<pre><code>if(n === 1) return total;
-return factorial(n-1, n * total);
-</code></pre><p>  }<br>  factorial(5,1) // 120<br>  // 只保留一个调用帧<br>  // factorial(5,1)<br>  // factorial(4,5)<br>  // factorial(3,20)<br>  // factorial(2,60)<br>  // factorial(1,120)</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">`</span><br><span class="line">尾递归的实现，往往需要改写递归函数，确保最后一步只调用自身。做到这一点的方法，就是把所有用到的内部变量改写成函数的参数。比如上面的例子，阶乘函数 factorial 需要用到一个中间变量 total ，那就把这个中间变量改写成函数的参数。</span><br><span class="line">`</span><br><span class="line">* 闭包记忆 [简书资料](http://www.jianshu.com/p/a2dfa59e70d7)</span><br></pre></td></tr></table></figure>
-</li>
-</ul>
-<p>//cache为function内局部变量，cache被匿名函数引用，匿名函数上下文为全局变量window<br>//memorize执行完后，cache理应被回收，但是在被匿名函数引用的情况下无法回收<br>function memorize(sets, f) {<br>    var cache = {};<br>    return function (x) {<br>        console.log(‘cache: %j’, cache);<br>        return x in cache<br>               ? cache[x]<br>               : cache[x] = f(sets[x]);<br>    }<br>}<br>var g = memorize([1000, 2000, 3000], function (x) { return x * x; });<br>````</p>
-<ul>
-<li>console.log(‘%c Hello~how are you’,’font-size:28px; font-family:Microsoft YAHEI;color: blue; font-weight: bold;’)</li>
-</ul>
-<p>/<em>Object</em>/</p>
-<ul>
-<li>Object.assign </li>
-<li>//除了字符串会以数组形式拷贝入目标对象，数值、布尔、undefined、null都不起效果（这是因为只有字符串的包装对象，会产生可枚举属性）</li>
-<li>//首参数不能是Null、Undefined ：Cannot convert undefined or null to object</li>
-</ul>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-=======
->>>>>>> Stashed changes
   </section>
 
   
@@ -1760,11 +1455,7 @@ return factorial(n-1, n * total);
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-<<<<<<< Updated upstream
-              <span class="site-state-item-count">33</span>
-=======
-              <span class="site-state-item-count">28</span>
->>>>>>> Stashed changes
+              <span class="site-state-item-count">34</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>
@@ -1781,11 +1472,7 @@ return factorial(n-1, n * total);
           
             <div class="site-state-item site-state-tags">
               <a href="/tags">
-<<<<<<< Updated upstream
                 <span class="site-state-item-count">28</span>
-=======
-                <span class="site-state-item-count">23</span>
->>>>>>> Stashed changes
                 <span class="site-state-item-name">标签</span>
               </a>
             </div>
