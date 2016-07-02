@@ -232,8 +232,140 @@
             
               
                 
+<<<<<<< Updated upstream
                 <a class="post-title-link" href="/2016/06/30/Proxy-ES6/" itemprop="url">
                   Proxy-ES6
+=======
+                <a class="post-title-link" href="/2016/06/05/Symbol-ES6/" itemprop="url">
+                  Symbol-ES6
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2016-06-05T14:54:28+08:00" content="2016-06-05">
+              2016-06-05
+            </time>
+          </span>
+
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2016/06/05/Symbol-ES6/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/06/05/Symbol-ES6/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <ul>
+<li>symbol.for(‘string’)</li>
+<li>symbol.keyfor()</li>
+<li><p>内置symbol</p>
+<ul>
+<li><p>Symbol.hasInstance,<code>foo instance Foo</code>内部是<code>Foo[Symbol.hasInstance](foo)</code></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">class MyClass &#123;</span><br><span class="line">  [Symbol.hasInstance](foo) &#123;</span><br><span class="line">    return foo instanceof Array;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">[1, 2, 3] instanceof MyClass() // true</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>Symbol.isConcatSpreadable 对象是否可以展开</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">//数组对象默认展开</span><br><span class="line">let arr1 = [&apos;c&apos;, &apos;d&apos;];</span><br><span class="line">[&apos;a&apos;, &apos;b&apos;].concat(arr1, &apos;e&apos;) // [&apos;a&apos;, &apos;b&apos;, &apos;c&apos;, &apos;d&apos;, &apos;e&apos;]</span><br><span class="line"></span><br><span class="line">let arr2 = [&apos;c&apos;, &apos;d&apos;];</span><br><span class="line">arr2[Symbol.isConcatSpreadable] = false;</span><br><span class="line">[&apos;a&apos;, &apos;b&apos;].concat(arr2, &apos;e&apos;) // [&apos;a&apos;, &apos;b&apos;, [&apos;c&apos;,&apos;d&apos;], &apos;e&apos;]</span><br><span class="line">//字面量对象默认收起</span><br><span class="line">let obj = &#123;length: 2, 0: &apos;c&apos;, 1: &apos;d&apos;&#125;;</span><br><span class="line">[&apos;a&apos;, &apos;b&apos;].concat(obj, &apos;e&apos;) // [&apos;a&apos;, &apos;b&apos;, obj, &apos;e&apos;]</span><br><span class="line"></span><br><span class="line">obj[Symbol.isConcatSpreadable] = true;</span><br><span class="line">[&apos;a&apos;, &apos;b&apos;].concat(obj, &apos;e&apos;) // [&apos;a&apos;, &apos;b&apos;, &apos;c&apos;, &apos;d&apos;, &apos;e&apos;]</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>Symbol.species 指向一个方法,该对象做为构造函数创造实例时，会调用这个方法。</p>
+</li>
+<li><p>Symbol.match 指向一个函数，当执行str.match(myObject)时，如果该属性存在，会调用它，返回该方法的返回值</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">String.prototype.match(regexp)</span><br><span class="line">// 等同于</span><br><span class="line">regexp[Symbol.match](this)</span><br><span class="line"></span><br><span class="line">class MyMatcher &#123;</span><br><span class="line">  [Symbol.match](string) &#123;</span><br><span class="line">    return &apos;hello world&apos;.indexOf(string);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">&apos;e&apos;.match(new MyMatcher()) // 1</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>Symbol.replace 指向一个方法,当该对象被String.prototype.replace调用时，会返回该方法的返回值</p>
+</li>
+<li>Symbol.search 指向一个方法，当该对象被String.prototype.search调用时，会返回该方法的返回值</li>
+<li>Symbol.split 指向一个方法，当该对象被String.prototye.split调用时，会返回该方法的返回值</li>
+<li>Symbol.iterator 指向该对象默认遍历器方法.对象进行for…of循环时，会调用Symbol.iterator方法，返回该对象的默认遍历器</li>
+<li><p>Symbol.toPrimitive</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">let obj = &#123;</span><br><span class="line">  	[Symbol.toPrimitive](hint) &#123;</span><br><span class="line">	    switch (hint) &#123;</span><br><span class="line">	      case &apos;number&apos;:</span><br><span class="line">	        return 123;</span><br><span class="line">	      case &apos;string&apos;:</span><br><span class="line">	        return &apos;str&apos;;</span><br><span class="line">	      case &apos;default&apos;:</span><br><span class="line">	        return &apos;default&apos;;</span><br><span class="line">	      default:</span><br><span class="line">	        throw new Error();</span><br><span class="line">     	&#125;</span><br><span class="line">   	&#125;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">2 * obj // 246</span><br><span class="line">3 + obj // &apos;3default&apos;</span><br><span class="line">obj === &apos;default&apos; // true</span><br><span class="line">String(obj) // &apos;str&apos;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>Symbol.toStringTag 被Object.prototype.toString调用时触发</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">class Collection &#123;</span><br><span class="line">  get [Symbol.toStringTag]() &#123;</span><br><span class="line">    return &apos;x2x3x&apos;;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line">var x = new Collection();</span><br><span class="line">console.log(Object.prototype.toString.call(x)) // &quot;[object x2x3x]&quot;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>Symbol.unscopables 指向一个对象，设置哪些属性可被with环境排除</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">// 没有unscopables时</span><br><span class="line">class MyClass &#123;</span><br><span class="line">  foo() &#123; return 1; &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">var foo = function () &#123; return 2; &#125;;</span><br><span class="line"></span><br><span class="line">with (MyClass.prototype) &#123;</span><br><span class="line">  foo(); // 1</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">// 有unscopables时</span><br><span class="line">class MyClass &#123;</span><br><span class="line">  foo() &#123; return 1; &#125;</span><br><span class="line">  get [Symbol.unscopables]() &#123;</span><br><span class="line">    return &#123; foo: true &#125;;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">var foo = function () &#123; return 2; &#125;;</span><br><span class="line"></span><br><span class="line">with (MyClass.prototype) &#123;</span><br><span class="line">  foo(); // 2</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
+</ul>
+</li>
+</ul>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/2016/06/01/css-box/" itemprop="url">
+                  css-box
+>>>>>>> Stashed changes
                 </a>
               
             
@@ -463,8 +595,145 @@
             
               
                 
+<<<<<<< Updated upstream
                 <a class="post-title-link" href="/2016/06/22/Reflect-ES6/" itemprop="url">
                   Reflect-ES6
+=======
+                <a class="post-title-link" href="/2016/05/22/Object-ES6/" itemprop="url">
+                  Object-ES6 
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2016-05-22T09:55:02+08:00" content="2016-05-22">
+              2016-05-22
+            </time>
+          </span>
+
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2016/05/22/Object-ES6/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/05/22/Object-ES6/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <ul>
+<li><p>属性简写：允许只写对象属性名，不写属性值</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">let foo = &apos;hello&apos;</span><br><span class="line">let bar = &#123;foo&#125; // bar.foo = &apos;hello&apos;</span><br><span class="line">function x(my,other)&#123; return &#123;my,other&#125;&#125;</span><br><span class="line">let o = x(1,2)// o.my = 1 , o.other = 2</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>方法简写</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">let obj = &#123;</span><br><span class="line">	method()&#123;</span><br><span class="line">		return &quot;hello~&quot;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line">console.log(obj.method()) // hello~</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>方括号定义对象变量</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">//ES5</span><br><span class="line">var bar = &#123;&quot;foo&quot;:&quot;hello&quot;&#125;</span><br><span class="line">//ES6</span><br><span class="line">let f = &quot;foo&quot;</span><br><span class="line">let bar = &#123;[f]:&apos;hello&apos;&#125; // bar.foo = hello</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>Object.is</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">Object.defineProperty(Object, &apos;is&apos;, &#123;</span><br><span class="line">  value: function(x, y) &#123;</span><br><span class="line">    if (x === y) &#123;</span><br><span class="line">      // 针对+0 不等于 -0的情况</span><br><span class="line">      return x !== 0 || 1 / x === 1 / y;</span><br><span class="line">    &#125;</span><br><span class="line">    // 针对NaN的情况</span><br><span class="line">    return x !== x &amp;&amp; y !== y;</span><br><span class="line">  &#125;,</span><br><span class="line">  configurable: true,</span><br><span class="line">  enumerable: false,</span><br><span class="line">  writable: true</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>Object.assin 合并可枚举对象</p>
+<ul>
+<li>为对象添加属性</li>
+<li>为对象添加方法</li>
+<li>克隆对象</li>
+<li>合并多个对象</li>
+<li>为属性指定默认值</li>
+</ul>
+</li>
+<li>Object.getOwnPropertyDescriptor 属性的可枚举性<ul>
+<li>ES5会有三个操作忽略enumerable为false的属性<ul>
+<li>for…in循环：只遍历对象自身的和继承的可枚举的属性</li>
+<li>Object.keys():返回对象自身的所有可枚举的属性键名</li>
+<li>JSON.stringify:只串行化对象自身的可枚举的属性</li>
+</ul>
+</li>
+<li>ES6新增会忽略enumerable为false的属性<ul>
+<li>Object.assign():只拷贝对象自身可枚举的属性</li>
+<li>Reflect.enumerate():返回所有for…in循环会遍历的属性</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/2016/05/13/Function-ES6/" itemprop="url">
+                  Function-ES6
+>>>>>>> Stashed changes
                 </a>
               
             
@@ -1132,6 +1401,7 @@
 
 
     
+<<<<<<< Updated upstream
       
 
   
@@ -1443,6 +1713,8 @@ return factorial(n-1, n * total);
 
 
     
+=======
+>>>>>>> Stashed changes
   </section>
 
   
@@ -1488,7 +1760,11 @@ return factorial(n-1, n * total);
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
+<<<<<<< Updated upstream
               <span class="site-state-item-count">33</span>
+=======
+              <span class="site-state-item-count">28</span>
+>>>>>>> Stashed changes
               <span class="site-state-item-name">日志</span>
             </a>
           </div>
@@ -1505,7 +1781,11 @@ return factorial(n-1, n * total);
           
             <div class="site-state-item site-state-tags">
               <a href="/tags">
+<<<<<<< Updated upstream
                 <span class="site-state-item-count">28</span>
+=======
+                <span class="site-state-item-count">23</span>
+>>>>>>> Stashed changes
                 <span class="site-state-item-name">标签</span>
               </a>
             </div>
@@ -1543,7 +1823,7 @@ return factorial(n-1, n * total);
       <div class="footer-inner">
         <div class="copyright" >
   
-  &copy;  Thu Mar 24 2016 08:00:00 GMT+0800 (中国标准时间) - 
+  &copy;  Thu Mar 24 2016 08:00:00 GMT+0800 (CST) - 
   <span itemprop="copyrightYear">2016</span>
   <span class="with-love">
     <i class="fa fa-heart"></i>
