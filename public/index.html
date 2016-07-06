@@ -232,6 +232,117 @@
             
               
                 
+                <a class="post-title-link" href="/2016/07/06/naturalHeight/" itemprop="url">
+                  HTML5 naturalHeight naturalWidth
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2016-07-06T09:41:12+08:00" content="2016-07-06">
+              2016-07-06
+            </time>
+          </span>
+
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2016/07/06/naturalHeight/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/07/06/naturalHeight/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <p>部分内容参考<a href="http://www.w3ctech.com/topic/112">w3ctech</a></p>
+<h3 id="预加载"><a href="#预加载" class="headerlink" title="预加载"></a>预加载</h3><ul>
+<li>设定图片自定义属性放置图片真实的URL，src放置默认打底图片</li>
+<li><p>获取图片元素相对顶部的高度<code>imageClientTop</code>，如果滚动高度接近<code>imageClientTop</code> ，则设置图片的src属性为自定义属性的值，在图片onload时去除打底，展示真正的图片</p>
+</li>
+<li><p>在未知预加图片宽高时，要想办法获取图片的真实宽高，有两种方案：支持H5 naturalHeight的和不支持的</p>
+</li>
+<li><p>支持的</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">// 注意,这里也要在img onload状态后才能获取naturalWidth，动态插入直接读该属性可能返回0</span><br><span class="line">var </span><br><span class="line">  nWidth = document.getElementById(&apos;example&apos;).naturalWidth,</span><br><span class="line">  nHeight = document.getElementById(&apos;example&apos;).naturalHeight;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>不支持的</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">function getNatural (el) &#123;</span><br><span class="line">  var img = new Image();</span><br><span class="line">  img.src = el.src;</span><br><span class="line">  return &#123;width: img.width, height: img.height&#125;;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">var </span><br><span class="line">natural = getNatural(document.getElementById(&apos;example&apos;)),</span><br><span class="line">nWidth = natural.width,</span><br><span class="line">nHeight = natural.height;</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+          <div class="post-more-link text-center">
+            <a class="btn" href="/2016/07/06/naturalHeight/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
                 <a class="post-title-link" href="/2016/07/01/a-pixel-is-not-a-pixel/" itemprop="url">
                   a pixel is not a pixel is not a pixel
                 </a>
@@ -1278,138 +1389,6 @@
 
 
     
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2016/05/22/Object-ES6/" itemprop="url">
-                  Object-ES6 
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            <span class="post-meta-item-icon">
-              <i class="fa fa-calendar-o"></i>
-            </span>
-            <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2016-05-22T09:55:02+08:00" content="2016-05-22">
-              2016-05-22
-            </time>
-          </span>
-
-          
-
-          
-            
-              <span class="post-comments-count">
-                &nbsp; | &nbsp;
-                <a href="/2016/05/22/Object-ES6/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/05/22/Object-ES6/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-
-          
-          
-
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <ul>
-<li><p>属性简写：允许只写对象属性名，不写属性值</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">let foo = &apos;hello&apos;</span><br><span class="line">let bar = &#123;foo&#125; // bar.foo = &apos;hello&apos;</span><br><span class="line">function x(my,other)&#123; return &#123;my,other&#125;&#125;</span><br><span class="line">let o = x(1,2)// o.my = 1 , o.other = 2</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>方法简写</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">let obj = &#123;</span><br><span class="line">	method()&#123;</span><br><span class="line">		return &quot;hello~&quot;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line">console.log(obj.method()) // hello~</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>方括号定义对象变量</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">//ES5</span><br><span class="line">var bar = &#123;&quot;foo&quot;:&quot;hello&quot;&#125;</span><br><span class="line">//ES6</span><br><span class="line">let f = &quot;foo&quot;</span><br><span class="line">let bar = &#123;[f]:&apos;hello&apos;&#125; // bar.foo = hello</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>Object.is</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">Object.defineProperty(Object, &apos;is&apos;, &#123;</span><br><span class="line">  value: function(x, y) &#123;</span><br><span class="line">    if (x === y) &#123;</span><br><span class="line">      // 针对+0 不等于 -0的情况</span><br><span class="line">      return x !== 0 || 1 / x === 1 / y;</span><br><span class="line">    &#125;</span><br><span class="line">    // 针对NaN的情况</span><br><span class="line">    return x !== x &amp;&amp; y !== y;</span><br><span class="line">  &#125;,</span><br><span class="line">  configurable: true,</span><br><span class="line">  enumerable: false,</span><br><span class="line">  writable: true</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>Object.assin 合并可枚举对象</p>
-<ul>
-<li>为对象添加属性</li>
-<li>为对象添加方法</li>
-<li>克隆对象</li>
-<li>合并多个对象</li>
-<li>为属性指定默认值</li>
-</ul>
-</li>
-<li>Object.getOwnPropertyDescriptor 属性的可枚举性<ul>
-<li>ES5会有三个操作忽略enumerable为false的属性<ul>
-<li>for…in循环：只遍历对象自身的和继承的可枚举的属性</li>
-<li>Object.keys():返回对象自身的所有可枚举的属性键名</li>
-<li>JSON.stringify:只串行化对象自身的可枚举的属性</li>
-</ul>
-</li>
-<li>ES6新增会忽略enumerable为false的属性<ul>
-<li>Object.assign():只拷贝对象自身可枚举的属性</li>
-<li>Reflect.enumerate():返回所有for…in循环会遍历的属性</li>
-</ul>
-</li>
-</ul>
-</li>
-</ul>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
   </section>
 
   
@@ -1455,7 +1434,7 @@
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">34</span>
+              <span class="site-state-item-count">35</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>
@@ -1472,7 +1451,7 @@
           
             <div class="site-state-item site-state-tags">
               <a href="/tags">
-                <span class="site-state-item-count">28</span>
+                <span class="site-state-item-count">30</span>
                 <span class="site-state-item-name">标签</span>
               </a>
             </div>
@@ -1510,7 +1489,7 @@
       <div class="footer-inner">
         <div class="copyright" >
   
-  &copy;  Thu Mar 24 2016 08:00:00 GMT+0800 (CST) - 
+  &copy;  Thu Mar 24 2016 08:00:00 GMT+0800 (中国标准时间) - 
   <span itemprop="copyrightYear">2016</span>
   <span class="with-love">
     <i class="fa fa-heart"></i>
