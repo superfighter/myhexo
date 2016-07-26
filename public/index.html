@@ -232,6 +232,223 @@
             
               
                 
+                <a class="post-title-link" href="/2016/07/26/closure/" itemprop="url">
+                  closure
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2016-07-26T16:39:14+08:00" content="2016-07-26">
+              2016-07-26
+            </time>
+          </span>
+
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2016/07/26/closure/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/07/26/closure/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <p>内容主要来源于网络文章<a href="http://www.4byte.cn/learning/119650/ni-bu-yi-ding-neng-zuo-dui-de-javascript-bi-bao-mian-shi-ti.html">4byte</a></p>
+<ul>
+<li>文章主旨是为了进一步理解闭包如果运作，最好是先自己动脑想一下答案再看解题思路</li>
+<li>直接抛题<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">function func(closure, more)&#123;</span><br><span class="line">    log(more);</span><br><span class="line">    return &#123;</span><br><span class="line">        func: function(innerClosure)&#123;</span><br><span class="line">            return func(innerClosure, closure);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;;</span><br><span class="line">&#125;</span><br><span class="line">function log(s)&#123;</span><br><span class="line">    var _d = document.createElement(&apos;div&apos;);</span><br><span class="line">    _d.innerHTML = s;</span><br><span class="line">    document.body.appendChild(_d);</span><br><span class="line">&#125;</span><br><span class="line">var temp = func(0);</span><br><span class="line">temp.func(1);</span><br><span class="line">temp.func(2);</span><br><span class="line">temp.func(3);</span><br><span class="line">var temp2 = func(0).func(1).func(2).func(3);</span><br><span class="line">var temp3 = func(0).func(1);</span><br><span class="line">temp3.func(2);</span><br><span class="line">temp3.func(3);</span><br><span class="line">//Question: 以上函数执行后出现在body上的结果是什么？</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+          <div class="post-more-link text-center">
+            <a class="btn" href="/2016/07/26/closure/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/2016/07/20/Iterator/" itemprop="url">
+                  Iterator
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2016-07-20T16:39:38+08:00" content="2016-07-20">
+              2016-07-20
+            </time>
+          </span>
+
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2016/07/20/Iterator/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/07/20/Iterator/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <ul>
+<li>javscript集合对象：Array,Object,Set,Map</li>
+<li>遍历器是一种接口，为各种不同的数据结构提供统一的访问机制。任何数据结构只要部署Iterator接口，就可以完成遍历操作（即依次处理该数据结构的所有成员）</li>
+<li>Iterator的作用有三个：<ul>
+<li>为各种数据结构提供一个统一的、简便的访问接口</li>
+<li>数据结构的成员能够按某种次序排列</li>
+<li>ES6创造了一种新的遍历命令for…of循环，Iterator接口主要供for…of消费。</li>
+</ul>
+</li>
+<li>Iterator的遍历过程：<ul>
+<li>创建一个指针对象，指向当前数据结构的起始位置。本质是一个指针对象。</li>
+<li>第一次调用指针对象的next方法，可以将指针指向数据结构的第一个成员。</li>
+<li>第二次调用指针对象的next方法，指针就指向数据结构的第二个成员。</li>
+<li>不断调用指针对象的Next方法，直到它指向数据结构的结束位置。</li>
+<li>每次调用next方法，都会返回数据结构的当前成员的信息。具体来说，就是返回一个包含value和done两个属性的对象。其中，value属性是当前成员的值，done属性是一个布尔值，表示遍历是否结束。</li>
+</ul>
+</li>
+<li>自定义实现一个拥有Iterator接口的对象，必须要在Symbol.iterator的属性上部署遍历器生成方法(原型链上也可以)<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br></pre></td><td class="code"><pre><span class="line">class RangeIterator&#123;</span><br><span class="line">	constructor(start, stop)&#123;</span><br><span class="line">		this.value = start;</span><br><span class="line">		this.stop = stop;</span><br><span class="line">	&#125;</span><br><span class="line">	[Symbol.iterator]()&#123; return this;&#125;</span><br><span class="line">	next()&#123;</span><br><span class="line">		var value = this.value;</span><br><span class="line">		if(value &lt; this.stop)&#123;</span><br><span class="line">			this.value++;</span><br><span class="line">			return &#123;done:false,value: value&#125;;</span><br><span class="line">		&#125; else &#123;</span><br><span class="line">			return &#123;done: true&#125;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line">//原型链</span><br><span class="line">function Obj(value)&#123;</span><br><span class="line">	this.value = value;</span><br><span class="line">	this.next = null;</span><br><span class="line">&#125;</span><br><span class="line">Obj.prototype[Symbol.iterator] = function()&#123;</span><br><span class="line">	var iterator = &#123;</span><br><span class="line">		next : next</span><br><span class="line">	&#125;</span><br><span class="line">	var current = this;</span><br><span class="line">	function next()&#123;</span><br><span class="line">		if(current)&#123;</span><br><span class="line">			var value = current.value;</span><br><span class="line">			current = current.next;</span><br><span class="line">			return &#123;</span><br><span class="line">				done: false,</span><br><span class="line">				value: value</span><br><span class="line">			&#125;</span><br><span class="line">		&#125; else &#123;</span><br><span class="line">			return &#123;done: true&#125;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	return iterator;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">var one = new Obj(1);</span><br><span class="line">var two = new Obj(2);</span><br><span class="line">var three = new Obj(3);</span><br><span class="line"></span><br><span class="line">one.next = two;</span><br><span class="line">two.next = three;</span><br><span class="line">for(var i of one)&#123;console.log(i)&#125;//1 2 3</span><br></pre></td></tr></table></figure></li>
+</ul>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
                 <a class="post-title-link" href="/2016/07/06/naturalHeight/" itemprop="url">
                   HTML5 naturalHeight naturalWidth
                 </a>
@@ -1129,266 +1346,6 @@
 
 
     
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2016/06/01/css-box/" itemprop="url">
-                  css-box
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            <span class="post-meta-item-icon">
-              <i class="fa fa-calendar-o"></i>
-            </span>
-            <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2016-06-01T14:55:23+08:00" content="2016-06-01">
-              2016-06-01
-            </time>
-          </span>
-
-          
-
-          
-            
-              <span class="post-comments-count">
-                &nbsp; | &nbsp;
-                <a href="/2016/06/01/css-box/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/06/01/css-box/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-
-          
-          
-
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h3 id="容器属性"><a href="#容器属性" class="headerlink" title="容器属性"></a>容器属性</h3><ul>
-<li><p>box-pack：定义子元素主轴对齐方式：justify-content</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">box-pack: start | end | center | justify;</span><br><span class="line">   /*主轴对齐：左对齐（默认） | 右对齐 | 居中对齐 | 左右对齐*/</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>box-align：定义元素交叉轴对齐方式：align-items</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">box-align: start | end | center | baseline | stretch;</span><br><span class="line">/*交叉轴对齐：顶部对齐（默认） | 底部对齐 | 居中对齐 | 文本基线对齐 | 上下对齐并铺满*/</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>box-direction：定义元素显示方向：flex-flow</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">box-direction: normal | reverse | inherit;</span><br><span class="line">/*显示方向：默认方向 | 反方向 | 继承子元素的 box-direction*/</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>box-orient：定义子元素水平或垂直排列：flex-flow</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">box-orient: horizontal | vertical | inline-axis | block-axis | inherit;</span><br><span class="line">/*排列方向：水平 | 垂直 | 行内方式排列（默认） | 块方式排列 | 继承父级的box-orient*/</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>box-lines：定义子元素超出容器是否换行：flex-wrap</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">box-lines: single | multiple;</span><br><span class="line">/*允许换行：不允许（默认） | 允许*/</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>box-flex：定义是否允许子元素伸缩：flex</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">box-flex: &lt;value&gt;;</span><br><span class="line">/*伸缩：&lt;一个浮点数，默认为0.0，即表示不可伸缩，大于0的值可伸缩，柔性相对&gt;*/</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>box-ordinal-group：定义子元素的显示顺序：flex-order</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">box-ordinal-group: &lt;integer&gt;;</span><br><span class="line">/*显示次序：&lt;一个整数，默认为1，数值越小越排前&gt;*/</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>元素对其方式</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">align-self: auto | flex-start | flex-end | center | baseline | stretch;</span><br><span class="line">/*单独对齐方式：自动（默认） | 顶部对齐 | 底部对齐 | 居中对齐 | 上下对齐并铺满 | 文本基线对齐*/</span><br></pre></td></tr></table></figure>
-</li>
-</ul>
-<h3 id="兼容写法"><a href="#兼容写法" class="headerlink" title="兼容写法"></a>兼容写法</h3><ul>
-<li>如果子元素是行内元素，在很多情况下都要使用 display:block 或 display:inline-block 把行内子元素变成块元素（例如使用 box-flex 属性），这也是旧版语法和新版语法的区别之一。</li>
-<li><p>由于旧版语法并没有列入W3C标准，所以这里不用写 display:box ，下面的语法也是一样的。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">.box&#123;</span><br><span class="line">	display: -webkit-box; /* 老版本语法: Safari, iOS, Android browser, older WebKit browsers. */</span><br><span class="line">	display: -moz-box; /* 老版本语法: Firefox (buggy) */</span><br><span class="line">	display: -ms-flexbox; /* 混合版本语法: IE 10 */</span><br><span class="line">	display: -webkit-flex; /* 新版本语法: Chrome 21+ */</span><br><span class="line">	display: flex; /* 新版本语法: Opera 12.1, Firefox 22+ */</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>子元素轴对齐方式，旧版语法有4个参数，而新版语法有5个参数，兼容写法新版语法的 space-around 是不可用的</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">.box&#123;</span><br><span class="line">	-webkit-box-pack: center;</span><br><span class="line">	-moz-justify-content: center;</span><br><span class="line">	-webkit-justify-content: center;</span><br><span class="line">	justify-content: center;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>子元素交叉轴对齐方式</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">.box&#123;</span><br><span class="line">	-webkit-box-align: center;</span><br><span class="line">	-moz-align-items: center;</span><br><span class="line">	-webkit-align-items: center;</span><br><span class="line">	align-items: center;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>子元素的显示方向，可通过 box-direction + box-orient + flex-direction 实现</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line">   /*左到右*/</span><br><span class="line">.box&#123;</span><br><span class="line">	-webkit-box-direction: normal;</span><br><span class="line">	-webkit-box-orient: horizontal;</span><br><span class="line">	-moz-flex-direction: row;</span><br><span class="line">	-webkit-flex-direction: row;</span><br><span class="line">	flex-direction: row;</span><br><span class="line">&#125;</span><br><span class="line">/*右到左*/</span><br><span class="line">.box&#123;</span><br><span class="line">	-webkit-box-pack: end;</span><br><span class="line">	-webkit-box-direction: reverse;</span><br><span class="line">	-webkit-box-orient: horizontal;</span><br><span class="line">	-moz-flex-direction: row-reverse;</span><br><span class="line">	-webkit-flex-direction: row-reverse;</span><br><span class="line">	flex-direction: row-reverse;</span><br><span class="line">&#125;</span><br><span class="line">/*上到下*/</span><br><span class="line">.box&#123;</span><br><span class="line">	-webkit-box-direction: normal;</span><br><span class="line">	-webkit-box-orient: vertical;</span><br><span class="line">	-moz-flex-direction: column;</span><br><span class="line">	-webkit-flex-direction: column;</span><br><span class="line">	flex-direction: column;</span><br><span class="line">&#125;</span><br><span class="line">/*下到上*/</span><br><span class="line">.box&#123;</span><br><span class="line">	-webkit-box-pack: end;</span><br><span class="line">	-webkit-box-direction: reverse;</span><br><span class="line">	-webkit-box-orient: vertical;</span><br><span class="line">	-moz-flex-direction: column-reverse;</span><br><span class="line">	-webkit-flex-direction: column-reverse;</span><br><span class="line">	flex-direction: column-reverse;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>是否允许子元素伸缩</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">/*扩展*/</span><br><span class="line">.item&#123;</span><br><span class="line">	-webkit-box-flex: 1.0;</span><br><span class="line">	-moz-flex-grow: 1;</span><br><span class="line">	-webkit-flex-grow: 1;</span><br><span class="line">	flex-grow: 1;</span><br><span class="line">&#125;</span><br><span class="line">/*收缩*/</span><br><span class="line">.item&#123;</span><br><span class="line">	-webkit-box-flex: 1.0;</span><br><span class="line">	-moz-flex-shrink: 1;</span><br><span class="line">	-webkit-flex-shrink: 1;</span><br><span class="line">	flex-shrink: 1;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
-</ul>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2016/05/31/jQuery-Deferred/" itemprop="url">
-                  jQuery-Deferred
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            <span class="post-meta-item-icon">
-              <i class="fa fa-calendar-o"></i>
-            </span>
-            <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2016-05-31T14:50:24+08:00" content="2016-05-31">
-              2016-05-31
-            </time>
-          </span>
-
-          
-
-          
-            
-              <span class="post-comments-count">
-                &nbsp; | &nbsp;
-                <a href="/2016/05/31/jQuery-Deferred/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/05/31/jQuery-Deferred/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-
-          
-          
-
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <ul>
-<li>jQuery 1.5.0 之前的jQuery调用ajax语法</li>
-</ul>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">　　			$.ajax(&#123;</span><br><span class="line">　　　　			url: &quot;test.html&quot;,</span><br><span class="line">　　　				success: function()&#123;</span><br><span class="line">　　　　　　				alert(&quot;success!&quot;);</span><br><span class="line">　　　　			&#125;,</span><br><span class="line">　　　　			error:function()&#123;</span><br><span class="line">　　　　　　				alert(&quot;error!&quot;);</span><br><span class="line">　　　　			&#125;</span><br><span class="line">　　			&#125;);</span><br></pre></td></tr></table></figure>
-<ul>
-<li>jQuery 1.5.0 新增Deferred对象后ajax语法</li>
-</ul>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">　　			$.ajax(&#123;url: &quot;test.html&quot;&#125;).done(function()&#123;alert(&quot;success!&quot;)&#125;).fail(function()&#123;alert(&quot;error!&quot;)&#125;);</span><br></pre></td></tr></table></figure>
-<ul>
-<li>多次回调</li>
-</ul>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$.ajax(&#123;url: &quot;test.html&quot;&#125;).done(function()&#123;alert(&quot;success!&quot;)&#125;).fail(function()&#123;alert(&quot;error!&quot;)&#125;).done(function()&#123;alert(&quot;success again&quot;)&#125;);</span><br></pre></td></tr></table></figure>
-<ul>
-<li>为多个事件制定一个回调参数</li>
-</ul>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$.when($.ajax(&#123;url:&apos;1t.html&apos;&#125;),$.ajax(&#123;url:&apos;2t.html&apos;&#125;)).</span><br><span class="line">	done(function()&#123;alert(&apos;all success&apos;)&#125;).</span><br><span class="line">	fail(function()&#123;alert(&apos;not all success&apos;)&#125;);</span><br></pre></td></tr></table></figure>
-<ul>
-<li>普通函数的回调参数</li>
-</ul>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">//判断是否支持webP格式图片</span><br><span class="line">function hasWebP()&#123;</span><br><span class="line">	var rv = $.Deferred();</span><br><span class="line">	var img = new Image();</span><br><span class="line">	img.onload = function ()&#123; return rv.resolve();&#125;</span><br><span class="line">	img.onerror = function()&#123; return rv.reject();&#125;</span><br><span class="line">	//img.src=&quot;http://baidu.com/1.jpg&quot;;</span><br><span class="line">	img.src=&quot;http://musicdata.baidu.com/data2/pic/39817702/39817702.jpg&quot;;</span><br><span class="line">	$(&apos;div&apos;).append(img);</span><br><span class="line">	return rv.promise();</span><br><span class="line">&#125;</span><br><span class="line">$(function()&#123;</span><br><span class="line">          //then(done,fail)</span><br><span class="line">	hasWebP().then(function()&#123;console.log(1)&#125;,function()&#123;console.log(2)&#125;);</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
-<ul>
-<li>Deffered可以接受一个函数名参数</li>
-</ul>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">  function func(rv)&#123;</span><br><span class="line">       //rv是Deferred对象</span><br><span class="line">　　　　var tasks = function()&#123;</span><br><span class="line">　　　　　　alert(&quot;done！&quot;);</span><br><span class="line">	   rv.resolve();</span><br><span class="line">　　　　&#125;;</span><br><span class="line">　　　　setTimeout(tasks,3000);</span><br><span class="line">	return rv.promise();</span><br><span class="line">&#125;</span><br><span class="line">  $.Deferred(func)</span><br><span class="line">　　.done(function()&#123; alert(&quot;success！&quot;); &#125;)</span><br><span class="line">　　.fail(function()&#123; alert(&quot;error！&quot;); &#125;);</span><br></pre></td></tr></table></figure>
-<ul>
-<li>always方法，执行完done,fail后执行</li>
-</ul>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"> $.Deferred(func)</span><br><span class="line">　　.done(function()&#123; alert(&quot;success！&quot;); &#125;)</span><br><span class="line">　　.fail(function()&#123; alert(&quot;error！&quot;); &#125;)</span><br><span class="line">.always(function()&#123;console.log(&apos;end&apos;);&#125;)</span><br></pre></td></tr></table></figure>
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
   </section>
 
   
@@ -1434,7 +1391,7 @@
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">35</span>
+              <span class="site-state-item-count">37</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>
@@ -1451,7 +1408,7 @@
           
             <div class="site-state-item site-state-tags">
               <a href="/tags">
-                <span class="site-state-item-count">30</span>
+                <span class="site-state-item-count">32</span>
                 <span class="site-state-item-name">标签</span>
               </a>
             </div>
