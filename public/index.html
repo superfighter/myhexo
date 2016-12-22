@@ -232,6 +232,227 @@
             
               
                 
+                <a class="post-title-link" href="/2016/12/22/UMD/" itemprop="url">
+                  UMD
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2016-12-22T10:08:35+08:00" content="2016-12-22">
+              2016-12-22
+            </time>
+          </span>
+
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2016/12/22/UMD/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/12/22/UMD/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <p><a href="https://github.com/umdjs/umd">参考自github/umdjs</a></p>
+<ul>
+<li>UMD (Universal Module Define) ，即通用模块定义。目前已有的模块定义规范有commonJS,Node,AMD,CMD,全局挂载等方式，如何同时适配两种或多种，做到一劳永逸是有套路的，具体尝试如下：</li>
+<li><p>A:基于AMD和全局挂载的</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">(function(root, factory)&#123;</span><br><span class="line">	if(typeof define === &apos;functon&apos; &amp;&amp; define.amd)&#123;</span><br><span class="line">		define([&apos;b&apos;], factory);</span><br><span class="line">	&#125;</span><br><span class="line">	else &#123;</span><br><span class="line">		root.amdWeb = factory(root.b);</span><br><span class="line">	&#125;</span><br><span class="line">&#125;(this, function(b)&#123;</span><br><span class="line">	return &#123;&#125;</span><br><span class="line">&#125;))</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>在A的基础上挂载全局</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">/*当你使用AMD模式的时候，有些脚本还是</span><br><span class="line">要去加载全局变量，这时需要在AMD模式尾巴上挂载全局变量*/</span><br><span class="line">(function(root, factory)&#123;</span><br><span class="line">	if(typeof define === &apos;function&apos; &amp;&amp; define.amd)&#123;</span><br><span class="line">		define([&apos;b&apos;], function(b)&#123;</span><br><span class="line">			//do something</span><br><span class="line">			return (root.amdWebGlobal = factory(b))</span><br><span class="line">		&#125;)</span><br><span class="line">	&#125;</span><br><span class="line">	else &#123;</span><br><span class="line">		root.amdWebGlobal = factory(root, b)</span><br><span class="line">	&#125;</span><br><span class="line">&#125;(this, function(b)&#123;</span><br><span class="line">	return &#123;&#125;</span><br><span class="line">&#125;))</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+          <div class="post-more-link text-center">
+            <a class="btn" href="/2016/12/22/UMD/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/2016/10/19/node-commandLineOptions/" itemprop="url">
+                  node-commandLineOptions
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2016-10-19T00:56:49+08:00" content="2016-10-19">
+              2016-10-19
+            </time>
+          </span>
+
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2016/10/19/node-commandLineOptions/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/10/19/node-commandLineOptions/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p><code>介绍node环境下可执行的command</code></p>
+<ul>
+<li>–version, -v, 当前Node版本</li>
+<li>–help, -h, 罗列可执行命令</li>
+<li>–eval, -e, 执行</li>
+<li>–print, -p, 执行并返回</li>
+<li>–check, -c, 不执行脚本，语法检测</li>
+<li>–interactive, -i</li>
+<li>–require module, -r, 预加载模块，module模块名或者路径</li>
+<li>–no-deprecation, 不提示弃用提示</li>
+<li>–trace-deprecation, 跟踪弃用信息</li>
+<li>–throw-deprecation, 抛出弃用信息</li>
+<li>–no-warning, 打印警告提示(v6)</li>
+<li>–trace-warning, 跟踪警告(v6)</li>
+<li>–throw-warning, 抛出警告(v6)</li>
+<li>–trace-sync-io, 异步执行出错时打印栈</li>
+<li>–zero-fill-buffers</li>
+<li>–preserve-symlinks</li>
+</ul>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
                 <a class="post-title-link" href="/2016/10/18/node-debugger/" itemprop="url">
                   node-debugger
                 </a>
@@ -1084,237 +1305,6 @@
 
 
     
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2016/06/30/Proxy-ES6/" itemprop="url">
-                  Proxy-ES6
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            <span class="post-meta-item-icon">
-              <i class="fa fa-calendar-o"></i>
-            </span>
-            <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2016-06-30T14:10:26+08:00" content="2016-06-30">
-              2016-06-30
-            </time>
-          </span>
-
-          
-
-          
-            
-              <span class="post-comments-count">
-                &nbsp; | &nbsp;
-                <a href="/2016/06/30/Proxy-ES6/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/06/30/Proxy-ES6/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-
-          
-          
-
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <ul>
-<li>Proxy用于修改某些操作的默认行为，等同于在语言层面做出修改，所以属于一种“元编程”（meta programming），即对编程语言进行编程。<br>Proxy可以理解成，在目标对象之前架设一层“拦截”，外界对该对象的访问，都必须先通过这层拦截，因此提供了一种机制，可以对外界的访问进行过滤和改写。Proxy这个词的原意是代理，用在这里表示由它来“代理”某些操作，可以译为“代理器”。</li>
-</ul>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">//ES6生成Proxy实例</span><br><span class="line">var proxy = new Proxy(target, handler);</span><br><span class="line"></span><br><span class="line">var obj = new Proxy(&#123;&#125;, &#123;</span><br><span class="line">  get: function (target, key, receiver) &#123;</span><br><span class="line">    console.log(`getting $&#123;key&#125;!`);</span><br><span class="line">    return Reflect.get(target, key, receiver);</span><br><span class="line">  &#125;,</span><br><span class="line">  set: function (target, key, value, receiver) &#123;</span><br><span class="line">    console.log(`setting $&#123;key&#125;!`);</span><br><span class="line">    return Reflect.set(target, key, value, receiver);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
-<ul>
-<li><p>要使得Proxy起作用，必须针对Proxy实例（上例是proxy对象）进行操作，而不是针对目标对象（上例是空对象）进行操作;如果handler没有设置任何拦截，那就等同于直接通向原对象。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br></pre></td><td class="code"><pre><span class="line">var target = &#123;&#125;;</span><br><span class="line">var handler = &#123;&#125;;</span><br><span class="line">var proxy = new Proxy(target, handler);</span><br><span class="line">proxy.a = &apos;b&apos;;</span><br><span class="line">target.a // &quot;b&quot;</span><br><span class="line">//技巧：将Proxy对象，设置到object.proxy属性，从而可以在object对象上调用</span><br><span class="line">var object = &#123; proxy: new Proxy(target, handler) &#125;;</span><br><span class="line">//Proxy实例也可以作为其他对象的原型对象</span><br><span class="line">var proxy = new Proxy(&#123;&#125;, &#123;</span><br><span class="line">  get: function(target, property) &#123;</span><br><span class="line">    return 35;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line">let obj = Object.create(proxy);</span><br><span class="line">obj.time // 35</span><br><span class="line"></span><br><span class="line">//可以进行多操作拦截</span><br><span class="line">var handler = &#123;</span><br><span class="line">  get: function(target, name) &#123;</span><br><span class="line">    if (name === &apos;prototype&apos;) &#123;</span><br><span class="line">      return Object.prototype;</span><br><span class="line">    &#125;</span><br><span class="line">    return &apos;Hello, &apos; + name;</span><br><span class="line">  &#125;,</span><br><span class="line"></span><br><span class="line">  apply: function(target, thisBinding, args) &#123;</span><br><span class="line">    return args[0];</span><br><span class="line">  &#125;,</span><br><span class="line"></span><br><span class="line">  construct: function(target, args) &#123;</span><br><span class="line">    return &#123;value: args[1]&#125;;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">var fproxy = new Proxy(function(x, y) &#123;</span><br><span class="line">  return x + y;</span><br><span class="line">&#125;, handler);</span><br><span class="line">fproxy(2,20);//apply ==&gt; 2</span><br><span class="line">new fproxy(1,11);//construct ==&gt; &#123;value: 11&#125;</span><br><span class="line">fproxy.hello;//get ==&gt; Hello, hello</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>Proxy支持的拦截操作如下</p>
-<ul>
-<li>get(target, propKey, receiver)拦截对象属性的读取，比如proxy.foo和proxy[‘foo’]，返回类型不限。最后一个参数receiver可选，当target对象设置了propKey属性的get函数时，receiver对象会绑定get函数的this对象。</li>
-<li>set(target, propKey, value, receiver)拦截对象属性的设置，比如proxy.foo = v或proxy[‘foo’] = v，返回一个布尔值。</li>
-<li>has(target, propKey)拦截propKey in proxy的操作，以及对象的hasOwnProperty方法，返回一个布尔值。</li>
-<li>deleteProperty(target, propKey)拦截delete proxy[propKey]的操作，返回一个布尔值。</li>
-<li>ownKeys(target)拦截Object.getOwnPropertyNames(proxy)、Object.getOwnPropertySymbols(proxy)、Object.keys(proxy)，返回一个数组。该方法返回对象所有自身的属性，而Object.keys()仅返回对象可遍历的属性。</li>
-<li>getOwnPropertyDescriptor(target, propKey)拦截Object.getOwnPropertyDescriptor(proxy, propKey)，返回属性的描述对象</li>
-<li>defineProperty(target, propKey, propDesc)拦截Object.defineProperty(proxy, propKey, propDesc）、Object.defineProperties(proxy, propDescs)，返回一个布尔值。</li>
-<li>preventExtensions(target)拦截Object.preventExtensions(proxy)，返回一个布尔值。</li>
-<li>isExtensible(target)拦截Object.isExtensible(proxy)，返回一个布尔值。</li>
-<li>setPrototypeOf(target, proto)拦截Object.setPrototypeOf(proxy, proto)，返回一个布尔值。</li>
-<li>apply(target, object, args)拦截Proxy实例作为函数调用的操作，比如proxy(…args)、proxy.call(object, …args)、proxy.apply(…)。</li>
-<li>construct(target, args)拦截Proxy实例作为构造函数调用的操作，比如new proxy(…args)。</li>
-</ul>
-</li>
-<li><p>各拦截操作实战用途如下</p>
-<ul>
-<li>get 可以在读取不存在的属性时抛出一个错误，而不是仅仅返回无意义的undefined；可以在返回之前做逻辑处理，比如实现数组负数索引取值；可以创建链式调用。</li>
-<li>set 可以用来实施更新DOM</li>
-<li>has 可以对in运算符做特殊处理，如不让带大写A的属性被in发现；has方法拦截的是HasProperty操作，而不是HasOwnProperty操作，即has方法不判断一个属性是对象自身的属性，还是继承的属性。for…in操作内部也是用到HasProperty操作，所以has方法在for…in循环时也会生效。</li>
-<li><p>construct方法返回的必须是一个对象，否则会报错。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">//在返回真正的对象前可以加以处理，但返回值必须是对象</span><br><span class="line">var p = new Proxy(function() &#123;&#125;, &#123;</span><br><span class="line"> 	construct: function(target, args) &#123;</span><br><span class="line">    console.log(&apos;called: &apos; + args.join(&apos;, &apos;));</span><br><span class="line">    return &#123; value: args[0] * 30 &#125;;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line">new p(10).value</span><br><span class="line">// &quot;called: 10&quot;</span><br><span class="line">// 300</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>getPrototypeOf用来拦截object.getPrototypeOf()运算符，以及Reflect.getPrototypeOf,instanceof运算符，Object.prototype.isPrototypeOf</p>
-</li>
-</ul>
-</li>
-<li>Proxy.revocable(),Proxy.revocable方法返回一个对象，该对象的proxy属性是Proxy实例，revoke属性是一个函数，可以取消Proxy实例。上面代码中，当执行revoke函数之后，再访问Proxy实例，就会抛出一个错误。<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">let target = &#123;&#125;;</span><br><span class="line">let handler = &#123;&#125;;</span><br><span class="line"></span><br><span class="line">let &#123;proxy, revoke&#125; = Proxy.revocable(target, handler);</span><br><span class="line">proxy.foo = 123;</span><br><span class="line">proxy.foo //123</span><br><span class="line">revoke();</span><br><span class="line">proxy.foo // TypeError : Revoke</span><br></pre></td></tr></table></figure></li>
-</ul>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2016/06/22/Pixel-puzzle/" itemprop="url">
-                  Pixel puzzle
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            <span class="post-meta-item-icon">
-              <i class="fa fa-calendar-o"></i>
-            </span>
-            <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2016-06-22T15:22:15+08:00" content="2016-06-22">
-              2016-06-22
-            </time>
-          </span>
-
-          
-
-          
-            
-              <span class="post-comments-count">
-                &nbsp; | &nbsp;
-                <a href="/2016/06/22/Pixel-puzzle/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/06/22/Pixel-puzzle/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-
-          
-          
-
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <ul>
-<li>pt &amp;&amp; px<br>  <code>PPI=(√(X²+Y²))/ Z (X:长度像素数;Y:宽度像素数;Z:屏幕尺寸)</code></li>
-</ul>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
   </section>
 
   
@@ -1360,7 +1350,7 @@
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">41</span>
+              <span class="site-state-item-count">43</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>
@@ -1377,7 +1367,7 @@
           
             <div class="site-state-item site-state-tags">
               <a href="/tags">
-                <span class="site-state-item-count">35</span>
+                <span class="site-state-item-count">38</span>
                 <span class="site-state-item-name">标签</span>
               </a>
             </div>
