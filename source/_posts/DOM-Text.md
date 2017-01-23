@@ -16,8 +16,8 @@ tags:
 |               | innerHTML           | innerText  | textContent |
 | ------------- |:-------------:|:-------------:|:-------------:|
 | 触发重绘      | √ | √ | ×
-| 包含script,style标签      |   √    | √(IE8↑)  | √
-| hidden元素 |   √    |  √(IE8↑)   | √
+| 包含script,style标签      |   √    | √(IE7↑)  | √
+| hidden元素 |   √    |  √   | √
 | 永久影响 |   √    |  √   | √
 | 避免XSS |   ×    |   √  | √
 * 总结
