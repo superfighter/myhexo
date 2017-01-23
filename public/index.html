@@ -232,6 +232,287 @@
             
               
                 
+                <a class="post-title-link" href="/2017/01/22/DOM-Text/" itemprop="url">
+                  DOM Text
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2017-01-22T17:08:44+08:00" content="2017-01-22">
+              2017-01-22
+            </time>
+          </span>
+
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2017/01/22/DOM-Text/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2017/01/22/DOM-Text/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <ul>
+<li>简述下innerText, textContent以及innerHTML的关系</li>
+<li>共性很明了，三者都可以读写操作，获取/改变对应DOM节点的内容</li>
+<li>差异体现以下几点：<ul>
+<li>是否触发浏览器重绘</li>
+<li>是否安全</li>
+<li>是否对特殊元素屏蔽</li>
+<li>在页面生命周期里是否起破坏作用</li>
+</ul>
+</li>
+<li>大致可以从下表看出三者特性[<a href="https://developer.mozilla.org/zh-CN/docs/Web/API/Node/textContent" target="_blank" rel="external">来源</a>]：</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th></th>
+<th style="text-align:center">innerHTML</th>
+<th style="text-align:center">innerText</th>
+<th style="text-align:center">textContent</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>触发重绘</td>
+<td style="text-align:center">√</td>
+<td style="text-align:center">√</td>
+<td style="text-align:center">×</td>
+</tr>
+<tr>
+<td>包含script,style标签</td>
+<td style="text-align:center">√</td>
+<td style="text-align:center">√(IE8↑)</td>
+<td style="text-align:center">√</td>
+</tr>
+<tr>
+<td>hidden元素</td>
+<td style="text-align:center">√</td>
+<td style="text-align:center">√(IE8↑)</td>
+<td style="text-align:center">√</td>
+</tr>
+<tr>
+<td>永久影响</td>
+<td style="text-align:center">√</td>
+<td style="text-align:center">√</td>
+<td style="text-align:center">√</td>
+</tr>
+<tr>
+<td>避免XSS</td>
+<td style="text-align:center">×</td>
+<td style="text-align:center">√</td>
+<td style="text-align:center">√</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li>总结<ul>
+<li>innerText是IE引入的方法，所以会有兼容性问题，在IE9及以上版本同步了textContent的表现</li>
+</ul>
+</li>
+</ul>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/2016/12/22/WTDSwiper/" itemprop="url">
+                  WTDSwiper
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2016-12-22T13:59:59+08:00" content="2016-12-22">
+              2016-12-22
+            </time>
+          </span>
+
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2016/12/22/WTDSwiper/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/12/22/WTDSwiper/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <ul>
+<li>隐藏内部实现</li>
+<li><p>依靠你能控制的对象，好过依靠你不能控制的对象，以免日后受他控制</p>
+</li>
+<li><p>类</p>
+</li>
+</ul>
+<ul>
+<li>单一权责原则：只有一条修改理由</li>
+<li>开放-闭合原则：只许扩展，不许修改</li>
+<li>低耦合高内聚原则</li>
+<li>依赖倒置原则：依赖于抽象，而不是具体实现细节</li>
+</ul>
+<ul>
+<li>并发基础定义</li>
+</ul>
+<ul>
+<li>限定资源， 并发环境中有着固定尺寸或数量的资源</li>
+<li>互斥，每一时刻仅有一个县城能访问共享数据或共享资源</li>
+<li>线程饥饿，一个或一组线程在很长时间内或永久被禁止</li>
+<li>死锁 两个或多个线程互相等待执行结束</li>
+<li>活锁 执行次序一致的线程，每个都想要起步，但发现其他线程已经“在路上”</li>
+</ul>
+<ul>
+<li>并发模型</li>
+</ul>
+<ul>
+<li>生产者-消费者模型</li>
+<li>读者-作者模型</li>
+<li>宴席哲学家</li>
+</ul>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
                 <a class="post-title-link" href="/2016/12/22/UMD/" itemprop="url">
                   UMD
                 </a>
@@ -1064,247 +1345,6 @@
 
 
     
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2016/07/06/naturalHeight/" itemprop="url">
-                  HTML5 naturalHeight naturalWidth
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            <span class="post-meta-item-icon">
-              <i class="fa fa-calendar-o"></i>
-            </span>
-            <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2016-07-06T09:41:12+08:00" content="2016-07-06">
-              2016-07-06
-            </time>
-          </span>
-
-          
-
-          
-            
-              <span class="post-comments-count">
-                &nbsp; | &nbsp;
-                <a href="/2016/07/06/naturalHeight/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/07/06/naturalHeight/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-
-          
-          
-
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <p>部分内容参考<a href="http://www.w3ctech.com/topic/112">w3ctech</a></p>
-<h3 id="预加载"><a href="#预加载" class="headerlink" title="预加载"></a>预加载</h3><ul>
-<li>设定图片自定义属性放置图片真实的URL，src放置默认打底图片</li>
-<li><p>获取图片元素相对顶部的高度<code>imageClientTop</code>，如果滚动高度接近<code>imageClientTop</code> ，则设置图片的src属性为自定义属性的值，在图片onload时去除打底，展示真正的图片</p>
-</li>
-<li><p>在未知预加图片宽高时，要想办法获取图片的真实宽高，有两种方案：支持H5 naturalHeight的和不支持的</p>
-</li>
-<li><p>支持的</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">// 注意,这里也要在img onload状态后才能获取naturalWidth，动态插入直接读该属性可能返回0</span><br><span class="line">var </span><br><span class="line">  nWidth = document.getElementById(&apos;example&apos;).naturalWidth,</span><br><span class="line">  nHeight = document.getElementById(&apos;example&apos;).naturalHeight;</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>不支持的</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">function getNatural (el) &#123;</span><br><span class="line">  var img = new Image();</span><br><span class="line">  img.src = el.src;</span><br><span class="line">  return &#123;width: img.width, height: img.height&#125;;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">var </span><br><span class="line">natural = getNatural(document.getElementById(&apos;example&apos;)),</span><br><span class="line">nWidth = natural.width,</span><br><span class="line">nHeight = natural.height;</span><br></pre></td></tr></table></figure>
-</li>
-</ul>
-          <div class="post-more-link text-center">
-            <a class="btn" href="/2016/07/06/naturalHeight/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2016/07/01/a-pixel-is-not-a-pixel/" itemprop="url">
-                  a pixel is not a pixel is not a pixel
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            <span class="post-meta-item-icon">
-              <i class="fa fa-calendar-o"></i>
-            </span>
-            <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2016-07-01T20:18:16+08:00" content="2016-07-01">
-              2016-07-01
-            </time>
-          </span>
-
-          
-
-          
-            
-              <span class="post-comments-count">
-                &nbsp; | &nbsp;
-                <a href="/2016/07/01/a-pixel-is-not-a-pixel/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/07/01/a-pixel-is-not-a-pixel/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-
-          
-          
-
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>原文<a href="http://www.quirksmode.org/blog/archives/2010/04/a_pixel_is_not.html" target="_blank" rel="external">A pixel is not a pixel is not a pixel</a></p>
-<ul>
-<li>现在我正在深入研究移动端中跨浏览器手机的宽和高，得出的结论是在99%的情况下，这些因素不会影响到正常的web开发</li>
-<li>剩余的1%变得非常诡异，我期望苹果公司通过假如一个像素层来解决这个1%引起的问题</li>
-<li>开始之前，我先提示下：因为这些因素对那些我忽视的正规屏幕尺寸并不重要，并且我没有认真的去研究过展示、像素密度等其他复杂概念。所以，接下的内容我可能用错了很多专业术语，多多包涵。</li>
-</ul>
-<h4 id="Web开发者需要什么"><a href="#Web开发者需要什么" class="headerlink" title="Web开发者需要什么"></a>Web开发者需要什么</h4><ul>
-<li>我并不知道web开发者真正感兴趣的是什么，但是我知道他们需要CSS像素单位。就是在CSS表达式中声明的：width: 300px 或者是 font-size: 14px;</li>
-<li>CSS像素和设备像素密度没有任何关系，也跟即将产生的中间层没有任何关系。他们本质上是专门为我们web开发者创造的抽象构造。</li>
-<li>我们可以用zoom操作来做简单说明。当用户放大的时候，一个<code>width:300px</code>的元素占据了更大的屏幕，这使得被放大的元素在设备（物理）像素上就变得越来越宽。zoom的效果完全是通过尽可能的扩展CSS像素产生的，然而此时该元素的CSS像素值仍是300px。</li>
-<li>当zoom效果达到100%时，一个CSS像素等于一个设备像素（尽管中间层会替代设备像素层）我得说明下<code>zoom 100%</code>对于web开发者来说没有任何意义，Zoom层级对我们不重要，我们要关心的是适配当前屏幕需要多少CSS像素。</li>
-<li>我们想想当用户zoom操作时到底发生了什么？当用户缩小时，CSS像素变小，此时一个设备像素重叠了更多的CSS像素。当用户放大时，CSS像素变大，此时一个设备像素重叠更少的CSS像素。</li>
-<li>这样我们的<code>width:300px</code>元素的实际CSS像素总是300，另外由zoom因素决定多少设备像素呈现一个CSS像素。</li>
-<li>这种机制不会改变，如果改变了，所有iPhone网站会严重失控，苹果公司肯定不会让这一切发生的。</li>
-<li>因此，完全适配的网站扔展示980px，此时我们并不关心多少设备像素来呈现980px。</li>
-</ul>
-<h4 id="解决方案"><a href="#解决方案" class="headerlink" title="解决方案"></a>解决方案</h4><ul>
-<li>&lt;meta name=\”viewport\” width=\”device-width\”&gt;</li>
-<li>media query <code>device-width</code></li>
-<li>以上两种方案都作用于设备像素，而不是CSS像素，因为他们的上下文是网页，不是CSS内部运行环境。</li>
-</ul>
-<h4 id="media-query"><a href="#media-query" class="headerlink" title="media query"></a>media query</h4><ul>
-<li><code>device-width</code>代表设备的宽度。</li>
-<li><code>width</code>代表页面的宽度。<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">/*正常范围宽300*/</span><br><span class="line">div.sidebar &#123; width: 300px;&#125;</span><br><span class="line">/*小于320px设定宽100*/</span><br><span class="line">@media all and (max-device-width: 320px)&#123;</span><br><span class="line">	div.sidebar&#123; width: 100px&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-</li>
-</ul>
-<h4 id="meta-tag"><a href="#meta-tag" class="headerlink" title="meta tag"></a>meta tag</h4><ul>
-<li>一般来说meta标签更有用。这起先是由苹果发布的属性，后来被许多移动浏览器实现，让layout viewport适配设备屏幕更容易。</li>
-<li>什么是Layout Viewport? 浏览器用它来计算元素的展示比例（CSS像素）,比如<code>div.sidebar{width: 20%}</code>,Layout Viewport总是比设备像素大一些。</li>
-<li>如果你添加了meta标签，layout viewport的宽度会限制在设备像素内：iPhone 是320</li>
-<li>即使你的页面小到足以适配屏幕，那也会有影响。应该加上<meta>标签，让文字适配当前屏幕。</li>
-</ul>
-<h4 id="other"><a href="#other" class="headerlink" title="other"></a>other</h4><ul>
-<li>dips: 谷歌提出一个概念，device-independent pixels，CSS像素作用于这一层 </li>
-</ul>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
   </section>
 
   
@@ -1350,7 +1390,7 @@
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">43</span>
+              <span class="site-state-item-count">45</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>
@@ -1367,7 +1407,7 @@
           
             <div class="site-state-item site-state-tags">
               <a href="/tags">
-                <span class="site-state-item-count">38</span>
+                <span class="site-state-item-count">41</span>
                 <span class="site-state-item-name">标签</span>
               </a>
             </div>
@@ -1406,7 +1446,7 @@
         <div class="copyright" >
   
   &copy;  Thu Mar 24 2016 08:00:00 GMT+0800 (中国标准时间) - 
-  <span itemprop="copyrightYear">2016</span>
+  <span itemprop="copyrightYear">2017</span>
   <span class="with-love">
     <i class="fa fa-heart"></i>
   </span>
