@@ -7,8 +7,40 @@ tags:
 	- es6
 ---
 
-* symbol.for('string')
-* symbol.keyfor()
+* symbol 可以转换成字符串类型、布尔类型，不能转换成数值。
+```
+	var s = Symbol('a')
+	s.toString()// Symbol(a)
+	!s // false
+	Number(s) // TypeError
+```
+* symbol定义时不能用.运算符
+```
+	var mysymbol = Symbol()
+	var a = {}
+	a.mysymbol = 'hello'
+	//因为点运算符后面总是字符串，所以不会读取mysymbol作为标识名所指代的那个值，导致a的属性名实际上是一个字符串，而不是一个Symbol值
+	a[mysymbol] //undefined
+	a['mysymbol'] // hello
+```
+* symbol.for('string') 和 symbol('string') 的区别是会在全局环境中搜索 string 是否已经存在，如果没有存在则新建一个值
+```
+	var s1 = Symbol.for('a')
+	var s2 = Symbol.for('a')
+
+	s1 == s2 //true
+
+	var s3 = Symbol('c')
+	var s4 = Symbol('d')
+
+	s3 == s4 //false
+```
+* symbol.keyfor('string') 返回一个已登记的Symbol值，在全局环境中起作用，可以在不同iframe和service worker中起作用
+```
+	var s1 = Symbol.for('cc')
+	symbol.keyfor(s1) // cc
+	symbol.keyfor(s2) // undefined
+```
 * 内置symbol
 	* Symbol.hasInstance,`foo instance Foo`内部是`Foo[Symbol.hasInstance](foo)`
 	````
@@ -65,6 +97,7 @@ tags:
 			      case 'string':
 			        return 'str';
 			      case 'default':
+			      	// 既可以转成字符串也可以转成数字时为default状态
 			        return 'default';
 			      default:
 			        throw new Error();
