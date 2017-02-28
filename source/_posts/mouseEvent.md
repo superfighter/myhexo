@@ -27,7 +27,7 @@ DOM3 级事件中定义了9个鼠标事件，分别是：
 * mousedown -> mouseup -> click
 <!-- more -->
 # 案例（Chrome V55）
-* mouseenter和mouseleave在定义顺序上原生定义优先级高于JQuery定义级别，其他事件有先定义先执行原则。
+* mouseenter和mouseleave在定义顺序上原生定义优先级低于JQuery定义级别，其他事件有先定义先执行原则。
 ````
 	var p = document.querySelector('p')
 	p.addEventListener('mouseenter',function(){
