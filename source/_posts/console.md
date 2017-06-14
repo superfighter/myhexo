@@ -36,6 +36,10 @@ tags: javascript
 			message:"我的博客"
 		};
  	console.dir(info);
+
+	// 2017-06-14 补充console.table
+	var info = [{table: 123}]
+	console.table(info) // ie 不兼容
 ````
 * 显示节点内容
 ````
