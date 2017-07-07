@@ -232,6 +232,108 @@
             
               
                 
+                <a class="post-title-link" href="/2017/07/05/contentEditable/" itemprop="url">
+                  contentEditable
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2017-07-05T18:53:34+08:00" content="2017-07-05">
+              2017-07-05
+            </time>
+          </span>
+
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2017/07/05/contentEditable/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2017/07/05/contentEditable/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <ul>
+<li><p>HTML</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;div contentEditable=true data-ph=&quot;My Placeholder String&quot;&gt;&lt;/div&gt;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>CSS</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">[contentEditable=true]&#123;</span><br><span class="line">border:1px solid grey;  </span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">[contentEditable=true]:empty:not(:focus):before&#123;</span><br><span class="line">content:attr(data-ph);</span><br><span class="line">color:grey;</span><br><span class="line">font-style:italic;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
+</ul>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
                 <a class="post-title-link" href="/2017/06/14/console-1/" itemprop="url">
                   console%
                 </a>
@@ -283,7 +385,7 @@
         
           
             <ul>
-<li>大约一年前介绍过一篇<code>console</code>API的文章<a href="./console">这里</a></li>
+<li>大约一年前介绍过一篇<code>console</code>API的文章<a href="/2016/08/11/console/">这里</a></li>
 <li>今天看到相关占位符的API，也记录下，供以后参考，内容直白不转弯，上代码；</li>
 <li><p><code>%c</code> 样式</p>
   <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">console.log(&apos;%cblue&apos;,&apos;color: blue&apos;)</span><br></pre></td></tr></table></figure>
@@ -1272,120 +1374,6 @@
 
 
     
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2016/10/19/node-commandLineOptions/" itemprop="url">
-                  node-commandLineOptions
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            <span class="post-meta-item-icon">
-              <i class="fa fa-calendar-o"></i>
-            </span>
-            <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2016-10-19T00:56:49+08:00" content="2016-10-19">
-              2016-10-19
-            </time>
-          </span>
-
-          
-
-          
-            
-              <span class="post-comments-count">
-                &nbsp; | &nbsp;
-                <a href="/2016/10/19/node-commandLineOptions/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/10/19/node-commandLineOptions/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-
-          
-          
-
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p><code>介绍node环境下可执行的command</code></p>
-<ul>
-<li>–version, -v, 当前Node版本</li>
-<li>–help, -h, 罗列可执行命令</li>
-<li>–eval, -e, 执行</li>
-<li>–print, -p, 执行并返回</li>
-<li>–check, -c, 不执行脚本，语法检测</li>
-<li>–interactive, -i</li>
-<li>–require module, -r, 预加载模块，module模块名或者路径</li>
-<li>–no-deprecation, 不提示弃用提示</li>
-<li>–trace-deprecation, 跟踪弃用信息</li>
-<li>–throw-deprecation, 抛出弃用信息</li>
-<li>–no-warning, 打印警告提示(v6)</li>
-<li>–trace-warning, 跟踪警告(v6)</li>
-<li>–throw-warning, 抛出警告(v6)</li>
-<li>–trace-sync-io, 异步执行出错时打印栈</li>
-<li>–zero-fill-buffers</li>
-<li>–preserve-symlinks</li>
-</ul>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
   </section>
 
   
@@ -1431,7 +1419,7 @@
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">51</span>
+              <span class="site-state-item-count">52</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>
@@ -1448,7 +1436,7 @@
           
             <div class="site-state-item site-state-tags">
               <a href="/tags">
-                <span class="site-state-item-count">49</span>
+                <span class="site-state-item-count">51</span>
                 <span class="site-state-item-name">标签</span>
               </a>
             </div>
