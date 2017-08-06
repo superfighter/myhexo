@@ -232,6 +232,759 @@
             
               
                 
+                <a class="post-title-link" href="/2017/08/06/Jest-3/" itemprop="url">
+                  Jest-3
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2017-08-06T19:59:33+08:00" content="2017-08-06">
+              2017-08-06
+            </time>
+          </span>
+
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2017/08/06/Jest-3/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2017/08/06/Jest-3/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><hr>
+<p><a href="">Jest-1</a>、<a href="">Jest-2</a>分别讲了断言基础和Mock基础，满足了大部分同步测试的需求。这节主要描述异步测试的情况，主要场景是回调、Promise以及async/await：</p>
+<h3 id="测试代码"><a href="#测试代码" class="headerlink" title="测试代码"></a>测试代码</h3><hr>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/** __mocks__/requestfks.js **/</span></span><br><span class="line"><span class="keyword">const</span> users = &#123;</span><br><span class="line">    <span class="number">4</span>: &#123;name: <span class="string">'Mark'</span>&#125;,</span><br><span class="line">    <span class="number">5</span>: &#123;name: <span class="string">'Paul'</span>&#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> <span class="function"><span class="keyword">function</span> <span class="title">request</span>(<span class="params">url</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">new</span> <span class="built_in">Promise</span>((resolve, reject) =&gt; &#123;</span><br><span class="line">        <span class="keyword">const</span> userId = <span class="built_in">parseInt</span>(url.substr(<span class="string">'/users/'</span>.length), <span class="number">10</span>)</span><br><span class="line">        process.nextTick(</span><br><span class="line">            () =&gt; users[userId]</span><br><span class="line">                ? resolve(users[userId])</span><br><span class="line">                : reject(&#123;</span><br><span class="line">                    error: <span class="string">'User with '</span>+ userId +<span class="string">' not found.'</span> </span><br><span class="line">                &#125;)</span><br><span class="line">        )</span><br><span class="line">    &#125;)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/** requestfks.js **/</span></span><br><span class="line"><span class="keyword">const</span> http = <span class="built_in">require</span>(<span class="string">'http'</span>)</span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> <span class="function"><span class="keyword">function</span> <span class="title">request</span>(<span class="params">url</span>)</span>&#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">new</span> <span class="built_in">Promise</span>(resolve =&gt; &#123;</span><br><span class="line">        http.get(&#123;path: url&#125;, response =&gt; &#123;</span><br><span class="line">            <span class="keyword">let</span> data = <span class="string">''</span></span><br><span class="line">            response.on(<span class="string">'data'</span>, _data =&gt; (data += _data))</span><br><span class="line">            response.on(<span class="string">'end'</span>, () =&gt; resolve(data))</span><br><span class="line">        &#125;)</span><br><span class="line">    &#125;)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/** user.js **/</span></span><br><span class="line"><span class="keyword">import</span> request <span class="keyword">from</span> <span class="string">'./requestfks'</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="function"><span class="keyword">function</span> <span class="title">getUserName</span> (<span class="params">userId</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> request(<span class="string">'/users/'</span> + userId).then(user =&gt; user.name)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="异步回调"><a href="#异步回调" class="headerlink" title="异步回调"></a>异步回调</h3><hr>
+<p>这里引用官网的例子，重点是要引入内置参数done：<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">test(<span class="string">'the data is peanut butter'</span>, done =&gt; &#123;</span><br><span class="line">  <span class="function"><span class="keyword">function</span> <span class="title">callback</span>(<span class="params">data</span>) </span>&#123;</span><br><span class="line">    expect(data).toBe(<span class="string">'peanut butter'</span>);</span><br><span class="line">    <span class="comment">// 在回掉执行完成时调用done方法通知Jest异步过程结束</span></span><br><span class="line">    done();</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  fetchData(callback);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure></p>
+<h3 id="Promise"><a href="#Promise" class="headerlink" title="Promise"></a>Promise</h3><hr>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> resolveFunc = jest.fn((d) =&gt; &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">new</span> <span class="built_in">Promise</span>((resolve, reject) =&gt; &#123;</span><br><span class="line">        resolve(d)</span><br><span class="line">    &#125;)</span><br><span class="line">&#125;)</span><br><span class="line"><span class="keyword">const</span> rejectFunc = jest.fn((d) =&gt; &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">new</span> <span class="built_in">Promise</span>((resolve, reject) =&gt; &#123;</span><br><span class="line">        reject(d)</span><br><span class="line">    &#125;)</span><br><span class="line">&#125;)</span><br><span class="line"><span class="keyword">const</span> catchFunc = jest.fn((d) =&gt; &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">new</span> <span class="built_in">Promise</span>((resolve, reject) =&gt; &#123;</span><br><span class="line">        resolve(d+o)</span><br><span class="line">    &#125;).catch((d) =&gt; &#123;</span><br><span class="line">        <span class="keyword">throw</span> <span class="keyword">new</span> <span class="built_in">Error</span>(d.message)</span><br><span class="line">    &#125;)</span><br><span class="line">&#125;)</span><br><span class="line">it(<span class="string">'callback'</span>, <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.time(<span class="string">'done time'</span>)</span><br><span class="line">    setTimeout(<span class="function"><span class="keyword">function</span> (<span class="params"></span>)</span>&#123;</span><br><span class="line">        expect(<span class="number">1</span>).toBeTruthy()</span><br><span class="line">        expect(<span class="number">2</span>).toBe(<span class="number">2</span>)</span><br><span class="line">        expect(<span class="number">1</span>).toBeFalsy()</span><br><span class="line">        <span class="built_in">console</span>.timeEnd(<span class="string">'done time'</span>)</span><br><span class="line">    &#125;, <span class="number">2000</span>)</span><br><span class="line">    jest.runOnlyPendingTimers()</span><br><span class="line">&#125;)</span><br><span class="line">it(<span class="string">'promise resolve'</span>, () =&gt; &#123;</span><br><span class="line">    <span class="keyword">return</span> expect(resolveFunc(<span class="number">1</span>)).resolves.toBe(<span class="number">1</span>)</span><br><span class="line">&#125;)</span><br><span class="line">it(<span class="string">'promise reject'</span>, () =&gt; &#123;</span><br><span class="line">    <span class="keyword">return</span> expect(rejectFunc(<span class="number">1</span>)).rejects.toBe(<span class="number">1</span>)</span><br><span class="line">&#125;)</span><br><span class="line">it(<span class="string">'promise catch'</span>, () =&gt; &#123;</span><br><span class="line">    <span class="keyword">return</span> expect(catchFunc(<span class="number">2</span>)).rejects.toEqual(<span class="keyword">new</span> <span class="built_in">Error</span>(<span class="string">'o is not defined'</span>))</span><br><span class="line">&#125;)</span><br><span class="line"><span class="keyword">var</span> states = &#123;</span><br><span class="line">    top: <span class="literal">false</span>,</span><br><span class="line">    bottom: <span class="literal">false</span>,</span><br><span class="line">    right: <span class="literal">false</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">prepareState</span>(<span class="params">cb</span>) </span>&#123;</span><br><span class="line">    <span class="comment">// 异步处理多个state</span></span><br><span class="line">    setTimeout(<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">        states = &#123;</span><br><span class="line">            top: <span class="literal">true</span>,</span><br><span class="line">            right: <span class="literal">true</span>,</span><br><span class="line">            bottom: <span class="literal">true</span></span><br><span class="line">        &#125;</span><br><span class="line">        cb()</span><br><span class="line">    &#125;,<span class="number">3000</span>)</span><br><span class="line">    jest.runAllTimers()</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">validateState</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> states.top &amp;&amp; states.bottom &amp;&amp; states.right</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">waitOnState</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    expect(states).toHaveProperty(<span class="string">'top'</span>, <span class="literal">true</span>)</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">new</span> <span class="built_in">Promise</span>((resolve, reject) =&gt; &#123;</span><br><span class="line">        setInterval(() =&gt; &#123;</span><br><span class="line">            <span class="built_in">console</span>.log(<span class="string">'...waiting'</span>)</span><br><span class="line">            <span class="keyword">if</span> (states.top &amp;&amp; states.bottom &amp;&amp; states.right) &#123;</span><br><span class="line">                resolve()</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;, <span class="number">1000</span>)</span><br><span class="line">        jest.runAllTimers()</span><br><span class="line">    &#125;).then(() =&gt; &#123;</span><br><span class="line">        <span class="built_in">console</span>.log(states)</span><br><span class="line">    &#125;)</span><br><span class="line">&#125;</span><br><span class="line">it(<span class="string">'hasAssertions'</span>, () =&gt; &#123;</span><br><span class="line">    expect.hasAssertions()</span><br><span class="line">    prepareState(<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">        expect(validateState(states)).toBeTruthy()</span><br><span class="line">    &#125;)</span><br><span class="line">    <span class="keyword">return</span> waitOnState()</span><br><span class="line">&#125;)</span><br><span class="line">it(<span class="string">'assertions 2'</span>, () =&gt; &#123;</span><br><span class="line">    expect.assertions(<span class="number">2</span>)</span><br><span class="line">    prepareState(<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">        expect(validateState(states)).toBeTruthy()</span><br><span class="line">    &#125;)</span><br><span class="line">    <span class="keyword">return</span> waitOnState()</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+<h3 id="async-await"><a href="#async-await" class="headerlink" title="async/await"></a>async/await</h3><hr>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line">jest.mock(<span class="string">'../requestfks'</span>)</span><br><span class="line"><span class="keyword">import</span> * <span class="keyword">as</span> user <span class="keyword">from</span> <span class="string">'../user'</span></span><br><span class="line">it(<span class="string">'async/await'</span>, () =&gt; &#123;</span><br><span class="line">    expect.assertions(<span class="number">1</span>)</span><br><span class="line">    <span class="keyword">return</span> user.getUserName(<span class="number">15</span>).catch((data) =&gt; &#123;</span><br><span class="line">        expect(data).toEqual(&#123;<span class="string">"error"</span>: <span class="string">"User with 15 not found."</span>&#125;)</span><br><span class="line">    &#125;)</span><br><span class="line">&#125;)</span><br><span class="line">it(<span class="string">'async/await'</span>, <span class="keyword">async</span> () =&gt; &#123;</span><br><span class="line">    expect.assertions(<span class="number">1</span>)</span><br><span class="line">    <span class="keyword">await</span> expect(user.getUserName(<span class="number">5</span>)).resolves.toEqual(<span class="string">'Paul'</span>)</span><br><span class="line">&#125;)</span><br><span class="line">it(<span class="string">'async/await rejects'</span>, <span class="keyword">async</span> () =&gt; &#123;</span><br><span class="line">    expect.assertions(<span class="number">1</span>)</span><br><span class="line">    <span class="keyword">await</span> expect(user.getUserName(<span class="number">3</span>)).rejects.toHaveProperty(<span class="string">'error'</span>)</span><br><span class="line">&#125;)</span><br><span class="line">it(<span class="string">'async/await resolves'</span>, <span class="keyword">async</span> () =&gt; &#123;</span><br><span class="line">    expect.assertions(<span class="number">1</span>)</span><br><span class="line">    <span class="keyword">const</span> data = user.getUserName(<span class="number">4</span>)</span><br><span class="line">    <span class="keyword">await</span> expect(data).resolves.toEqual(<span class="string">'Mark'</span>)</span><br><span class="line">&#125;)</span><br><span class="line">it(<span class="string">'Promise.catch'</span>, <span class="keyword">async</span> () =&gt; &#123;</span><br><span class="line">    expect.assertions(<span class="number">1</span>)</span><br><span class="line">    <span class="keyword">return</span> user.getUserName(<span class="number">2</span>).catch(e =&gt; &#123;</span><br><span class="line">        expect(e).toHaveProperty(<span class="string">'error'</span>)</span><br><span class="line">    &#125;)</span><br><span class="line">&#125;)</span><br><span class="line">it(<span class="string">'try/catch'</span>, <span class="keyword">async</span> () =&gt; &#123;</span><br><span class="line">    expect.assertions(<span class="number">1</span>)</span><br><span class="line">    <span class="keyword">try</span> &#123;</span><br><span class="line">        <span class="keyword">await</span> user.getUserName(<span class="number">12</span>)</span><br><span class="line">    &#125; <span class="keyword">catch</span> (e) &#123;</span><br><span class="line">        expect(e).toHaveProperty(<span class="string">'error'</span>)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+<h3 id="小结"><a href="#小结" class="headerlink" title="小结"></a>小结</h3><hr>
+<p>本节介绍了异步测试的代码，是不是可以开始实际业务情景测试了？当然可以，但是Jest并不止这些内容。下节先介绍Jquery业务场景的登录测试。</p>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/2017/08/06/Jest-1/" itemprop="url">
+                  Jest-1
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2017-08-06T15:02:01+08:00" content="2017-08-06">
+              2017-08-06
+            </time>
+          </span>
+
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2017/08/06/Jest-1/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2017/08/06/Jest-1/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><hr>
+<p>本系列内容基本上按照官网的示例来讲解如何入门。</p>
+<h2 id="匹配器"><a href="#匹配器" class="headerlink" title="匹配器"></a>匹配器</h2><hr>
+<p>首先讲匹配器，是单元测试最基础的部分，一般称为断言，如：assert，tap，chai，should等断言库。Jest内置了断言库，正式场景中不需引入断言库。<br>我们从基本类型讲起，</p>
+<h3 id="字符串"><a href="#字符串" class="headerlink" title="字符串"></a>字符串</h3><hr>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br></pre></td><td class="code"><pre><span class="line">it(<span class="string">'"" toBe ""'</span>, () =&gt; &#123;</span><br><span class="line">    expect(<span class="string">''</span>).toBe(<span class="string">''</span>)</span><br><span class="line">&#125;)</span><br><span class="line">it(<span class="string">'"" toEqual ""'</span>, () =&gt; &#123;</span><br><span class="line">    expect(<span class="string">''</span>).toEqual(<span class="string">''</span>)</span><br><span class="line">&#125;)</span><br><span class="line">it(<span class="string">'"1" not toBe ""'</span>, () =&gt; &#123;</span><br><span class="line">    <span class="comment">// 逆向断言</span></span><br><span class="line">    expect(<span class="string">'1'</span>).not.toBe(<span class="string">''</span>)</span><br><span class="line">&#125;)</span><br><span class="line">it(<span class="string">'"1" not toEqual ""'</span>, () =&gt; &#123;</span><br><span class="line">    expect(<span class="string">'1'</span>).not.toEqual(<span class="string">''</span>)</span><br><span class="line">&#125;)</span><br><span class="line">it(<span class="string">'"1" not toEqual 1'</span>, () =&gt; &#123;</span><br><span class="line">    expect(<span class="string">'1'</span>).not.toEqual(<span class="number">1</span>)</span><br><span class="line">&#125;)</span><br><span class="line">it(<span class="string">'"1" not toBe 1'</span>, () =&gt; &#123;</span><br><span class="line">    expect(<span class="string">'1'</span>).not.toBe(<span class="number">1</span>)</span><br><span class="line">&#125;)</span><br><span class="line">it(<span class="string">'"hello world" toMatch "/world/"'</span>, () =&gt; &#123;</span><br><span class="line">    <span class="comment">// 正则匹配器</span></span><br><span class="line">    expect(<span class="string">'hello world'</span>).toMatch(<span class="regexp">/world/</span>)</span><br><span class="line">&#125;)</span><br><span class="line">it(<span class="string">'"hello world" not toMatch "/world~/"'</span>, () =&gt; &#123;</span><br><span class="line">    expect(<span class="string">'hello world'</span>).not.toMatch(<span class="regexp">/world~/</span>)</span><br><span class="line">&#125;)</span><br><span class="line">it(<span class="string">'"hello world" toContain "world"'</span>, () =&gt; &#123;</span><br><span class="line">    <span class="comment">// 交集</span></span><br><span class="line">    expect(<span class="string">'hello world'</span>).toContain(<span class="string">'world'</span>)</span><br><span class="line">&#125;)</span><br><span class="line">it(<span class="string">'"hello world" is String'</span>, () =&gt; &#123;</span><br><span class="line">    expect(<span class="string">'hello world'</span>).toEqual(expect.any(<span class="built_in">String</span>))</span><br><span class="line">&#125;)</span><br><span class="line">it(<span class="string">'"hello world" is not Number'</span>, () =&gt; &#123;</span><br><span class="line">    <span class="comment">// 类型判断</span></span><br><span class="line">    expect(<span class="string">'hello world'</span>).not.toEqual(expect.any(<span class="built_in">Number</span>))</span><br><span class="line">&#125;)</span><br><span class="line">it(<span class="string">'"hello wordl" toHaveLength 11'</span>, () =&gt; &#123;</span><br><span class="line">    <span class="comment">// 长度判断</span></span><br><span class="line">    expect(<span class="string">'hello wordl'</span>).toHaveLength(<span class="number">11</span>)</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+<h3 id="数字"><a href="#数字" class="headerlink" title="数字"></a>数字</h3><hr>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">it(<span class="string">'12 toBe 12'</span>, () =&gt; &#123;</span><br><span class="line">    expect(<span class="number">12</span>).toBe(<span class="number">12</span>)</span><br><span class="line">&#125;)</span><br><span class="line">it(<span class="string">'0.1+0.2 not toBe 0.3'</span>, () =&gt; &#123;</span><br><span class="line">    expect(<span class="number">0.1</span>+<span class="number">0.2</span>).not.toBe(<span class="number">0.3</span>)</span><br><span class="line">&#125;)</span><br><span class="line">it(<span class="string">'0.1+0.2 toBeCloseTo 0.3'</span>, () =&gt; &#123;</span><br><span class="line">    <span class="comment">// 无限接近</span></span><br><span class="line">    expect(<span class="number">0.1</span>+<span class="number">0.2</span>).toBeCloseTo(<span class="number">0.3</span>)</span><br><span class="line">&#125;)</span><br><span class="line">it(<span class="string">'0.1+0.2 toBeGreaterThan 0.3'</span>, () =&gt; &#123;</span><br><span class="line">    expect(<span class="number">0.1</span>+<span class="number">0.2</span>).toBeGreaterThan(<span class="number">0.3</span>)</span><br><span class="line">&#125;)</span><br><span class="line">it(<span class="string">'0.1+0.2 not toBeLessThan 0.3'</span>, () =&gt; &#123;</span><br><span class="line">    expect(<span class="number">0.1</span>+<span class="number">0.2</span>).not.toBeLessThan(<span class="number">0.3</span>)</span><br><span class="line">&#125;)</span><br><span class="line">it(<span class="string">'1+2 toBeGreaterThanOrEqual 3'</span>, () =&gt; &#123;</span><br><span class="line">    expect(<span class="number">1</span>+<span class="number">2</span>).toBeGreaterThanOrEqual(<span class="number">3</span>)</span><br><span class="line">&#125;)</span><br><span class="line">it(<span class="string">'1+2 toBeLessThanOrEqual 3'</span>, () =&gt; &#123;</span><br><span class="line">    expect(<span class="number">1</span>+<span class="number">2</span>).toBeLessThanOrEqual(<span class="number">3</span>)</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+<h3 id="数组"><a href="#数组" class="headerlink" title="数组"></a>数组</h3><hr>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><span class="line">test(<span class="string">'[1,2,3,4,500] not toBe [1,2,3,4,500]'</span>, () =&gt; &#123;</span><br><span class="line">    expect([<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>,<span class="number">4</span>,<span class="number">500</span>]).not.toBe([<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>,<span class="number">4</span>,<span class="number">500</span>])</span><br><span class="line">&#125;)</span><br><span class="line">test(<span class="string">'[1,2,3,4,500] toEqual [1,2,3,4,500]'</span>, () =&gt; &#123;</span><br><span class="line">    expect([<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>,<span class="number">4</span>,<span class="number">500</span>]).toEqual([<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>,<span class="number">4</span>,<span class="number">500</span>])</span><br><span class="line">&#125;)</span><br><span class="line">test(<span class="string">'[1,2,3,4,500] toContain 500'</span>, () =&gt; &#123;</span><br><span class="line">    expect([<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>,<span class="number">4</span>,<span class="number">500</span>]).toContain(<span class="number">500</span>)</span><br><span class="line">&#125;)</span><br><span class="line">test(<span class="string">'[1,2,3,4,500] not toContain "500"'</span>, () =&gt; &#123;</span><br><span class="line">    expect([<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>,<span class="number">4</span>,<span class="number">500</span>]).not.toContain(<span class="string">'500'</span>)</span><br><span class="line">&#125;)</span><br><span class="line">test(<span class="string">'[1,[2],3,4,500] not toContain 2'</span>, () =&gt; &#123;</span><br><span class="line">    expect([<span class="number">1</span>,[<span class="number">2</span>],<span class="number">3</span>,<span class="number">4</span>,<span class="number">500</span>]).not.toContain(<span class="number">2</span>)</span><br><span class="line">&#125;)</span><br><span class="line">test(<span class="string">'[1,[2],3,4,500] toContain [2]'</span>, () =&gt; &#123;</span><br><span class="line">    <span class="comment">// 多维数组交集多个</span></span><br><span class="line">    expect([<span class="number">1</span>,[<span class="number">2</span>],<span class="number">3</span>,<span class="number">4</span>,<span class="number">500</span>]).toEqual(expect.arrayContaining([[<span class="number">2</span>]]))</span><br><span class="line">&#125;)</span><br><span class="line">test(<span class="string">'[1,3,4,500] arrayContanin [3,4]'</span>, () =&gt; &#123;</span><br><span class="line">    <span class="comment">// 一维数组交集多个</span></span><br><span class="line">    expect([<span class="number">1</span>,[<span class="number">2</span>],<span class="number">3</span>,<span class="number">4</span>,<span class="number">500</span>]).toEqual(expect.arrayContaining([<span class="number">3</span>,<span class="number">4</span>]))</span><br><span class="line">&#125;)</span><br><span class="line">it(<span class="string">'["hello wordl"] toHaveLength 1'</span>, () =&gt; &#123;</span><br><span class="line">    expect([<span class="string">'hello wordl'</span>]).toHaveLength(<span class="number">1</span>)</span><br><span class="line">&#125;)</span><br><span class="line">it(<span class="string">'stringMatching'</span>, () =&gt; &#123;</span><br><span class="line">    <span class="keyword">const</span> helloworld = [</span><br><span class="line">        <span class="string">'hello'</span>,</span><br><span class="line">        <span class="string">'world'</span></span><br><span class="line">    ]</span><br><span class="line">    <span class="keyword">const</span> sm = [</span><br><span class="line">        expect.stringMatching(<span class="regexp">/^hell/</span>),</span><br><span class="line">        expect.stringMatching(<span class="regexp">/^wo/</span>),</span><br><span class="line">    ]</span><br><span class="line">    <span class="comment">// 遍历交集</span></span><br><span class="line">    expect(helloworld).toEqual(expect.arrayContaining(sm))</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+<h3 id="布尔"><a href="#布尔" class="headerlink" title="布尔"></a>布尔</h3><hr>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">it(<span class="string">'false toBeFalsy'</span>, () =&gt; &#123;</span><br><span class="line">    expect(<span class="literal">false</span>).toBeFalsy()</span><br><span class="line">&#125;)</span><br><span class="line">it(<span class="string">'"" toBeFalsy'</span>, () =&gt; &#123;</span><br><span class="line">    expect(<span class="string">""</span>).toBeFalsy()</span><br><span class="line">&#125;)</span><br><span class="line">it(<span class="string">'0 toBeFalsy'</span>, () =&gt; &#123;</span><br><span class="line">    expect(<span class="number">0</span>).toBeFalsy()</span><br><span class="line">&#125;)</span><br><span class="line">it(<span class="string">'null toBeFalsy'</span>, () =&gt; &#123;</span><br><span class="line">    expect(<span class="literal">null</span>).toBeFalsy()</span><br><span class="line">&#125;)</span><br><span class="line">it(<span class="string">'undefined toBeFalsy'</span>, () =&gt; &#123;</span><br><span class="line">    expect(<span class="literal">undefined</span>).toBeFalsy()</span><br><span class="line">&#125;)</span><br><span class="line">it(<span class="string">'NaN toBeFalsy'</span>, () =&gt; &#123;</span><br><span class="line">    expect(<span class="literal">NaN</span>).toBeFalsy()</span><br><span class="line">&#125;)</span><br><span class="line">it(<span class="string">'everything toBeTruthy'</span>, () =&gt; &#123;</span><br><span class="line">    expect(<span class="number">1</span>).toBeTruthy()</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+<h3 id="函数"><a href="#函数" class="headerlink" title="函数"></a>函数</h3><hr>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">sum</span>(<span class="params">a</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> a</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// 基于mock fn</span></span><br><span class="line"><span class="keyword">const</span> func = jest.fn((a, b)=&gt;(a + b))</span><br><span class="line"><span class="keyword">const</span> func2 = jest.fn((a, b)=&gt;(a + b))</span><br><span class="line">it(<span class="string">'func toHaveBeenCalledWith 3, 2'</span>, () =&gt; &#123;</span><br><span class="line">    func(<span class="number">3</span>, <span class="number">2</span>)</span><br><span class="line">    <span class="comment">// 调用时的参数3，2</span></span><br><span class="line">    expect(func).toHaveBeenCalledWith(<span class="number">3</span>, <span class="number">2</span>)</span><br><span class="line">&#125;)</span><br><span class="line">it(<span class="string">'func toHaveBeenCalled'</span>, () =&gt; &#123;</span><br><span class="line">    <span class="comment">// 已被调用</span></span><br><span class="line">    expect(func).toHaveBeenCalled()</span><br><span class="line">&#125;)</span><br><span class="line">it(<span class="string">'func toHaveBeenLastCalled'</span>, () =&gt; &#123;</span><br><span class="line">    func(<span class="number">9</span>, <span class="number">9</span>)</span><br><span class="line">    <span class="comment">// 最后一次被调用</span></span><br><span class="line">    expect(func).toHaveBeenLastCalledWith(<span class="number">9</span>, <span class="number">9</span>)</span><br><span class="line">&#125;)</span><br><span class="line">it(<span class="string">'func2 toHaveBeenCalled'</span>, () =&gt; &#123;</span><br><span class="line">    expect(func2).not.toHaveBeenCalled()</span><br><span class="line">&#125;)</span><br><span class="line">it(<span class="string">'func toHaveBeenCalledTimes 2'</span>, () =&gt; &#123;</span><br><span class="line">    <span class="comment">// 被调用两次</span></span><br><span class="line">    expect(func).toHaveBeenCalledTimes(<span class="number">2</span>)</span><br><span class="line">&#125;)</span><br><span class="line">it(<span class="string">'func toThrowError '</span>, () =&gt; &#123;</span><br><span class="line">    <span class="keyword">const</span> throwFunc = <span class="function"><span class="keyword">function</span> (<span class="params">data</span>)</span>&#123;</span><br><span class="line">        <span class="keyword">throw</span> <span class="keyword">new</span> <span class="built_in">Error</span>(<span class="string">'...error'</span>)</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">// 抛出错误</span></span><br><span class="line">    expect(throwFunc).toThrowError(<span class="string">'...error'</span>)</span><br><span class="line">&#125;)</span><br><span class="line">it(<span class="string">'func toThrow'</span>, () =&gt; &#123;</span><br><span class="line">    expect(() =&gt; &#123;</span><br><span class="line">        <span class="keyword">throw</span> <span class="keyword">new</span> <span class="built_in">Error</span>()</span><br><span class="line">    &#125;).toThrow()</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+<h3 id="对象"><a href="#对象" class="headerlink" title="对象"></a>对象</h3><hr>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br></pre></td><td class="code"><pre><span class="line">it(<span class="string">'&#123;hello: "world"&#125; toHaveProperty hello'</span>, () =&gt; &#123;</span><br><span class="line">    <span class="keyword">const</span> helloworld = &#123;hello: <span class="string">'world'</span>&#125;</span><br><span class="line">    <span class="comment">// 属性检测</span></span><br><span class="line">    expect(helloworld).toHaveProperty(<span class="string">'hello'</span>)</span><br><span class="line">&#125;)</span><br><span class="line">it(<span class="string">'&#123;hello: "world"&#125; not toHaveProperty hello:"google"'</span>, () =&gt; &#123;</span><br><span class="line">    <span class="keyword">const</span> helloworld = &#123;hello: <span class="string">'world'</span>&#125;</span><br><span class="line">    expect(helloworld).not.toHaveProperty(<span class="string">'hello'</span>, <span class="string">'google'</span>)</span><br><span class="line">&#125;)</span><br><span class="line">it(<span class="string">'&#123;hello: &#123;world: "one"&#125; deep referencing hello.world'</span>, () =&gt; &#123;</span><br><span class="line">    <span class="keyword">const</span> helloworld = &#123;hello: &#123;world: <span class="string">'one'</span>&#125;&#125;</span><br><span class="line">    <span class="comment">// deep属性</span></span><br><span class="line">    expect(helloworld).toHaveProperty(<span class="string">'hello.world'</span>, <span class="string">'one'</span>)</span><br><span class="line">&#125;)</span><br><span class="line">it(<span class="string">'[&#123;hello: 1, world: 2, every: 3&#125;] toContainEqual &#123;world: 2, every: 3&#125;'</span>, () =&gt; &#123;</span><br><span class="line">    <span class="comment">// 数组或者是可被数组化（Array.from）的类数组对象</span></span><br><span class="line">    <span class="keyword">const</span> helloworldevery = [&#123;</span><br><span class="line">        world: <span class="number">2</span>,</span><br><span class="line">        every: <span class="number">3</span></span><br><span class="line">    &#125;,&#123;</span><br><span class="line">        hello: <span class="number">1</span>,</span><br><span class="line">        world: <span class="number">2</span></span><br><span class="line">    &#125;,&#123;</span><br><span class="line">        every: <span class="number">3</span></span><br><span class="line">    &#125;]</span><br><span class="line">    <span class="keyword">const</span> worldevery = &#123;</span><br><span class="line">        world: <span class="number">2</span>,</span><br><span class="line">        every: <span class="number">3</span></span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">// 部分对象检测</span></span><br><span class="line">    expect(helloworldevery).toContainEqual(worldevery)</span><br><span class="line">&#125;)</span><br><span class="line">it(<span class="string">'现有的对象满足我期望的对象'</span>, () =&gt; &#123;</span><br><span class="line">    <span class="keyword">const</span> feature = &#123;</span><br><span class="line">        height: <span class="number">177</span>,</span><br><span class="line">        width: <span class="number">90</span>,</span><br><span class="line">        padding: &#123;</span><br><span class="line">            top: <span class="number">20</span>,</span><br><span class="line">            bottom: <span class="number">20</span></span><br><span class="line">        &#125;,</span><br><span class="line">        content: [<span class="string">'h'</span>,<span class="string">'e'</span>,<span class="string">'l'</span>,<span class="string">'l'</span>,<span class="string">'o'</span>]</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">const</span> current = &#123;</span><br><span class="line">        height: <span class="number">177</span>,</span><br><span class="line">        width: <span class="number">90</span>,</span><br><span class="line">        padding: &#123;</span><br><span class="line">            top: <span class="number">20</span>,</span><br><span class="line">            bottom: <span class="number">20</span>,</span><br><span class="line">            left: <span class="number">20</span>,</span><br><span class="line">            right: <span class="number">20</span></span><br><span class="line">        &#125;,</span><br><span class="line">        content: [<span class="string">'h'</span>,<span class="string">'e'</span>,<span class="string">'l'</span>,<span class="string">'l'</span>,<span class="string">'o'</span>],</span><br><span class="line">        checked: <span class="literal">false</span></span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">// 整个对象集合检测</span></span><br><span class="line">    expect(current).toMatchObject(feature)</span><br><span class="line">&#125;)</span><br><span class="line">it(<span class="string">'A toBeInstanceOf Class A'</span>, () =&gt; &#123;</span><br><span class="line">    <span class="function"><span class="keyword">function</span> <span class="title">A</span>(<span class="params"></span>) </span>&#123;&#125;</span><br><span class="line">    <span class="function"><span class="keyword">function</span> <span class="title">B</span>(<span class="params"></span>) </span>&#123;&#125;</span><br><span class="line">    <span class="keyword">const</span> newA = <span class="keyword">new</span> A()</span><br><span class="line">    <span class="comment">// 实例检测</span></span><br><span class="line">    expect(newA).toBeInstanceOf(A)</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+<h3 id="其他"><a href="#其他" class="headerlink" title="其他"></a>其他</h3><hr>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">it(<span class="string">'undefined toBeUndefined'</span>, () =&gt; &#123;</span><br><span class="line">    expect(<span class="literal">undefined</span>).toBeUndefined()</span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line">it(<span class="string">'null toBeUndefined'</span>, () =&gt; &#123;</span><br><span class="line">    expect(<span class="literal">null</span>).toBeNull()</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+<h3 id="小结"><a href="#小结" class="headerlink" title="小结"></a>小结</h3><hr>
+<p>以上总的讲述了Expect基本的使用API，接下来讲一讲另一个重要的方法mock。</p>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/2017/08/06/Jest-2/" itemprop="url">
+                  Jest-2
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2017-08-06T15:02:01+08:00" content="2017-08-06">
+              2017-08-06
+            </time>
+          </span>
+
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2017/08/06/Jest-2/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2017/08/06/Jest-2/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><hr>
+<p><a href="">Jest-1</a>主要讲述了Jest冢对Expect的用法，这篇<a href="">Jest-2</a>将讲述重要的mock部分</p>
+<h3 id="Mock"><a href="#Mock" class="headerlink" title="Mock"></a>Mock</h3><hr>
+<p>单元测试的主要做的事情给予我们想给的，得到我们期望的。现在的业务代码中都是由各个模块串联而成，你包我，我包他，一个包可能很大很长，但最终会抛出公共接口。我们在测试引入包时，不需关心内部具体实现，这时可以使用Mock功能，直接给出期望的结果。<br>除主测之外的代码，都可以Mock。</p>
+<h3 id="Function-Mock"><a href="#Function-Mock" class="headerlink" title="Function Mock"></a>Function Mock</h3><hr>
+<p>在上一篇中的Function里也提到jest.fn，这里细说：<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br></pre></td><td class="code"><pre><span class="line">it(<span class="string">'mockFn.mock.calls'</span>, () =&gt; &#123;</span><br><span class="line">    <span class="keyword">const</span> f = jest.fn()</span><br><span class="line">    f(<span class="number">1</span>, <span class="number">2</span>)</span><br><span class="line">    f(<span class="number">2</span>, <span class="number">3</span>)</span><br><span class="line">    <span class="comment">// 调用过程存入集合</span></span><br><span class="line">    expect(f.mock.calls).toEqual(expect.arrayContaining([[<span class="number">1</span>, <span class="number">2</span>], [<span class="number">2</span>, <span class="number">3</span>]]))</span><br><span class="line">&#125;)</span><br><span class="line">it(<span class="string">'mockFn.mock.instances'</span>, () =&gt; &#123;</span><br><span class="line">    <span class="keyword">const</span> f = jest.fn()</span><br><span class="line">    <span class="keyword">const</span> a = <span class="keyword">new</span> f()</span><br><span class="line">    <span class="keyword">const</span> b = <span class="keyword">new</span> f()</span><br><span class="line">    <span class="comment">// 引用计数</span></span><br><span class="line">    expect(f.mock.instances[<span class="number">0</span>]).toBe(a)</span><br><span class="line">&#125;)</span><br><span class="line">it(<span class="string">'mockFn.mockClear'</span>, () =&gt; &#123;</span><br><span class="line">    <span class="function"><span class="keyword">function</span> <span class="title">f</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="number">3</span></span><br><span class="line">    &#125;</span><br><span class="line">    f = jest.fn(()=&gt;<span class="number">4</span>)</span><br><span class="line">    <span class="keyword">const</span> a = <span class="keyword">new</span> f()</span><br><span class="line">    <span class="keyword">const</span> b = <span class="keyword">new</span> f()</span><br><span class="line">    f(<span class="number">2</span>)</span><br><span class="line">    expect(f.mock.calls[<span class="number">2</span>]).toEqual([<span class="number">2</span>])</span><br><span class="line">    <span class="comment">// 清空执行轨迹</span></span><br><span class="line">    f.mockClear()</span><br><span class="line">    expect(f.mock.instances).toEqual([])</span><br><span class="line">    expect(f.mock.calls).toEqual([])</span><br><span class="line">    <span class="comment">// f.mockRestore()</span></span><br><span class="line">    <span class="comment">// 重置mock.fn</span></span><br><span class="line">    f.mockReset()</span><br><span class="line">    expect(f()).toBeUndefined()</span><br><span class="line">&#125;)</span><br><span class="line">it(<span class="string">'mockFn.mockImplementationOnce'</span>, () =&gt; &#123;</span><br><span class="line">    <span class="keyword">var</span> myMockFn = jest.fn()</span><br><span class="line">        .mockImplementationOnce(cb =&gt; cb(<span class="literal">null</span>, <span class="literal">true</span>))</span><br><span class="line">        .mockImplementationOnce(cb =&gt; cb(<span class="literal">null</span>, <span class="literal">false</span>))</span><br><span class="line">    <span class="comment">// 可逐一调用</span></span><br><span class="line">    expect(myMockFn((err, val) =&gt; val)).toBeTruthy()</span><br><span class="line">    expect(myMockFn((err, val) =&gt; val)).toBeFalsy()</span><br><span class="line">    expect(myMockFn()).toBeUndefined()</span><br><span class="line">&#125;)</span><br><span class="line">it(<span class="string">'mockFn.mockReturnValueOnce'</span>, () =&gt; &#123;</span><br><span class="line">    <span class="keyword">const</span> myMockFn = jest.fn()</span><br><span class="line">    <span class="comment">// 只执行一次，后重置</span></span><br><span class="line">    myMockFn.mockReturnValueOnce(<span class="number">90</span>)</span><br><span class="line">    expect(myMockFn()).toBe(<span class="number">90</span>)</span><br><span class="line">    expect(myMockFn()).toBeUndefined()</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure></p>
+<h3 id="Class-Mock"><a href="#Class-Mock" class="headerlink" title="Class Mock"></a>Class Mock</h3><hr>
+<p>jest.fn是单个函数的模拟，一个具体的Module可能会抛出多个接口，同样可以模拟：<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">jest.mock(<span class="string">'../request'</span>, (url) =&gt; &#123;</span><br><span class="line">     <span class="keyword">let</span> users = &#123;</span><br><span class="line">         <span class="number">4</span>: &#123;name: <span class="string">'Mark'</span>&#125;,</span><br><span class="line">         <span class="number">5</span>: &#123;name: <span class="string">'Paul'</span>&#125;</span><br><span class="line">     &#125;</span><br><span class="line">     <span class="keyword">return</span> <span class="keyword">new</span> <span class="built_in">Promise</span>((resolve, reject) =&gt; &#123;</span><br><span class="line">         <span class="keyword">if</span> (url) &#123;</span><br><span class="line">             <span class="keyword">const</span> userId = url.substr(<span class="string">'/users/'</span>.length)</span><br><span class="line">             process.nextTick(</span><br><span class="line">                 () =&gt; users[userId]</span><br><span class="line">                     ? resolve(users[userId])</span><br><span class="line">                     : reject(&#123;</span><br><span class="line">                         error: <span class="string">'User with '</span>+ userId +<span class="string">' not found.'</span> </span><br><span class="line">                     &#125;)</span><br><span class="line">             )</span><br><span class="line">         &#125;</span><br><span class="line">     &#125;)</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure></p>
+<p>还有一种形式：<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">jest.mock(<span class="string">'../request'</span>)</span><br><span class="line"><span class="comment">// 接下来针对需要自定义的方法单独jest.fn</span></span><br><span class="line">jest.default = jest.fn()</span><br></pre></td></tr></table></figure></p>
+<h3 id="计时器Mock"><a href="#计时器Mock" class="headerlink" title="计时器Mock"></a>计时器Mock</h3><hr>
+<p>计时器经常在业务中用到，<code>setTimeout</code>,<code>setInterval</code>,<code>clearTimeout</code>,<code>clearInterval</code>;要是在测试中按真实的设置等下去那就疯啦，所以facebook的天才们提供了模拟方案，即做了延迟处理又不用等多时：<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 启用timer mock</span></span><br><span class="line">jest.useFakeTimers()</span><br><span class="line"><span class="comment">// 调用全部timer mock</span></span><br><span class="line">jest.runAllTimers()</span><br><span class="line"><span class="comment">// 运行pending中的timers，如一个定时器（1000）的回调触发了另一个定时器，这个后触发的定时器（10000ms）处于pending</span></span><br><span class="line">jest.runOnlyPendingTimers()</span><br><span class="line"><span class="comment">// 快进</span></span><br><span class="line">jest.runTimersToTime(<span class="number">1000</span>)</span><br><span class="line"><span class="comment">// 清空pending的timers</span></span><br><span class="line">jest.clearTimers()</span><br></pre></td></tr></table></figure></p>
+<h3 id="小结"><a href="#小结" class="headerlink" title="小结"></a>小结</h3><hr>
+<p>以上讲了function mock、class mock以及timers mock的种种api，在实际测试环境中出场率还是挺高的。接下一节将介绍异步检测，非常重要哟。</p>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/2017/06/10/node-PATH-NODE-PATH/" itemprop="url">
+                  node $PATH NODE_PATH
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2017-06-10T08:23:23+08:00" content="2017-06-10">
+              2017-06-10
+            </time>
+          </span>
+
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2017/06/10/node-PATH-NODE-PATH/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2017/06/10/node-PATH-NODE-PATH/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <ul>
+<li><p>设置全局变量文件夹</p>
+  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">Error: vue command not found</span><br><span class="line">export PATH=/user/local/bin:$PATH`</span><br><span class="line">echo $PATH</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>设置指定$NODE_PATH</p>
+  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">Error: Cannot find module &apos;inherits&apos;</span><br><span class="line">echo $NODE_PATH</span><br><span class="line">export $NODE_PATH=/user/local/lib/node_modules</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/2017/06/03/Promise-ES5/" itemprop="url">
+                  Promise Pollyfill
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2017-06-03T19:20:44+08:00" content="2017-06-03">
+              2017-06-03
+            </time>
+          </span>
+
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2017/06/03/Promise-ES5/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2017/06/03/Promise-ES5/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <ul>
+<li>这篇博客我要记录的是如何自定义Promise对象，拥有:then,catch,final,all,some这四个API</li>
+</ul>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/2017/06/03/weex-step-first/" itemprop="url">
+                  weex-step-first
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2017-06-03T17:05:09+08:00" content="2017-06-03">
+              2017-06-03
+            </time>
+          </span>
+
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2017/06/03/weex-step-first/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2017/06/03/weex-step-first/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/2017/05/30/d3-rect/" itemprop="url">
+                  D3-Rect
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2017-05-30T21:14:23+08:00" content="2017-05-30">
+              2017-05-30
+            </time>
+          </span>
+
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2017/05/30/d3-rect/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2017/05/30/d3-rect/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <ul>
+<li>一段时间没有记录博客了，四月份和五月份都很忙，四月份主要忙weex，五月份主要忙wexx+d3.v3.js，这里先稳下如何用d3实现负柱形图，供以后参考。<h3 id="基础元素"><a href="#基础元素" class="headerlink" title="基础元素"></a>基础元素</h3></li>
+<li><p>创建底盘svg</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">var width = window.innerWidth;</span><br><span class="line">var height = width/2;</span><br><span class="line">var svg = d3.selectAll(&apos;body&apos;)</span><br><span class="line">	.append(&apos;svg&apos;)</span><br><span class="line">	.attr(&#123;</span><br><span class="line">		width: width,</span><br><span class="line">		height: height</span><br><span class="line">	&#125;)</span><br><span class="line">	.style(&#123;</span><br><span class="line">		background: &quot;black&quot;</span><br><span class="line">	&#125;)</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>声明元数据，比例尺，坐标轴</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">var dataSet = [10,20,30,40,60]</span><br><span class="line">var xScale = d3.scale.ordinal()</span><br><span class="line">	.domain(dataSet)</span><br><span class="line">	.rangeRoundBands([0,width-margin.right-margin.left])</span><br><span class="line">var yScale = d3.scale.ordinal()</span><br><span class="line">	.domain(dataSet)</span><br><span class="line">	.rangeRoundBands([height-margin.bottom-margin.top,0])</span><br><span class="line">var xAxis = d3.svg.axis()</span><br><span class="line">	.scale(xScale)</span><br><span class="line">	.orient(&apos;bottom&apos;)</span><br><span class="line">var yAxis = d3.svg.axis()</span><br><span class="line">	.scale(yScale)</span><br><span class="line">	.orient(&apos;left&apos;)</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>生成坐标轴</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">svg.append(&apos;g&apos;)</span><br><span class="line">	.call(xAxis)</span><br><span class="line">svg.append(&apos;g&apos;)</span><br><span class="line">	.call(yAxis)</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>因为没有设置合理的位置，Y轴在可见区域之外了，X轴在最顶上了，这都是不是我们期望的，下面做一些改动。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br></pre></td><td class="code"><pre><span class="line">// 这里额外定义了偏值</span><br><span class="line">var margin = &#123;</span><br><span class="line">	&apos;top&apos;:20,</span><br><span class="line">	&apos;right&apos;: 50,</span><br><span class="line">	&apos;bottom&apos;: 50,</span><br><span class="line">	&apos;left&apos;: 50</span><br><span class="line">&#125;;</span><br><span class="line">var width = window.innerWidth;</span><br><span class="line">var height = width/2;</span><br><span class="line">var svg = d3.selectAll(&apos;body&apos;)</span><br><span class="line">   .append(&apos;svg&apos;)</span><br><span class="line">   .attr(&#123;</span><br><span class="line">       width: width,</span><br><span class="line">       height: height</span><br><span class="line">   &#125;)</span><br><span class="line">   .style(&#123;</span><br><span class="line">       background: &quot;#FFF&quot;</span><br><span class="line">   &#125;)</span><br><span class="line">var dataSet = [1,2,3,4,5]</span><br><span class="line">var xScale = d3.scale.ordinal()</span><br><span class="line">	.domain(dataSet)</span><br><span class="line">	.rangeRoundBands([0,width-margin.right-margin.left])</span><br><span class="line">var yScale = d3.scale.ordinal()</span><br><span class="line">	.domain(dataSet)</span><br><span class="line">	.rangeRoundBands([height-margin.bottom-margin.top,0])</span><br><span class="line">var xAxis = d3.svg.axis()</span><br><span class="line">	.scale(xScale)</span><br><span class="line">	.orient(&apos;bottom&apos;)</span><br><span class="line">	.tickSize(-100,0)</span><br><span class="line">var yAxis = d3.svg.axis()</span><br><span class="line">	.scale(yScale)</span><br><span class="line">	.orient(&apos;left&apos;)</span><br><span class="line">	.tickSize(-100,-(width-margin.right-margin.left))</span><br><span class="line"></span><br><span class="line">svg.append(&apos;g&apos;)</span><br><span class="line">	.attr(&apos;transform&apos;, &apos;translate(&apos;+(margin.left)+&apos;,&apos;+(height-margin.bottom)+&apos;)&apos;)</span><br><span class="line">	.call(xAxis)</span><br><span class="line">svg.append(&apos;g&apos;)</span><br><span class="line">	.attr(&apos;transform&apos;, &apos;translate(&apos;+margin.left+&apos;,&apos;+margin.top+&apos;)&apos;)</span><br><span class="line">	.call(yAxis)</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>以上，我们最简单的打底内容就搞定了，下面尝试添加柱形元素。</p>
+<h3 id="正向柱形"><a href="#正向柱形" class="headerlink" title="正向柱形"></a>正向柱形</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">svg.selectAll(&apos;rect&apos;).data(dataSet).enter()</span><br><span class="line">	.append(&apos;rect&apos;)</span><br><span class="line">	.attr(&#123;</span><br><span class="line">		&apos;class&apos;: &apos;rect&apos;,</span><br><span class="line">		&apos;x&apos;: function(d, i)&#123;</span><br><span class="line">			return xScale(d)+margin.left</span><br><span class="line">		&#125;,</span><br><span class="line">		&apos;y&apos;: function(d, i)&#123;</span><br><span class="line">			return yScale(d) + margin.top</span><br><span class="line">		&#125;,</span><br><span class="line">		&apos;width&apos;: function(d, i)&#123;</span><br><span class="line">			return  xScale.rangeBand()</span><br><span class="line">		&#125;,</span><br><span class="line">		&apos;height&apos;: function(d, i)&#123;</span><br><span class="line">			return height - margin.top - margin.bottom - yScale(d)</span><br><span class="line">		&#125;,</span><br><span class="line">		&apos;fill&apos;: function(d)&#123;</span><br><span class="line">			return &apos;red&apos;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;)</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>这样我们就能渲染正常的柱形图</p>
+<h3 id="负向柱形"><a href="#负向柱形" class="headerlink" title="负向柱形"></a>负向柱形</h3></li>
+<li>负向的要点主要有两点<ul>
+<li>负刻度以0为基准线</li>
+<li>负刻度的高度也要以0对应的值为基准值，最后求绝对值</li>
+</ul>
+</li>
+<li><p>代码稍做改动就能达到如期效果</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line">var dataSet = [1,2,-3,4,5]</span><br><span class="line">var xScale = d3.scale.ordinal()</span><br><span class="line">	.domain(dataSet)</span><br><span class="line">	.rangeRoundBands([0,width-margin.right-margin.left])</span><br><span class="line">var yScale = d3.scale.linear()</span><br><span class="line">	.domain([d3.min(dataSet,d3.max(dataSet)])</span><br><span class="line">	.range([height-margin.bottom-margin.top,0])</span><br><span class="line">svg.selectAll(&apos;rect&apos;).data(dataSet).enter()</span><br><span class="line">	.append(&apos;rect&apos;)</span><br><span class="line">	.attr(&#123;</span><br><span class="line">		&apos;class&apos;: &apos;rect&apos;,</span><br><span class="line">		&apos;x&apos;: function(d, i)&#123;</span><br><span class="line">			return xScale(d)+margin.left</span><br><span class="line">		&#125;,</span><br><span class="line">		&apos;y&apos;: function(d, i)&#123;</span><br><span class="line">			// 要点一，注意这里</span><br><span class="line">			var basePoint = d &gt; -1 ? yScale(d) : yScale(0)</span><br><span class="line">			return basePoint + margin.top</span><br><span class="line">		&#125;,</span><br><span class="line">		&apos;width&apos;: function(d, i)&#123;</span><br><span class="line">			return  xScale.rangeBand()</span><br><span class="line">		&#125;,</span><br><span class="line">		&apos;height&apos;: function(d, i)&#123;</span><br><span class="line">			// 要点二，注意这里</span><br><span class="line">			var baseHeight = yScale(0) - yScale(d)</span><br><span class="line">			return d &gt; -1 ? baseHeight : Math.abs(baseHeight)</span><br><span class="line">		&#125;,</span><br><span class="line">		&apos;fill&apos;: function(d)&#123;</span><br><span class="line">			return &apos;red&apos;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;)</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>暂时写到这里，后续补充：分组柱形图</p>
+</li>
+</ul>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
                 <a class="post-title-link" href="/2017/03/01/canvasSave/" itemprop="url">
                   canvasSave
                 </a>
@@ -285,10 +1038,14 @@
 <li>根据文档说明是把绘制状态保存到栈中，相关状态如下：<ul>
 <li>strokeStyle, fillStyle, globalAlpha, lineWidth, lineCap, lineJoin, miterLimit</li>
 <li>lineDashOffset, shadowOffsetX, shadowOffsetY, shadowBlur, shadowColor, globalCompositeOperation</li>
-<li>font, textAlign, textBaseline, direction, imageSmoothingEnabled.<h2 id="restore"><a href="#restore" class="headerlink" title="restore"></a>restore</h2></li>
+<li>font, textAlign, textBaseline, direction, imageSmoothingEnabled.</li>
 </ul>
 </li>
-<li>根据文档说明是恢复到最近的保存状态，如果没有保存状态，此方法不做任何改变<h2 id="实例"><a href="#实例" class="headerlink" title="实例"></a>实例</h2>
+</ul>
+<h2 id="restore"><a href="#restore" class="headerlink" title="restore"></a>restore</h2><ul>
+<li>根据文档说明是恢复到最近的保存状态，如果没有保存状态，此方法不做任何改变</li>
+</ul>
+<h2 id="实例"><a href="#实例" class="headerlink" title="实例"></a>实例</h2>
           <div class="post-more-link text-center">
             <a class="btn" href="/2017/03/01/canvasSave/#more" rel="contents">
               阅读全文 &raquo;
@@ -532,824 +1289,11 @@
 
 
     
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2017/01/22/DOM-Text/" itemprop="url">
-                  DOM Text
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            <span class="post-meta-item-icon">
-              <i class="fa fa-calendar-o"></i>
-            </span>
-            <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2017-01-22T17:08:44+08:00" content="2017-01-22">
-              2017-01-22
-            </time>
-          </span>
-
-          
-
-          
-            
-              <span class="post-comments-count">
-                &nbsp; | &nbsp;
-                <a href="/2017/01/22/DOM-Text/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2017/01/22/DOM-Text/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-
-          
-          
-
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <ul>
-<li>简述下innerText, textContent以及innerHTML的关系</li>
-<li>共性很明了，三者都可以读写操作，获取/改变对应DOM节点的内容</li>
-<li>差异体现以下几点：<ul>
-<li>是否触发浏览器重绘</li>
-<li>是否安全</li>
-<li>是否对特殊元素屏蔽</li>
-<li>在页面生命周期里是否起破坏作用</li>
-</ul>
-</li>
-<li>大致可以从下表看出三者特性[<a href="https://developer.mozilla.org/zh-CN/docs/Web/API/Node/textContent" target="_blank" rel="external">来源</a>]：</li>
-</ul>
-<table>
-<thead>
-<tr>
-<th></th>
-<th style="text-align:center">innerHTML</th>
-<th style="text-align:center">innerText</th>
-<th style="text-align:center">textContent</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>触发重绘</td>
-<td style="text-align:center">√</td>
-<td style="text-align:center">√</td>
-<td style="text-align:center">×</td>
-</tr>
-<tr>
-<td>包含script,style标签</td>
-<td style="text-align:center">√</td>
-<td style="text-align:center">√(IE7↑)</td>
-<td style="text-align:center">√</td>
-</tr>
-<tr>
-<td>hidden元素</td>
-<td style="text-align:center">√</td>
-<td style="text-align:center">√</td>
-<td style="text-align:center">√</td>
-</tr>
-<tr>
-<td>永久影响</td>
-<td style="text-align:center">√</td>
-<td style="text-align:center">√</td>
-<td style="text-align:center">√</td>
-</tr>
-<tr>
-<td>避免XSS</td>
-<td style="text-align:center">×</td>
-<td style="text-align:center">√</td>
-<td style="text-align:center">√</td>
-</tr>
-</tbody>
-</table>
-<ul>
-<li>总结<ul>
-<li>innerText是IE引入的方法，所以会有兼容性问题，在IE9及以上版本同步了textContent的表现</li>
-</ul>
-</li>
-</ul>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2016/12/22/WTDSwiper/" itemprop="url">
-                  WTDSwiper
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            <span class="post-meta-item-icon">
-              <i class="fa fa-calendar-o"></i>
-            </span>
-            <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2016-12-22T13:59:59+08:00" content="2016-12-22">
-              2016-12-22
-            </time>
-          </span>
-
-          
-
-          
-            
-              <span class="post-comments-count">
-                &nbsp; | &nbsp;
-                <a href="/2016/12/22/WTDSwiper/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/12/22/WTDSwiper/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-
-          
-          
-
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <ul>
-<li>隐藏内部实现</li>
-<li><p>依靠你能控制的对象，好过依靠你不能控制的对象，以免日后受他控制</p>
-</li>
-<li><p>类</p>
-</li>
-</ul>
-<ul>
-<li>单一权责原则：只有一条修改理由</li>
-<li>开放-闭合原则：只许扩展，不许修改</li>
-<li>低耦合高内聚原则</li>
-<li>依赖倒置原则：依赖于抽象，而不是具体实现细节</li>
-</ul>
-<ul>
-<li>并发基础定义</li>
-</ul>
-<ul>
-<li>限定资源， 并发环境中有着固定尺寸或数量的资源</li>
-<li>互斥，每一时刻仅有一个县城能访问共享数据或共享资源</li>
-<li>线程饥饿，一个或一组线程在很长时间内或永久被禁止</li>
-<li>死锁 两个或多个线程互相等待执行结束</li>
-<li>活锁 执行次序一致的线程，每个都想要起步，但发现其他线程已经“在路上”</li>
-</ul>
-<ul>
-<li>并发模型</li>
-</ul>
-<ul>
-<li>生产者-消费者模型</li>
-<li>读者-作者模型</li>
-<li>宴席哲学家</li>
-</ul>
-<ul>
-<li>[<a href="https://zhuanlan.zhihu.com/p/21927991" target="_blank" rel="external">知乎</a>]</li>
-</ul>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line">//两点触控旋转角度和方向求解代码</span><br><span class="line">//这两个方法属于向量计算，具体原理请阅读本文最后的参考文献</span><br><span class="line"></span><br><span class="line">_getRotateDirection(vector1,vector2) &#123;</span><br><span class="line"></span><br><span class="line">	return vector1.x * vector2.y - vector2.x * vector1.y;</span><br><span class="line"></span><br><span class="line">&#125;  </span><br><span class="line"></span><br><span class="line">_getRotateAngle(vector1,vector2) &#123;</span><br><span class="line"></span><br><span class="line">	let direction = this._getRotateDirection(vector1,vector2);</span><br><span class="line"></span><br><span class="line">	direction = direction &gt; 0 ? -1 : 1;</span><br><span class="line"></span><br><span class="line">	let len1 = this._getDistance(vector1.x,vector1.y);</span><br><span class="line"></span><br><span class="line">	let len2 = this._getDistance(vector2.x,vector2.y);</span><br><span class="line"></span><br><span class="line">	let mr = len1 * len2;</span><br><span class="line"></span><br><span class="line">	if(mr === 0) return 0;</span><br><span class="line"></span><br><span class="line">	let dot = vector1.x * vector2.x + vector1.y * vector2.y;</span><br><span class="line"></span><br><span class="line">	let r = dot / mr;</span><br><span class="line"></span><br><span class="line">	if(r &gt; 1) r = 1;</span><br><span class="line"></span><br><span class="line">	if(r &lt; -1) r = -1;</span><br><span class="line"></span><br><span class="line">	return Math.acos(r) * direction * 180 / Math.PI;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2016/12/22/UMD/" itemprop="url">
-                  UMD
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            <span class="post-meta-item-icon">
-              <i class="fa fa-calendar-o"></i>
-            </span>
-            <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2016-12-22T10:08:35+08:00" content="2016-12-22">
-              2016-12-22
-            </time>
-          </span>
-
-          
-
-          
-            
-              <span class="post-comments-count">
-                &nbsp; | &nbsp;
-                <a href="/2016/12/22/UMD/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/12/22/UMD/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-
-          
-          
-
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <p><a href="https://github.com/umdjs/umd">参考自github/umdjs</a></p>
-<ul>
-<li>UMD (Universal Module Define) ，即通用模块定义。目前已有的模块定义规范有commonJS,Node,AMD,CMD,全局挂载等方式，如何同时适配两种或多种，做到一劳永逸是有套路的，具体尝试如下：</li>
-<li><p>A:基于AMD和全局挂载的</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">(function(root, factory)&#123;</span><br><span class="line">	if(typeof define === &apos;functon&apos; &amp;&amp; define.amd)&#123;</span><br><span class="line">		define([&apos;b&apos;], factory);</span><br><span class="line">	&#125;</span><br><span class="line">	else &#123;</span><br><span class="line">		root.amdWeb = factory(root.b);</span><br><span class="line">	&#125;</span><br><span class="line">&#125;(this, function(b)&#123;</span><br><span class="line">	return &#123;&#125;</span><br><span class="line">&#125;))</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>在A的基础上挂载全局</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">/*当你使用AMD模式的时候，有些脚本还是</span><br><span class="line">要去加载全局变量，这时需要在AMD模式尾巴上挂载全局变量*/</span><br><span class="line">(function(root, factory)&#123;</span><br><span class="line">	if(typeof define === &apos;function&apos; &amp;&amp; define.amd)&#123;</span><br><span class="line">		define([&apos;b&apos;], function(b)&#123;</span><br><span class="line">			//do something</span><br><span class="line">			return (root.amdWebGlobal = factory(b))</span><br><span class="line">		&#125;)</span><br><span class="line">	&#125;</span><br><span class="line">	else &#123;</span><br><span class="line">		root.amdWebGlobal = factory(root, b)</span><br><span class="line">	&#125;</span><br><span class="line">&#125;(this, function(b)&#123;</span><br><span class="line">	return &#123;&#125;</span><br><span class="line">&#125;))</span><br></pre></td></tr></table></figure>
-</li>
-</ul>
-          <div class="post-more-link text-center">
-            <a class="btn" href="/2016/12/22/UMD/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2016/10/19/node-commandLineOptions/" itemprop="url">
-                  node-commandLineOptions
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            <span class="post-meta-item-icon">
-              <i class="fa fa-calendar-o"></i>
-            </span>
-            <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2016-10-19T00:56:49+08:00" content="2016-10-19">
-              2016-10-19
-            </time>
-          </span>
-
-          
-
-          
-            
-              <span class="post-comments-count">
-                &nbsp; | &nbsp;
-                <a href="/2016/10/19/node-commandLineOptions/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/10/19/node-commandLineOptions/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-
-          
-          
-
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p><code>介绍node环境下可执行的command</code></p>
-<ul>
-<li>–version, -v, 当前Node版本</li>
-<li>–help, -h, 罗列可执行命令</li>
-<li>–eval, -e, 执行</li>
-<li>–print, -p, 执行并返回</li>
-<li>–check, -c, 不执行脚本，语法检测</li>
-<li>–interactive, -i</li>
-<li>–require module, -r, 预加载模块，module模块名或者路径</li>
-<li>–no-deprecation, 不提示弃用提示</li>
-<li>–trace-deprecation, 跟踪弃用信息</li>
-<li>–throw-deprecation, 抛出弃用信息</li>
-<li>–no-warning, 打印警告提示(v6)</li>
-<li>–trace-warning, 跟踪警告(v6)</li>
-<li>–throw-warning, 抛出警告(v6)</li>
-<li>–trace-sync-io, 异步执行出错时打印栈</li>
-<li>–zero-fill-buffers</li>
-<li>–preserve-symlinks</li>
-</ul>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2016/10/18/node-debugger/" itemprop="url">
-                  node-debugger
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            <span class="post-meta-item-icon">
-              <i class="fa fa-calendar-o"></i>
-            </span>
-            <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2016-10-18T21:06:17+08:00" content="2016-10-18">
-              2016-10-18
-            </time>
-          </span>
-
-          
-
-          
-            
-              <span class="post-comments-count">
-                &nbsp; | &nbsp;
-                <a href="/2016/10/18/node-debugger/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/10/18/node-debugger/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-
-          
-          
-
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <ul>
-<li>javascript运行在宿主环境中，浏览器、node都是宿主。</li>
-<li>javascript中常用debugger断点查看脚本运行状态，在浏览器环境下(这里以Chrome为例，其他高级浏览器雷同)按F12键可以看到调试工具栏，选择<code>Sources</code>标签栏，左侧是页面引入的资源列表，中间是对应源码，右侧就是调试界面，右侧最顶部的按钮依次是：脚本暂停，跳过下一个执行阶段，进入下一个执行阶段，跳出当前方法，阻止断点，异常暂停。</li>
-<li>按钮下面提供Watch(监听)、Call Stack(调用栈)、Scope(作用域)、Breakpoints(断点记录)、DOM Breakpoints、XHR Breakpoints(XHR断点)、EventListener Breakpoints(事件断点)等信息。关于按钮之下的信息在这里不扩开讲，自己可以尝试一下，对于查错很有帮助。这里主要讲下在node环境中，怎么像浏览器环境调试javascript一样调试nodejs代码。
-          <div class="post-more-link text-center">
-            <a class="btn" href="/2016/10/18/node-debugger/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2016/09/07/nbsp/" itemprop="url">
-                  nbsp
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            <span class="post-meta-item-icon">
-              <i class="fa fa-calendar-o"></i>
-            </span>
-            <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2016-09-07T14:26:12+08:00" content="2016-09-07">
-              2016-09-07
-            </time>
-          </span>
-
-          
-
-          
-            
-              <span class="post-comments-count">
-                &nbsp; | &nbsp;
-                <a href="/2016/09/07/nbsp/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/09/07/nbsp/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-
-          
-          
-
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <ul>
-<li>编写静态HTML页面的时候时不时会遇到空格对其的情况，比如Form表单的title对其，因为中文字体不同宽度不同，完美处理要搞事。</li>
-<li>在HTML中有5种空格实体。他们拥有不同的宽度，经常使用的是”&amp;nbsp;”，这个大家都熟悉，是由空格键输入的结果。除了这个，其他还有（&amp;ensp;&amp;emsp;&amp;thinsp;&amp;zwnj;&amp;zwj;）<h3 id="amp-nbsp"><a href="#amp-nbsp" class="headerlink" title="&amp;nbsp;"></a>&amp;nbsp;</h3></li>
-<li>全称No-Break Space，占据宽度受字体影响明显。<h3 id="amp-ensp"><a href="#amp-ensp" class="headerlink" title="&amp;ensp;"></a>&amp;ensp;</h3></li>
-<li>半角空格，全称En Space，占据宽度1/2中文宽度，基本上不受字体影响。<h3 id="amp-emsp"><a href="#amp-emsp" class="headerlink" title="&amp;emsp;"></a>&amp;emsp;</h3></li>
-<li>全角空格，全称Em Space，占据宽度1/1中文宽度，基本上不受字体影响。<h3 id="amp-thinsp"><a href="#amp-thinsp" class="headerlink" title="&amp;thinsp;"></a>&amp;thinsp;</h3></li>
-<li>窄空格，全称Thin Space，占据1/6 em宽度。<h3 id="amp-zwnj-amp-zwj"><a href="#amp-zwnj-amp-zwj" class="headerlink" title="&amp;zwnj; &amp;zwj;"></a>&amp;zwnj; &amp;zwj;</h3></li>
-<li>零宽不连字和零宽连字，多用于打印排版<h3 id="其他"><a href="#其他" class="headerlink" title="其他"></a>其他</h3></li>
-<li>空格(&amp;#x0020;)、制表位(&amp;#x0009;)、换行(&amp;#x000A;)和回车(&amp;#x000D;)(&amp;#12288;)等；</li>
-</ul>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2016/08/24/Promise-ES6/" itemprop="url">
-                  Promise-ES6
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            <span class="post-meta-item-icon">
-              <i class="fa fa-calendar-o"></i>
-            </span>
-            <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2016-08-24T09:40:44+08:00" content="2016-08-24">
-              2016-08-24
-            </time>
-          </span>
-
-          
-
-          
-            
-              <span class="post-comments-count">
-                &nbsp; | &nbsp;
-                <a href="/2016/08/24/Promise-ES6/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/08/24/Promise-ES6/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-
-          
-          
-
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h3 id="不足之处"><a href="#不足之处" class="headerlink" title="不足之处"></a>不足之处</h3><ul>
-<li>初始化之后无法取消</li>
-<li>不设置回调函数，Promise内部抛出错误，不会反应到外部</li>
-<li>处于Pending状态时，不清楚具体处于开始阶段还是即将结束阶段<h3 id="用武之地"><a href="#用武之地" class="headerlink" title="用武之地"></a>用武之地</h3></li>
-<li>内部状态不受外部干扰</li>
-<li>避免无限套回调函数</li>
-</ul>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
   </section>
 
   
   <nav class="pagination">
-    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><span class="space">&hellip;</span><a class="page-number" href="/page/5/">5</a><a class="extend next" rel="next" href="/page/2/"><i class="fa fa-angle-right"></i></a>
+    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><span class="space">&hellip;</span><a class="page-number" href="/page/6/">6</a><a class="extend next" rel="next" href="/page/2/"><i class="fa fa-angle-right"></i></a>
   </nav>
 
 
@@ -1390,7 +1334,7 @@
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">48</span>
+              <span class="site-state-item-count">55</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>
@@ -1407,7 +1351,7 @@
           
             <div class="site-state-item site-state-tags">
               <a href="/tags">
-                <span class="site-state-item-count">46</span>
+                <span class="site-state-item-count">48</span>
                 <span class="site-state-item-name">标签</span>
               </a>
             </div>
@@ -1445,7 +1389,7 @@
       <div class="footer-inner">
         <div class="copyright" >
   
-  &copy;  Thu Mar 24 2016 08:00:00 GMT+0800 (中国标准时间) - 
+  &copy;  Thu Mar 24 2016 08:00:00 GMT+0800 (CST) - 
   <span itemprop="copyrightYear">2017</span>
   <span class="with-love">
     <i class="fa fa-heart"></i>
