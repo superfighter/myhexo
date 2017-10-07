@@ -33,18 +33,18 @@ tags:
 * `%o` 类型转成对象
 
 	```
-		console.log('%fblue','3.12') // "3.12"blue
+		console.log('%oblue','3.12') // "3.12"blue
 	```
 
 	```
-		console.log('%fblue', [3.33]) // Arrayblue
+		console.log('%oblue', [3.33]) // Arrayblue
 	```
 * `%s` 类型转成字符串
 
 	```
-		console.log('%fblue','3.12') // 3.12blue
+		console.log('%sblue','3.12') // 3.12blue
 	```
 
 	```
-		console.log('%fblue', [3.33]) // Array(1)blue
+		console.log('%sblue', [3.33]) // Array(1)blue
 	```

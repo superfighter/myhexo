@@ -232,6 +232,105 @@
             
               
                 
+                <a class="post-title-link" href="/2017/10/07/20176-20179summary/" itemprop="url">
+                  20176-20179summary
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2017-10-07T17:05:08+08:00" content="2017-10-07">
+              2017-10-07
+            </time>
+          </span>
+
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2017/10/07/20176-20179summary/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2017/10/07/20176-20179summary/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><hr>
+<p>鉴于产品竞争对手步步紧逼的优化升级，自身的服务质量亟需提升，决定拿业务使用频率高的业务线做重构优化，在界面不大变的前提下提高信息提取和展示速度，提升用户体验。<br>
+          <div class="post-more-link text-center">
+            <a class="btn" href="/2017/10/07/20176-20179summary/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
                 <a class="post-title-link" href="/2017/09/09/Array-sort/" itemprop="url">
                   Array sort
                 </a>
@@ -785,6 +884,114 @@
             
               
                 
+                <a class="post-title-link" href="/2017/08/06/Jest-2/" itemprop="url">
+                  Jest-2
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2017-08-06T15:02:01+08:00" content="2017-08-06">
+              2017-08-06
+            </time>
+          </span>
+
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2017/08/06/Jest-2/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2017/08/06/Jest-2/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><hr>
+<p><a href="">Jest-1</a>主要讲述了Jest冢对Expect的用法，这篇<a href="">Jest-2</a>将讲述重要的mock部分</p>
+<h3 id="Mock"><a href="#Mock" class="headerlink" title="Mock"></a>Mock</h3><hr>
+<p>单元测试的主要做的事情给予我们想给的，得到我们期望的。现在的业务代码中都是由各个模块串联而成，你包我，我包他，一个包可能很大很长，但最终会抛出公共接口。我们在测试引入包时，不需关心内部具体实现，这时可以使用Mock功能，直接给出期望的结果。<br>除主测之外的代码，都可以Mock。</p>
+<h3 id="Function-Mock"><a href="#Function-Mock" class="headerlink" title="Function Mock"></a>Function Mock</h3><hr>
+<p>在上一篇中的Function里也提到jest.fn，这里细说：<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br></pre></td><td class="code"><pre><span class="line">it(<span class="string">'mockFn.mock.calls'</span>, () =&gt; &#123;</span><br><span class="line">    <span class="keyword">const</span> f = jest.fn()</span><br><span class="line">    f(<span class="number">1</span>, <span class="number">2</span>)</span><br><span class="line">    f(<span class="number">2</span>, <span class="number">3</span>)</span><br><span class="line">    <span class="comment">// 调用过程存入集合</span></span><br><span class="line">    expect(f.mock.calls).toEqual(expect.arrayContaining([[<span class="number">1</span>, <span class="number">2</span>], [<span class="number">2</span>, <span class="number">3</span>]]))</span><br><span class="line">&#125;)</span><br><span class="line">it(<span class="string">'mockFn.mock.instances'</span>, () =&gt; &#123;</span><br><span class="line">    <span class="keyword">const</span> f = jest.fn()</span><br><span class="line">    <span class="keyword">const</span> a = <span class="keyword">new</span> f()</span><br><span class="line">    <span class="keyword">const</span> b = <span class="keyword">new</span> f()</span><br><span class="line">    <span class="comment">// 引用计数</span></span><br><span class="line">    expect(f.mock.instances[<span class="number">0</span>]).toBe(a)</span><br><span class="line">&#125;)</span><br><span class="line">it(<span class="string">'mockFn.mockClear'</span>, () =&gt; &#123;</span><br><span class="line">    <span class="function"><span class="keyword">function</span> <span class="title">f</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="number">3</span></span><br><span class="line">    &#125;</span><br><span class="line">    f = jest.fn(()=&gt;<span class="number">4</span>)</span><br><span class="line">    <span class="keyword">const</span> a = <span class="keyword">new</span> f()</span><br><span class="line">    <span class="keyword">const</span> b = <span class="keyword">new</span> f()</span><br><span class="line">    f(<span class="number">2</span>)</span><br><span class="line">    expect(f.mock.calls[<span class="number">2</span>]).toEqual([<span class="number">2</span>])</span><br><span class="line">    <span class="comment">// 清空执行轨迹</span></span><br><span class="line">    f.mockClear()</span><br><span class="line">    expect(f.mock.instances).toEqual([])</span><br><span class="line">    expect(f.mock.calls).toEqual([])</span><br><span class="line">    <span class="comment">// f.mockRestore()</span></span><br><span class="line">    <span class="comment">// 重置mock.fn</span></span><br><span class="line">    f.mockReset()</span><br><span class="line">    expect(f()).toBeUndefined()</span><br><span class="line">&#125;)</span><br><span class="line">it(<span class="string">'mockFn.mockImplementationOnce'</span>, () =&gt; &#123;</span><br><span class="line">    <span class="keyword">var</span> myMockFn = jest.fn()</span><br><span class="line">        .mockImplementationOnce(cb =&gt; cb(<span class="literal">null</span>, <span class="literal">true</span>))</span><br><span class="line">        .mockImplementationOnce(cb =&gt; cb(<span class="literal">null</span>, <span class="literal">false</span>))</span><br><span class="line">    <span class="comment">// 可逐一调用</span></span><br><span class="line">    expect(myMockFn((err, val) =&gt; val)).toBeTruthy()</span><br><span class="line">    expect(myMockFn((err, val) =&gt; val)).toBeFalsy()</span><br><span class="line">    expect(myMockFn()).toBeUndefined()</span><br><span class="line">&#125;)</span><br><span class="line">it(<span class="string">'mockFn.mockReturnValueOnce'</span>, () =&gt; &#123;</span><br><span class="line">    <span class="keyword">const</span> myMockFn = jest.fn()</span><br><span class="line">    <span class="comment">// 只执行一次，后重置</span></span><br><span class="line">    myMockFn.mockReturnValueOnce(<span class="number">90</span>)</span><br><span class="line">    expect(myMockFn()).toBe(<span class="number">90</span>)</span><br><span class="line">    expect(myMockFn()).toBeUndefined()</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure></p>
+<h3 id="Class-Mock"><a href="#Class-Mock" class="headerlink" title="Class Mock"></a>Class Mock</h3><hr>
+<p>jest.fn是单个函数的模拟，一个具体的Module可能会抛出多个接口，同样可以模拟：<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">jest.mock(<span class="string">'../request'</span>, (url) =&gt; &#123;</span><br><span class="line">     <span class="keyword">let</span> users = &#123;</span><br><span class="line">         <span class="number">4</span>: &#123;name: <span class="string">'Mark'</span>&#125;,</span><br><span class="line">         <span class="number">5</span>: &#123;name: <span class="string">'Paul'</span>&#125;</span><br><span class="line">     &#125;</span><br><span class="line">     <span class="keyword">return</span> <span class="keyword">new</span> <span class="built_in">Promise</span>((resolve, reject) =&gt; &#123;</span><br><span class="line">         <span class="keyword">if</span> (url) &#123;</span><br><span class="line">             <span class="keyword">const</span> userId = url.substr(<span class="string">'/users/'</span>.length)</span><br><span class="line">             process.nextTick(</span><br><span class="line">                 () =&gt; users[userId]</span><br><span class="line">                     ? resolve(users[userId])</span><br><span class="line">                     : reject(&#123;</span><br><span class="line">                         error: <span class="string">'User with '</span>+ userId +<span class="string">' not found.'</span> </span><br><span class="line">                     &#125;)</span><br><span class="line">             )</span><br><span class="line">         &#125;</span><br><span class="line">     &#125;)</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure></p>
+<p>还有一种形式：<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">jest.mock(<span class="string">'../request'</span>)</span><br><span class="line"><span class="comment">// 接下来针对需要自定义的方法单独jest.fn</span></span><br><span class="line">jest.default = jest.fn()</span><br></pre></td></tr></table></figure></p>
+<h3 id="计时器Mock"><a href="#计时器Mock" class="headerlink" title="计时器Mock"></a>计时器Mock</h3><hr>
+<p>计时器经常在业务中用到，<code>setTimeout</code>,<code>setInterval</code>,<code>clearTimeout</code>,<code>clearInterval</code>;要是在测试中按真实的设置等下去那就疯啦，所以facebook的天才们提供了模拟方案，即做了延迟处理又不用等多时：<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 启用timer mock</span></span><br><span class="line">jest.useFakeTimers()</span><br><span class="line"><span class="comment">// 调用全部timer mock</span></span><br><span class="line">jest.runAllTimers()</span><br><span class="line"><span class="comment">// 运行pending中的timers，如一个定时器（1000）的回调触发了另一个定时器，这个后触发的定时器（10000ms）处于pending</span></span><br><span class="line">jest.runOnlyPendingTimers()</span><br><span class="line"><span class="comment">// 快进</span></span><br><span class="line">jest.runTimersToTime(<span class="number">1000</span>)</span><br><span class="line"><span class="comment">// 清空pending的timers</span></span><br><span class="line">jest.clearTimers()</span><br></pre></td></tr></table></figure></p>
+<h3 id="小结"><a href="#小结" class="headerlink" title="小结"></a>小结</h3><hr>
+<p>以上讲了function mock、class mock以及timers mock的种种api，在实际测试环境中出场率还是挺高的。接下一节将介绍异步检测，非常重要哟。</p>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
                 <a class="post-title-link" href="/2017/08/06/Jest-1/" itemprop="url">
                   Jest-1
                 </a>
@@ -855,114 +1062,6 @@
 <figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">it(<span class="string">'undefined toBeUndefined'</span>, () =&gt; &#123;</span><br><span class="line">    expect(<span class="literal">undefined</span>).toBeUndefined()</span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line">it(<span class="string">'null toBeUndefined'</span>, () =&gt; &#123;</span><br><span class="line">    expect(<span class="literal">null</span>).toBeNull()</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
 <h3 id="小结"><a href="#小结" class="headerlink" title="小结"></a>小结</h3><hr>
 <p>以上总的讲述了Expect基本的使用API，接下来讲一讲另一个重要的方法mock。</p>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2017/08/06/Jest-2/" itemprop="url">
-                  Jest-2
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            <span class="post-meta-item-icon">
-              <i class="fa fa-calendar-o"></i>
-            </span>
-            <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2017-08-06T15:02:01+08:00" content="2017-08-06">
-              2017-08-06
-            </time>
-          </span>
-
-          
-
-          
-            
-              <span class="post-comments-count">
-                &nbsp; | &nbsp;
-                <a href="/2017/08/06/Jest-2/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2017/08/06/Jest-2/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-
-          
-          
-
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><hr>
-<p><a href="">Jest-1</a>主要讲述了Jest冢对Expect的用法，这篇<a href="">Jest-2</a>将讲述重要的mock部分</p>
-<h3 id="Mock"><a href="#Mock" class="headerlink" title="Mock"></a>Mock</h3><hr>
-<p>单元测试的主要做的事情给予我们想给的，得到我们期望的。现在的业务代码中都是由各个模块串联而成，你包我，我包他，一个包可能很大很长，但最终会抛出公共接口。我们在测试引入包时，不需关心内部具体实现，这时可以使用Mock功能，直接给出期望的结果。<br>除主测之外的代码，都可以Mock。</p>
-<h3 id="Function-Mock"><a href="#Function-Mock" class="headerlink" title="Function Mock"></a>Function Mock</h3><hr>
-<p>在上一篇中的Function里也提到jest.fn，这里细说：<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br></pre></td><td class="code"><pre><span class="line">it(<span class="string">'mockFn.mock.calls'</span>, () =&gt; &#123;</span><br><span class="line">    <span class="keyword">const</span> f = jest.fn()</span><br><span class="line">    f(<span class="number">1</span>, <span class="number">2</span>)</span><br><span class="line">    f(<span class="number">2</span>, <span class="number">3</span>)</span><br><span class="line">    <span class="comment">// 调用过程存入集合</span></span><br><span class="line">    expect(f.mock.calls).toEqual(expect.arrayContaining([[<span class="number">1</span>, <span class="number">2</span>], [<span class="number">2</span>, <span class="number">3</span>]]))</span><br><span class="line">&#125;)</span><br><span class="line">it(<span class="string">'mockFn.mock.instances'</span>, () =&gt; &#123;</span><br><span class="line">    <span class="keyword">const</span> f = jest.fn()</span><br><span class="line">    <span class="keyword">const</span> a = <span class="keyword">new</span> f()</span><br><span class="line">    <span class="keyword">const</span> b = <span class="keyword">new</span> f()</span><br><span class="line">    <span class="comment">// 引用计数</span></span><br><span class="line">    expect(f.mock.instances[<span class="number">0</span>]).toBe(a)</span><br><span class="line">&#125;)</span><br><span class="line">it(<span class="string">'mockFn.mockClear'</span>, () =&gt; &#123;</span><br><span class="line">    <span class="function"><span class="keyword">function</span> <span class="title">f</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="number">3</span></span><br><span class="line">    &#125;</span><br><span class="line">    f = jest.fn(()=&gt;<span class="number">4</span>)</span><br><span class="line">    <span class="keyword">const</span> a = <span class="keyword">new</span> f()</span><br><span class="line">    <span class="keyword">const</span> b = <span class="keyword">new</span> f()</span><br><span class="line">    f(<span class="number">2</span>)</span><br><span class="line">    expect(f.mock.calls[<span class="number">2</span>]).toEqual([<span class="number">2</span>])</span><br><span class="line">    <span class="comment">// 清空执行轨迹</span></span><br><span class="line">    f.mockClear()</span><br><span class="line">    expect(f.mock.instances).toEqual([])</span><br><span class="line">    expect(f.mock.calls).toEqual([])</span><br><span class="line">    <span class="comment">// f.mockRestore()</span></span><br><span class="line">    <span class="comment">// 重置mock.fn</span></span><br><span class="line">    f.mockReset()</span><br><span class="line">    expect(f()).toBeUndefined()</span><br><span class="line">&#125;)</span><br><span class="line">it(<span class="string">'mockFn.mockImplementationOnce'</span>, () =&gt; &#123;</span><br><span class="line">    <span class="keyword">var</span> myMockFn = jest.fn()</span><br><span class="line">        .mockImplementationOnce(cb =&gt; cb(<span class="literal">null</span>, <span class="literal">true</span>))</span><br><span class="line">        .mockImplementationOnce(cb =&gt; cb(<span class="literal">null</span>, <span class="literal">false</span>))</span><br><span class="line">    <span class="comment">// 可逐一调用</span></span><br><span class="line">    expect(myMockFn((err, val) =&gt; val)).toBeTruthy()</span><br><span class="line">    expect(myMockFn((err, val) =&gt; val)).toBeFalsy()</span><br><span class="line">    expect(myMockFn()).toBeUndefined()</span><br><span class="line">&#125;)</span><br><span class="line">it(<span class="string">'mockFn.mockReturnValueOnce'</span>, () =&gt; &#123;</span><br><span class="line">    <span class="keyword">const</span> myMockFn = jest.fn()</span><br><span class="line">    <span class="comment">// 只执行一次，后重置</span></span><br><span class="line">    myMockFn.mockReturnValueOnce(<span class="number">90</span>)</span><br><span class="line">    expect(myMockFn()).toBe(<span class="number">90</span>)</span><br><span class="line">    expect(myMockFn()).toBeUndefined()</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure></p>
-<h3 id="Class-Mock"><a href="#Class-Mock" class="headerlink" title="Class Mock"></a>Class Mock</h3><hr>
-<p>jest.fn是单个函数的模拟，一个具体的Module可能会抛出多个接口，同样可以模拟：<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">jest.mock(<span class="string">'../request'</span>, (url) =&gt; &#123;</span><br><span class="line">     <span class="keyword">let</span> users = &#123;</span><br><span class="line">         <span class="number">4</span>: &#123;name: <span class="string">'Mark'</span>&#125;,</span><br><span class="line">         <span class="number">5</span>: &#123;name: <span class="string">'Paul'</span>&#125;</span><br><span class="line">     &#125;</span><br><span class="line">     <span class="keyword">return</span> <span class="keyword">new</span> <span class="built_in">Promise</span>((resolve, reject) =&gt; &#123;</span><br><span class="line">         <span class="keyword">if</span> (url) &#123;</span><br><span class="line">             <span class="keyword">const</span> userId = url.substr(<span class="string">'/users/'</span>.length)</span><br><span class="line">             process.nextTick(</span><br><span class="line">                 () =&gt; users[userId]</span><br><span class="line">                     ? resolve(users[userId])</span><br><span class="line">                     : reject(&#123;</span><br><span class="line">                         error: <span class="string">'User with '</span>+ userId +<span class="string">' not found.'</span> </span><br><span class="line">                     &#125;)</span><br><span class="line">             )</span><br><span class="line">         &#125;</span><br><span class="line">     &#125;)</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure></p>
-<p>还有一种形式：<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">jest.mock(<span class="string">'../request'</span>)</span><br><span class="line"><span class="comment">// 接下来针对需要自定义的方法单独jest.fn</span></span><br><span class="line">jest.default = jest.fn()</span><br></pre></td></tr></table></figure></p>
-<h3 id="计时器Mock"><a href="#计时器Mock" class="headerlink" title="计时器Mock"></a>计时器Mock</h3><hr>
-<p>计时器经常在业务中用到，<code>setTimeout</code>,<code>setInterval</code>,<code>clearTimeout</code>,<code>clearInterval</code>;要是在测试中按真实的设置等下去那就疯啦，所以facebook的天才们提供了模拟方案，即做了延迟处理又不用等多时：<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 启用timer mock</span></span><br><span class="line">jest.useFakeTimers()</span><br><span class="line"><span class="comment">// 调用全部timer mock</span></span><br><span class="line">jest.runAllTimers()</span><br><span class="line"><span class="comment">// 运行pending中的timers，如一个定时器（1000）的回调触发了另一个定时器，这个后触发的定时器（10000ms）处于pending</span></span><br><span class="line">jest.runOnlyPendingTimers()</span><br><span class="line"><span class="comment">// 快进</span></span><br><span class="line">jest.runTimersToTime(<span class="number">1000</span>)</span><br><span class="line"><span class="comment">// 清空pending的timers</span></span><br><span class="line">jest.clearTimers()</span><br></pre></td></tr></table></figure></p>
-<h3 id="小结"><a href="#小结" class="headerlink" title="小结"></a>小结</h3><hr>
-<p>以上讲了function mock、class mock以及timers mock的种种api，在实际测试环境中出场率还是挺高的。接下一节将介绍异步检测，非常重要哟。</p>
 
           
         
@@ -1175,115 +1274,12 @@
   <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">console.log(&apos;%fblue&apos;, 3.33) // 3.33blue</span><br></pre></td></tr></table></figure>
 </li>
 <li><p><code>%o</code> 类型转成对象</p>
-  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">console.log(&apos;%fblue&apos;,&apos;3.12&apos;) // &quot;3.12&quot;blue</span><br></pre></td></tr></table></figure>
-  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">console.log(&apos;%fblue&apos;, [3.33]) // Arrayblue</span><br></pre></td></tr></table></figure>
+  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">console.log(&apos;%oblue&apos;,&apos;3.12&apos;) // &quot;3.12&quot;blue</span><br></pre></td></tr></table></figure>
+  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">console.log(&apos;%oblue&apos;, [3.33]) // Arrayblue</span><br></pre></td></tr></table></figure>
 </li>
 <li><p><code>%s</code> 类型转成字符串</p>
-  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">console.log(&apos;%fblue&apos;,&apos;3.12&apos;) // 3.12blue</span><br></pre></td></tr></table></figure>
-  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">console.log(&apos;%fblue&apos;, [3.33]) // Array(1)blue</span><br></pre></td></tr></table></figure></li>
-</ul>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2017/06/10/node-PATH-NODE-PATH/" itemprop="url">
-                  node $PATH NODE_PATH
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            <span class="post-meta-item-icon">
-              <i class="fa fa-calendar-o"></i>
-            </span>
-            <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2017-06-10T08:23:23+08:00" content="2017-06-10">
-              2017-06-10
-            </time>
-          </span>
-
-          
-
-          
-            
-              <span class="post-comments-count">
-                &nbsp; | &nbsp;
-                <a href="/2017/06/10/node-PATH-NODE-PATH/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2017/06/10/node-PATH-NODE-PATH/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-
-          
-          
-
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <ul>
-<li><p>设置全局变量文件夹</p>
-  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">Error: vue command not found</span><br><span class="line">export PATH=/user/local/bin:$PATH`</span><br><span class="line">echo $PATH</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>设置指定$NODE_PATH</p>
-  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">Error: Cannot find module &apos;inherits&apos;</span><br><span class="line">echo $NODE_PATH</span><br><span class="line">export $NODE_PATH=/user/local/lib/node_modules</span><br></pre></td></tr></table></figure>
-</li>
+  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">console.log(&apos;%sblue&apos;,&apos;3.12&apos;) // 3.12blue</span><br></pre></td></tr></table></figure>
+  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">console.log(&apos;%sblue&apos;, [3.33]) // Array(1)blue</span><br></pre></td></tr></table></figure></li>
 </ul>
 
           
@@ -1354,7 +1350,7 @@
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">62</span>
+              <span class="site-state-item-count">63</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>
@@ -1371,7 +1367,7 @@
           
             <div class="site-state-item site-state-tags">
               <a href="/tags">
-                <span class="site-state-item-count">54</span>
+                <span class="site-state-item-count">55</span>
                 <span class="site-state-item-name">标签</span>
               </a>
             </div>
